@@ -1,28 +1,10 @@
-// Learn cc.Class:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://docs.cocos2d-x.org/creator/manual/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://docs.cocos2d-x.org/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 const JSZip = require("jszip");
+
 cc.Class({
     extends: cc.Component,
 
     properties: {
         spinePrefab: cc.Prefab,
-        spineParent: cc.Node,
-    },
-
-    start() {
-        this.node.on("click", this.buttonClickCallback, this);
-    },
-
-    buttonClickCallback(event) {
-        cc.log("Button Clicked!");
-        this.openFileDialog();
     },
 
     openFileDialog() {
@@ -94,26 +76,5 @@ cc.Class({
             });
         };
         reader.readAsArrayBuffer(file);
-    },
-
-    loadCountCheck() {
-        this.loadCount--;
-        if (this.loadCount === 0) {
-            this.buildSpine();
-        }
-    },
-
-    buildSpine() {
-        const data = new sp.SkeletonData();
-        data.skeletonJson = this.json;
-        data.atlasText = this.atlas;
-        data.textures.push(this.img);
-        data.textureNames.push(this.imgName);
-
-        const node = cc.instantiate(this.spinePrefab);
-        node.parent = this.spineParent;
-        node.getComponent(sp.Skeleton).skeletonData = data;
-        // node.scale = cc.v2(0.5, 0.5);
-        // node.getComponent(sp.Skeleton).setAnimation(0, 'run', true);
     },
 });
