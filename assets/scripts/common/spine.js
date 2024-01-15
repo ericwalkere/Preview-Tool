@@ -17,6 +17,6 @@ cc.Class({
 
   init(skeleton) {
     cc.log('init', skeleton);
-    this.spine.skeletonData = skeleton;
+    // this.spine.skeletonData = skeleton;
   },
 });
