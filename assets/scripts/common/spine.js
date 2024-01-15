@@ -9,13 +9,14 @@
 //  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 
 cc.Class({
-    extends: cc.Component,
+  extends: cc.Component,
 
-    properties: {
+  properties: {
+    spine: sp.Skeleton,
+  },
 
-    },
-
-    onLoad(){
-        cc.director.getPhysicsManager().enabled = true;
-    }
+  init(skeleton) {
+    cc.log('init', skeleton);
+    this.spine.skeletonData = skeleton;
+  },
 });
