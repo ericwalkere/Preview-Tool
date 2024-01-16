@@ -17,18 +17,19 @@ cc.Class({
     },
 
     start() {
+        this.openFileDialog();
         this.node.on("click", this.buttonClickCallback, this);
     },
 
     buttonClickCallback(event) {
         cc.log("Button Clicked!");
-        this.openFileDialog();
+        this.input.click();
     },
 
     openFileDialog() {
         const input = document.createElement("input");
         input.type = "file";
-        input.accept = ".zip";
+        input.accept = "zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed";
         input.style.display = "none";
 
         input.addEventListener("change", (event) => {
@@ -37,8 +38,7 @@ cc.Class({
         });
 
         document.body.appendChild(input);
-        input.click();
-        document.body.removeChild(input);
+        this.input = input;
     },
 
     loadZip(file) {
@@ -76,12 +76,14 @@ cc.Class({
                             .then((data) => {
                                 const img = new Image();
                                 img.src = "data:image/png;base64," + data;
+                                cc.log(img.localName)
                                 img.onload = () => {
                                     const texture = new cc.Texture2D();
-                                    texture.width = img.width;
-                                    texture.height = img.height;
+                                    // texture.width = img.width;
+                                    // texture.height = img.height;
                                     texture.initWithElement(img);
                                     texture.name = fileName.split("/")[fileName.split("/").length - 1];
+                                    cc.log(texture)
                                     this.img = texture;
                                     this.imgName = texture.name;
                                     this.loadCountCheck();
