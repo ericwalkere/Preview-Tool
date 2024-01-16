@@ -6,19 +6,20 @@ class Emitter {
         this._emitter.setMaxListeners(100);
     }
 
-    emit(event, ...args) {
-        this._emitter.emit(event, ...args);
+    emit(eventName, ...args) {
+        this._emitter.emit(eventName, ...args);
     }
 
-    registerEvent(event, listener) {
-        this._emitter.on(event, listener);
-    }
-    registerOnce(event, listener) {
-        this._emitter.once(event, listener);
+    registerEvent(eventName, listener) {
+        this._emitter.on(eventName, listener);
     }
 
-    removeEvent(event, listener) {
-        this._emitter.removeListener(event, listener);
+    registerOnce(eventName, listener) {
+        this._emitter.once(eventName, listener);
+    }
+
+    removeEvent(eventName, listener) {
+        this._emitter.removeListener(eventName, listener);
     }
 
     destroy() {
