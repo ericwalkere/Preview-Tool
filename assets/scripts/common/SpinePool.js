@@ -6,6 +6,8 @@ cc.Class({
 
     properties: {
         spinePrefab: cc.Prefab,
+
+        _spineNode: null,
     },
 
     onLoad() {
@@ -26,6 +28,8 @@ cc.Class({
         registerEvent(EventCode.SPINE_POOL.ADD_ATLAS, this.addAtlas, this);
         registerEvent(EventCode.SPINE_POOL.ADD_TEXTURE, this.addTexture, this);
         registerEvent(EventCode.SPINE_POOL.ADD_SPINE, this.addSpine, this);
+        registerEvent(EventCode.SPINE_POOL.LOAD_ANIMATIONS, this.loadAnimations, this);
+        registerEvent(EventCode.SPINE_POOL.LOAD_SKINS, this.loadSkins, this);
     },
 
     addJson(name, json) {
@@ -46,6 +50,39 @@ cc.Class({
         spine.atlasText = this._atlases[name];
         spine.textures.push(this._textures[name]);
         spine.textureNames.push(this._textures[name].name);
+        this._spines[name] = spine;
+
+        this.loadSkeletonData(spine);
+        // this.loadSpines();
+        // this.loadAnimations(name);
+        // this.loadSkins(name);
+        // todo
+    },
+
+    loadSkeletonData(data) {
+        if (!this._spineNode) {
+            const node = cc.instantiate(this.spinePrefab);
+            node.parent = this.node;
+            this._spineNode = node.getComponent(sp.Skeleton);
+        }
+        this._spineNode.skeletonData = data;
+    },
+
+    loadSpines() {
+        const spineNames = Object.keys(this._spines);
+        cc.log(spineNames);
+        // todo
+    },
+
+    loadAnimations(name) {
+        const animations = Object.keys(this._jsons[name].animations);
+        cc.log(animations);
+        // todo
+    },
+
+    loadSkins(name) {
+        const skins = Object.keys(this._jsons[name].skins);
+        cc.log(skins);
         // todo
     },
 });
