@@ -12,18 +12,23 @@ cc.Class({
   extends: cc.Component,
 
   properties: {
-    slide: cc.Slider,
-    handle: cc.Node,
-    background: cc.Node,
-    size: 300,
-    spineSize: cc.Node,
+    text: cc.Label,
   },
 
-  updateSlide() {
-    this.background.width = this.size + this.handle.x;
+  onLoad() {
+    this.node.on("click", this.onClick.bind(this));
   },
 
-  updateSize() {
-    this.spineSize.scale = cc.v2(this.slide.progress*2, this.slide.progress*2);
+  setData(text, spine) {
+    this.text.string = text;
+    this.textValue = text;
+    this.spine = spine;
+  },
+
+  onClick() {
+    let track = this.spine.setAnimation(0, this.textValue, false); 
+    cc.log(track);
+    cc.log(track.animationEnd);
+    cc.log(track.animationLast);
   },
 });
