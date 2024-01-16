@@ -12,10 +12,11 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-
+        handle:cc.Node,
+        background:cc.Node,
     },
 
-    onLoad(){
-        cc.director.getPhysicsManager().enabled = true;
+    updateSlide(){
+        this.background.width = 300 + this.handle.x;
     }
 });
