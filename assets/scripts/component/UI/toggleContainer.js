@@ -12,11 +12,14 @@ cc.Class({
   extends: cc.Component,
 
   properties: {
-    spine: sp.Skeleton,
+    toggleContainer: cc.ToggleContainer,
   },
 
-  init(skeleton) {
-    cc.log('init', skeleton);
-    // this.spine.skeletonData = skeleton;
+  onLoad() {},
+
+  setToggle() {
+    this.toggleContainer.toggleItems.forEach((toggle) => {
+      toggle.getComponent("toggle").setSplash();
+    });
   },
 });

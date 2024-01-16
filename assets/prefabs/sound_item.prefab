@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "anim_Item",
+    "_name": "sound_item",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -52,7 +52,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": -30,
+      "y": -100,
       "z": 0
     },
     "_scale": {
@@ -214,8 +214,8 @@
       }
     ],
     "_useOriginalSize": false,
-    "_string": "anim",
-    "_N$string": "anim",
+    "_string": "sound",
+    "_N$string": "sound",
     "_fontSize": 20,
     "_lineHeight": 40,
     "_enableWrapText": false,
@@ -236,9 +236,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "acee6bac-de11-4665-ab2a-8a339ba42e06"
+      "__uuid__": "3060192d-fe57-4e76-9594-70247e81c1b5"
     },
-    "fileId": "1bwRzaOZlNt6VvpboyyWlm",
+    "fileId": "49YpUja1tDDYyS+YGEi0/H",
     "sync": false
   },
   {
@@ -306,9 +306,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "acee6bac-de11-4665-ab2a-8a339ba42e06"
+      "__uuid__": "3060192d-fe57-4e76-9594-70247e81c1b5"
     },
-    "fileId": "33ZSpz3bZHJpTEZMrxGtni",
+    "fileId": "fdqW2nHwNPs6KBNCie55eg",
     "sync": false
   },
   {
@@ -397,9 +397,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "acee6bac-de11-4665-ab2a-8a339ba42e06"
+      "__uuid__": "3060192d-fe57-4e76-9594-70247e81c1b5"
     },
-    "fileId": "55gJsWlqxMl7YJhQvv/tXj",
+    "fileId": "c5hpSSQftKwYt38EbYntOa",
     "sync": false
   }
 ]
