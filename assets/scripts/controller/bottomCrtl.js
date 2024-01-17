@@ -7,30 +7,29 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
-
+const EventCode = require("EventCode");
+const { registerEvent, removeEvents } = require("eventHelper");
 cc.Class({
     extends: cc.Component,
 
     properties: {
+        startTimeText: cc.Label,
+        endTimeText: cc.Label,
         slide: cc.Slider,
-        handle: cc.Node,
-        background: cc.Node,
-        size: 300,
-        spineSize: cc.Node,
     },
 
     onLoad() {
-        this.updateSlide();
+        registerEvent(EventCode.UI_BOTTOM.TIME_BAR, this.init, this);
     },
 
-    updateSlide() {
-        this.background.width = this.size + this.handle.x;
+    init(track) {
+        this.track = track;
+        this.endTimeText.string = track.animation.duration.toFixed(2);
     },
 
-    updateSize() {
-        this.spineSize.scale = cc.v2(
-            this.slide.progress * 2,
-            this.slide.progress * 2
-        );
+    update(dt) {
+        // if(this._coolDown >= this.endTime) return;
+        // this._coolDown += dt;
+        // this.slide.progress = this._coolDown;
     },
 });
