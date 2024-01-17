@@ -32,12 +32,6 @@ cc.Class({
     registerEvent(EventCode.SPINE_POOL.ADD_ATLAS, this.addAtlas, this);
     registerEvent(EventCode.SPINE_POOL.ADD_TEXTURE, this.addTexture, this);
     registerEvent(EventCode.SPINE_POOL.ADD_SPINE, this.addSpine, this);
-    registerEvent(
-      EventCode.SPINE_POOL.LOAD_ANIMATIONS,
-      this.loadAnimations,
-      this
-    );
-    registerEvent(EventCode.SPINE_POOL.LOAD_SKINS, this.loadSkins, this);
   },
 
   addJson(name, json) {

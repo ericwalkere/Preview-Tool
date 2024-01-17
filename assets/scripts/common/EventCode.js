@@ -7,6 +7,10 @@ const EventCode = {
         LOAD_ANIMATIONS: "LOAD_ANIMATIONS",
         LOAD_SKINS: "LOAD_SKINS",
     },
+    
+    SPINE_CTRL:{
+        SET_ANIM:"SET_ANIM",
+    }
 };
 
 module.exports = EventCode;
