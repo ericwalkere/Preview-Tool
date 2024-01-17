@@ -13,7 +13,7 @@ cc.Class({
         this.initEvents();
 
         this.spine.setCompleteListener(() => {
-            this.spine.clearTrack(0);
+            // this.spine.clearTrack(0);
         });
     },
 
@@ -29,6 +29,10 @@ cc.Class({
     update(dt) {
         const trackEntry = this.spine.getCurrent(0);
         if (!trackEntry) return;
+
+        if (trackEntry.animationLast === trackEntry.animationEnd) {
+            return;
+        }
 
         cc.log("run");
         Emitter.instance.emit(EventCode.TIMELINE.UPDATE_TIMELINE, trackEntry.animationLast, trackEntry.animationEnd);

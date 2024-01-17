@@ -19,7 +19,7 @@ cc.Class({
 
     setToggle() {
         this.toggleContainer.toggleItems.forEach((toggle) => {
-            toggle.getComponent("Toggle1").setSplash();
+            toggle.getComponent("Toggle").setSplash();
         });
     },
 });

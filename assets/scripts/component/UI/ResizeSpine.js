@@ -1,17 +1,13 @@
 cc.Class({
-    extends: require('SliderUpdate1'),
+    extends: require("SliderUpdate"),
 
-    properties: {
-
-    },
+    properties: {},
 
     // LIFE-CYCLE CALLBACKS:
 
     // onLoad () {},
 
-    start () {
-
-    },
+    start() {},
 
     // update (dt) {},
 });

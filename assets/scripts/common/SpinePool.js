@@ -81,7 +81,7 @@ cc.Class({
         this.anims.removeAllChildren();
         for (let i = 0; i < animations.length; i++) {
             const anim = cc.instantiate(this.itemPrefabs);
-            anim.getComponent("loadData").setData(animations[i], this._spineNode);
+            anim.getComponent("LoadData").setData(animations[i], this._spineNode);
             anim.parent = this.anims;
         }
     },

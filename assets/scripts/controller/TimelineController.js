@@ -5,7 +5,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        timeline: require("SliderUpdate1"),
+        timeline: require("SliderUpdate"),
         currentTime: cc.Label,
         durationTime: cc.Label,
         // play/pause
