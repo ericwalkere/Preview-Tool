@@ -9,19 +9,24 @@
 //  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 const EventCode = require("EventCode");
 const { registerEvent, removeEvents } = require("eventHelper");
+const Emitter = require("EventEmitter");
 
 cc.Class({
-  extends: cc.Component,
+    extends: cc.Component,
 
-  properties: {
-    spine: sp.Skeleton,
-  },
+    properties: {
+        spine: sp.Skeleton,
+    },
 
-  onLoad() {
-    registerEvent(EventCode.SPINE_CTRL.SET_ANIM, this.setAnimation, this);
-  },
+    onLoad() {
+        registerEvent(EventCode.SPINE_CTRL.SET_ANIM, this.setAnimation, this);
+        registerEvent(EventCode.SPINE_CTRL.SET_SKIN, this.setSkin, this);
+    },
 
-  setAnimation(name, loop = false) {
-    let track = this.spine.setAnimation(0, name, loop);
-  },
+    setAnimation(name, loop = false) {
+        let track = this.spine.setAnimation(0, name, loop);
+        Emitter.instance.emit(EventCode.UI_BOTTOM.TIME_BAR, track);
+    },
+
+    setSkin(name) {},
 });

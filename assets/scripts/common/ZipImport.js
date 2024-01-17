@@ -39,7 +39,7 @@ cc.Class({
     onClick() {
         this._fileSelector.click();
     },
-
+    
     loadZip(event) {
         const jszip = new JSZip();
         jszip.loadAsync(event.target.result).then((zip) => {
