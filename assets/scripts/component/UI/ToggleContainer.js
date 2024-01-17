@@ -12,25 +12,14 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        slide: cc.Slider,
-        handle: cc.Node,
-        background: cc.Node,
-        size: 300,
-        spineSize: cc.Node,
+        toggleContainer: cc.ToggleContainer,
     },
 
-    onLoad() {
-        this.updateSlide();
-    },
+    onLoad() {},
 
-    updateSlide() {
-        this.background.width = this.size + this.handle.x;
-    },
-
-    updateSize() {
-        this.spineSize.scale = cc.v2(
-            this.slide.progress * 2,
-            this.slide.progress * 2
-        );
+    setToggle() {
+        this.toggleContainer.toggleItems.forEach((toggle) => {
+            toggle.getComponent("Toggle").setSplash();
+        });
     },
 });

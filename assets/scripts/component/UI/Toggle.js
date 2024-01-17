@@ -9,17 +9,16 @@
 //  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 
 cc.Class({
-  extends: cc.Component,
+    extends: cc.Component,
 
-  properties: {
-    toggleContainer: cc.ToggleContainer,
-  },
+    properties: {
+        toggle: cc.Toggle,
+        splash: cc.Node,
+        list: cc.Node,
+    },
 
-  onLoad() {},
-
-  setToggle() {
-    this.toggleContainer.toggleItems.forEach((toggle) => {
-      toggle.getComponent("toggle").setSplash();
-    });
-  },
+    setSplash() {
+        this.splash.active = !this.toggle.isChecked;
+        this.list.active = this.toggle.isChecked;
+    },
 });

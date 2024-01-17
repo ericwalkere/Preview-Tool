@@ -7,26 +7,26 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
-const EventCode = require("EventCode");
-const { registerEvent, removeEvents } = require("eventHelper");
-const Emitter = require("EventEmitter");
 
+const Emitter = require("EventEmitter");
+const EventCode = require("EventCode");
 cc.Class({
     extends: cc.Component,
 
     properties: {
-        spine: sp.Skeleton,
+        text: cc.Label,
     },
 
     onLoad() {
-        registerEvent(EventCode.SPINE_CTRL.SET_ANIM, this.setAnimation, this);
-        registerEvent(EventCode.SPINE_CTRL.SET_SKIN, this.setSkin, this);
+        this.node.on("click", this.onClickSetAnim.bind(this));
     },
 
-    setAnimation(name, loop = false) {
-        let track = this.spine.setAnimation(0, name, loop);
-        Emitter.instance.emit(EventCode.UI_BOTTOM.TIME_BAR, track);
+    setData(text) {
+        this.text.string = text;
+        this.textValue = text;
     },
 
-    setSkin(name) {},
+    onClickSetAnim() {
+        Emitter.instance.emit(EventCode.SPINE_CTRL.SET_ANIM, this.textValue);
+    },
 });
