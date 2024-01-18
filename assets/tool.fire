@@ -165,7 +165,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 584.5671475544962
+      "z": 599.2895794188315
     },
     "_scale": {
       "__type__": "cc.Vec3",
@@ -1503,7 +1503,7 @@
     },
     "_enabled": true,
     "slide": {
-      "__id__": 27
+      "__id__": 30
     },
     "_durationTime": 0,
     "_id": "f2HNyC4L1KoYJvuQ8ByNr9"
@@ -2781,7 +2781,7 @@
     },
     "_enabled": true,
     "timeline": {
-      "__id__": 30
+      "__id__": 31
     },
     "currentTime": {
       "__id__": 33
