@@ -16,6 +16,8 @@ cc.Class({
         this.spine.setCompleteListener(() => {
             // this.spine.clearTrack(0);
         });
+
+        cc.log(this.spine)
     },
 
     onDestroy() {
