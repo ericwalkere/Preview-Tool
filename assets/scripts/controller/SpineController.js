@@ -12,6 +12,10 @@ cc.Class({
 
     onLoad() {
         this.initEvents();
+
+        this.spine.setEventListener(()=>{
+            cc.log('alo');
+        })
     },
 
     onDestroy() {

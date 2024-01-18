@@ -18,15 +18,29 @@ cc.Class({
     },
 
     onLoad() {
-        this.node.on("click", this.onClickSetAnim.bind(this));
+        this.node.on("click", this.onClick.bind(this));
     },
 
-    setData(text) {
+    setData(text, type) {
         this.text.string = text;
         this.textValue = text;
+        this.type = type;
     },
 
-    onClickSetAnim() {
-        Emitter.instance.emit(EventCode.SPINE_CTRL.SET_ANIM, this.textValue);
+    onClick() {
+        switch (this.type) {
+            case "anim":
+                Emitter.instance.emit(
+                    EventCode.SPINE_CTRL.SET_ANIM,
+                    this.textValue
+                );
+                break;
+            case "skin":
+                cc.log("click skin :", this.textValue);
+                break;
+            case "event":
+                cc.log("click event :", this.textValue);
+                break;
+        }
     },
 });
