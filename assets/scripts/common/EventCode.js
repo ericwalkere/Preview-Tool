@@ -22,6 +22,10 @@ const EventCode = {
         UPDATE_TIMELINE: "UPDATE_TIMELINE",
         SET_DURATION_TIME: "SET_DURATION_TIME",
     },
+
+    AUDIO:{
+        PLAY_SOUND:"PLAY_SOUND",
+    }
 };
 
 module.exports = EventCode;
