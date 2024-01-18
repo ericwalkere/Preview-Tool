@@ -217,8 +217,8 @@
       }
     ],
     "_useOriginalSize": false,
-    "_string": "anim",
-    "_N$string": "anim",
+    "_string": "item",
+    "_N$string": "item",
     "_fontSize": 20,
     "_lineHeight": 40,
     "_enableWrapText": false,

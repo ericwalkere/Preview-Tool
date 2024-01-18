@@ -65,8 +65,9 @@ cc.Class({
         // this._spineNode.setEventListener(()=>{
         //     cc.log('alo');
         // })
-        this._jsons[name].animations['idle'].events = [];
-        cc.log(this._jsons[name].animations['idle']);
+
+        // this._jsons[name].animations['idle'].events = [];
+        // cc.log(this._jsons[name].animations['idle']);
     },
 
     loadSkeletonData(data) {
@@ -113,4 +114,6 @@ cc.Class({
             event.parent = this.eventNode;
         }
     },
+
+    
 });
