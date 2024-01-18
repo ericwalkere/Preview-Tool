@@ -12,12 +12,6 @@ cc.Class({
 
     onLoad() {
         this.initEvents();
-
-        this.spine.setCompleteListener(() => {
-            // this.spine.clearTrack(0);
-        });
-
-        cc.log(this.spine)
     },
 
     onDestroy() {
@@ -28,22 +22,22 @@ cc.Class({
         registerEvent(EventCode.SPINE_CTRL.SET_ANIM, this.setAnimation, this);
         registerEvent(EventCode.SPINE_CTRL.SET_SKIN, this.setSkin, this);
         registerEvent(EventCode.SPINE_CTRL.SET_LOOP, this.setAnimLoop, this);
+        registerEvent(EventCode.SPINE_CTRL.UPDATE_TIME, this.updateTime, this);
     },
 
     update(dt) {
         const trackEntry = this.spine.getCurrent(0);
         if (!trackEntry) return;
+      
+        const currentTime = trackEntry.animationLast;
+        const durationTime = trackEntry.animationEnd;
+        Emitter.instance.emit(EventCode.TIMELINE.UPDATE_TIMELINE, currentTime, durationTime);
+    },
 
-        if (trackEntry.animationLast === trackEntry.animationEnd) {
-            return;
-        }
-
-        cc.log("run");
-        Emitter.instance.emit(
-            EventCode.TIMELINE.UPDATE_TIMELINE,
-            trackEntry.animationLast,
-            trackEntry.animationEnd
-        );
+    updateTime(time) {
+        const animation = this.spine.animation;
+        this.spine.setAnimation(0, animation, false);
+        this.spine.update(time);
     },
 
     setAnimation(name) {

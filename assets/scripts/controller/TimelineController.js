@@ -41,12 +41,14 @@ cc.Class({
         );
     },
 
-    updateTimeline(currentTime, duration) {
-        this.timeline.updateProgress(currentTime / duration);
+    updateTimeline(currentTime, durationTime) {
+        const progress = durationTime === 0 ? 1 : currentTime / durationTime;
+        this.timeline.updateProgress(progress);
         this.currentTime.string = currentTime.toFixed(2);
     },
 
     setDurationTime(duration) {
+        this.timeline.getComponent("Timeline").setDurationTime(duration);
         this.durationTime.string = duration.toFixed(2);
     },
 
