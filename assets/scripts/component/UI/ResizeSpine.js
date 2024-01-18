@@ -1,13 +1,15 @@
 cc.Class({
     extends: require("SliderUpdate"),
 
-    properties: {},
+    properties: {
+        handle: cc.Node,
+        spineNode: cc.Node,
+    },
 
-    // LIFE-CYCLE CALLBACKS:
-
-    // onLoad () {},
-
-    start() {},
-
-    // update (dt) {},
+    setSize() {
+        this.spineNode.scale = cc.v2(
+            this.slide.progress * 2,
+            this.slide.progress * 2
+        );
+    },
 });
