@@ -10,6 +10,7 @@ const EventCode = {
 
     SPINE_CTRL: {
         SET_ANIM: "SET_ANIM",
+        UPDATE_TIME: "UPDATE_TIME",
     },
 
     UI_BOTTOM: {
