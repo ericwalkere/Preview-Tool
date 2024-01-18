@@ -7,9 +7,9 @@ cc.Class({
     properties: {
         spinePrefab: cc.Prefab,
         itemPrefabs: cc.Prefab,
-        anims: cc.Node,
-        sounds: cc.Node,
-        skins: cc.Node,
+        animNode: cc.Node,
+        eventNode: cc.Node,
+        skinNode: cc.Node,
 
         _spineNode: null,
     },
@@ -58,6 +58,7 @@ cc.Class({
         // this.loadSpines();
         this.loadAnimations(name);
         this.loadSkins(name);
+        this.loadEvent(name);
         // todo
     },
 
@@ -78,20 +79,31 @@ cc.Class({
 
     loadAnimations(name) {
         const animations = Object.keys(this._jsons[name].animations);
-        this.anims.removeAllChildren();
+        this.animNode.removeAllChildren();
         for (let i = 0; i < animations.length; i++) {
             const anim = cc.instantiate(this.itemPrefabs);
-            anim.getComponent("LoadData").setData(animations[i], this._spineNode);
-            anim.parent = this.anims;
+            anim.getComponent("LoadData").setData(animations[i], 'anim');
+            anim.parent = this.animNode;
         }
     },
 
     loadSkins(name) {
         const skins = Object.keys(this._jsons[name].skins);
-        this.skins.removeAllChildren();
+        this.skinNode.removeAllChildren();
         for (let i = 0; i < skins.length; i++) {
             const skin = cc.instantiate(this.itemPrefabs);
-            skin.parent = this.skins;
+            skin.getComponent("LoadData").setData(skins[i], 'skin');
+            skin.parent = this.skinNode;
+        }
+    },
+
+    loadEvent(name) {
+        const events = Object.keys(this._jsons[name].events);
+        this.eventNode.removeAllChildren();
+        for (let i = 0; i < events.length; i++) {
+            const event = cc.instantiate(this.itemPrefabs);
+            event.getComponent("LoadData").setData(events[i], 'event');
+            event.parent = this.eventNode;
         }
     },
 });
