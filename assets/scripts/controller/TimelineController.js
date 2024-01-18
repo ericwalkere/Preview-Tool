@@ -6,7 +6,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        timeline: require("SliderUpdate"),
+        timeline: require("Timeline"),
         currentTime: cc.Label,
         durationTime: cc.Label,
         // play/pause
@@ -29,26 +29,17 @@ cc.Class({
     },
 
     initEvents() {
-        registerEvent(
-            EventCode.TIMELINE.UPDATE_TIMELINE,
-            this.updateTimeline,
-            this
-        );
-        registerEvent(
-            EventCode.TIMELINE.SET_DURATION_TIME,
-            this.setDurationTime,
-            this
-        );
+        registerEvent(EventCode.TIMELINE.UPDATE_TIMELINE, this.updateTimeline, this);
+        registerEvent(EventCode.TIMELINE.SET_DURATION_TIME, this.setDurationTime, this);
     },
 
-    updateTimeline(currentTime, durationTime) {
-        const progress = durationTime === 0 ? 1 : currentTime / durationTime;
-        this.timeline.updateProgress(progress);
+    updateTimeline(currentTime) {
+        this.timeline.updateTimeline(currentTime);
         this.currentTime.string = currentTime.toFixed(2);
     },
 
     setDurationTime(duration) {
-        this.timeline.getComponent("Timeline").setDurationTime(duration);
+        this.timeline.setDurationTime(duration);
         this.durationTime.string = duration.toFixed(2);
     },
 
@@ -57,11 +48,10 @@ cc.Class({
 
         if (this._isLoop) {
             this.loopButton.color = cc.color("#5569FF");
-            Emitter.instance.emit(EventCode.SPINE_CTRL.SET_LOOP, this._isLoop);
         } else {
             this.loopButton.color = cc.color("#FFFFFF");
-            Emitter.instance.emit(EventCode.SPINE_CTRL.SET_LOOP, this._isLoop);
         }
+        Emitter.instance.emit(EventCode.SPINE_CTRL.SET_LOOP, this._isLoop);
     },
 
     setPause() {
@@ -69,10 +59,9 @@ cc.Class({
 
         if (this._isPause) {
             this.buttonSprite.spriteFrame = this.playSprite;
-            cc.log('pause true');
         } else {
             this.buttonSprite.spriteFrame = this.pauseSprite;
-            cc.log('pause false');
         }
+        Emitter.instance.emit(EventCode.SPINE_CTRL.SET_PAUSED, this._isPause);
     },
 });

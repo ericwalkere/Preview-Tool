@@ -5,7 +5,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        slide: cc.Slider,
+        slide: require("SliderUpdate"),
 
         _durationTime: 0,
     },
@@ -14,8 +14,13 @@ cc.Class({
         this._durationTime = durationTime;
     },
 
-    onSlide() {
-        const currentTime = this.slide.progress * this._durationTime;
+    updateTimeline(currentTime) {
+        const progress = this._durationTime === 0 ? 1 : currentTime / this._durationTime;
+        this.slide.updateProgress(progress);
+    },
+
+    onSlide(slide) {
+        const currentTime = slide.progress * this._durationTime;
         Emitter.instance.emit(EventCode.SPINE_CTRL.UPDATE_TIME, currentTime);
     },
 });
