@@ -28,7 +28,7 @@ cc.Class({
     update(dt) {
         const trackEntry = this.spine.getCurrent(0);
         if (!trackEntry) return;
-      
+
         const currentTime = trackEntry.animationLast;
         const durationTime = trackEntry.animationEnd;
         Emitter.instance.emit(EventCode.TIMELINE.UPDATE_TIMELINE, currentTime, durationTime);
@@ -36,16 +36,13 @@ cc.Class({
 
     updateTime(time) {
         const animation = this.spine.animation;
-        this.spine.setAnimation(0, animation, false);
+        this.spine.setAnimation(0, animation, this._loop);
         this.spine.update(time);
     },
 
     setAnimation(name) {
-        const track = this.spine.setAnimation(0, name, this._loop);
-        Emitter.instance.emit(
-            EventCode.TIMELINE.SET_DURATION_TIME,
-            track.animationEnd
-        );
+        const trackEntry = this.spine.setAnimation(0, name, this._loop);
+        Emitter.instance.emit(EventCode.TIMELINE.SET_DURATION_TIME, trackEntry.animationEnd);
     },
 
     setAnimLoop(loop) {
