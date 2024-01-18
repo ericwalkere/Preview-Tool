@@ -60,6 +60,13 @@ cc.Class({
         this.loadSkins(name);
         this.loadEvent(name);
         // todo
+
+        // cc.log(this._jsons);
+        // this._spineNode.setEventListener(()=>{
+        //     cc.log('alo');
+        // })
+        this._jsons[name].animations['idle'].events = [];
+        cc.log(this._jsons[name].animations['idle']);
     },
 
     loadSkeletonData(data) {
