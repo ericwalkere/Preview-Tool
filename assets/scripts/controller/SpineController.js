@@ -7,6 +7,7 @@ cc.Class({
 
     properties: {
         spine: sp.Skeleton,
+        _loop: false,
     },
 
     onLoad() {
@@ -24,6 +25,7 @@ cc.Class({
     initEvents() {
         registerEvent(EventCode.SPINE_CTRL.SET_ANIM, this.setAnimation, this);
         registerEvent(EventCode.SPINE_CTRL.SET_SKIN, this.setSkin, this);
+        registerEvent(EventCode.SPINE_CTRL.SET_LOOP, this.setAnimLoop, this);
     },
 
     update(dt) {
@@ -35,12 +37,25 @@ cc.Class({
         }
 
         cc.log("run");
-        Emitter.instance.emit(EventCode.TIMELINE.UPDATE_TIMELINE, trackEntry.animationLast, trackEntry.animationEnd);
+        Emitter.instance.emit(
+            EventCode.TIMELINE.UPDATE_TIMELINE,
+            trackEntry.animationLast,
+            trackEntry.animationEnd
+        );
     },
 
-    setAnimation(name, loop = false) {
-        const track = this.spine.setAnimation(0, name, loop);
-        Emitter.instance.emit(EventCode.TIMELINE.SET_DURATION_TIME, track.animationEnd);
+    setAnimation(name) {
+        const track = this.spine.setAnimation(0, name, this._loop);
+        Emitter.instance.emit(
+            EventCode.TIMELINE.SET_DURATION_TIME,
+            track.animationEnd
+        );
+    },
+
+    setAnimLoop(loop) {
+        const trackEntry = this.spine.getCurrent(0);
+        trackEntry.loop = loop;
+        this._loop = loop;
     },
 
     setSkin(name) {},

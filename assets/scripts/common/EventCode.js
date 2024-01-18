@@ -10,6 +10,7 @@ const EventCode = {
 
     SPINE_CTRL: {
         SET_ANIM: "SET_ANIM",
+        SET_LOOP:"SET_LOOP",
     },
 
     UI_BOTTOM: {
