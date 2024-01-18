@@ -9,7 +9,7 @@
   "packable": true,
   "platformSettings": {},
   "subMetas": {
-    "player": {
+    "pause": {
       "ver": "1.0.4",
       "uuid": "2cb42ba6-40df-497d-9f6c-4f5fcf1936f8",
       "rawTextureUuid": "172ef0ef-a75e-4b6e-825c-a4881518c64c",

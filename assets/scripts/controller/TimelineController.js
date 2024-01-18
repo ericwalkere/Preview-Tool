@@ -12,7 +12,12 @@ cc.Class({
         // play/pause
         // loop
         _isLoop: false,
+        _isPause: true,
         loopButton: cc.Node,
+
+        buttonSprite: cc.Sprite,
+        playSprite: cc.SpriteFrame,
+        pauseSprite: cc.SpriteFrame,
     },
 
     onLoad() {
@@ -58,6 +63,14 @@ cc.Class({
     },
 
     setPause() {
-        
+        this._isPause = !this._isPause;
+
+        if (this._isPause) {
+            this.buttonSprite.spriteFrame = this.playSprite;
+            cc.log('pause true');
+        } else {
+            this.buttonSprite.spriteFrame = this.pauseSprite;
+            cc.log('pause false');
+        }
     },
 });
