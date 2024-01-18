@@ -4,42 +4,24 @@ const Emitter = require("EventEmitter");
 const EventCode = require("EventCode");
 
 cc.Class({
-    extends: cc.Component,
+    extends: require("FileImport"),
 
     properties: {
-        _fileSelector: null,
         _spineName: "",
         _countFile: 0,
     },
 
-    onLoad() {
-        this.initFileSelector();
-        this.node.on("click", this.onClick, this);
+    acceptFile() {
+        this._fileSelector.accept =
+            "zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed";
     },
 
-    initFileSelector() {
-        const input = document.createElement("input");
-        input.type = "file";
-        input.accept = "zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed";
-        input.style.visibility = "hidden";
-
-        input.addEventListener("change", (event) => {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = this.loadZip.bind(this);
-            reader.readAsArrayBuffer(file);
-        });
-
-        document.body.appendChild(input);
-        this._fileSelector = input;
+    loadFile(file) {
+        const reader = new FileReader();
+        reader.onload = this.loadZip.bind(this);
+        reader.readAsArrayBuffer(file);
     },
 
-    onClick() {
-        this._fileSelector.click();
-    },
-    
     loadZip(event) {
         const jszip = new JSZip();
         jszip.loadAsync(event.target.result).then((zip) => {
