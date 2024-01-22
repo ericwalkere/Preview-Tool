@@ -5,7 +5,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        slide: require("SliderUpdate"),
+        slider: require("SliderUpdate"),
 
         _durationTime: 0,
     },
@@ -16,7 +16,7 @@ cc.Class({
 
     updateTimeline(currentTime) {
         const progress = this._durationTime === 0 ? 1 : currentTime / this._durationTime;
-        this.slide.updateProgress(progress);
+        this.slider.progress = progress;
     },
 
     onSlide(slide) {

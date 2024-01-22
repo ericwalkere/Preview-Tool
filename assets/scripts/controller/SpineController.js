@@ -1,7 +1,6 @@
 const EventCode = require("EventCode");
 const Emitter = require("EventEmitter");
 const { registerEvent, removeEvents } = require("eventHelper");
-const { clamp } = require("math");
 
 cc.Class({
     extends: cc.Component,
@@ -32,7 +31,7 @@ cc.Class({
         if (!trackEntry) return;
 
         let currentTime = trackEntry.animationLast;
-        if (currentTime <= 0) currentTime = trackEntry.trackTime;
+        if (currentTime <= 0 && this.spine.paused) currentTime = trackEntry.trackTime;
         Emitter.instance.emit(EventCode.TIMELINE.UPDATE_TIMELINE, currentTime);
     },
 

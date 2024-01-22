@@ -1,15 +1,11 @@
 cc.Class({
-    extends: require("SliderUpdate"),
+    extends: cc.Component,
 
     properties: {
-        handle: cc.Node,
         spineNode: cc.Node,
     },
 
-    setSize() {
-        this.spineNode.scale = cc.v2(
-            this.slide.progress * 2,
-            this.slide.progress * 2
-        );
+    setSize(slide) {
+        this.spineNode.scale = cc.v2(slide.progress * 2, slide.progress * 2);
     },
 });
