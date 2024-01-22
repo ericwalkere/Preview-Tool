@@ -1341,7 +1341,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "event_keys",
+    "_name": "eventNode",
     "_objFlags": 0,
     "_parent": {
       "__id__": 19
@@ -1366,12 +1366,12 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
+      "x": 0,
       "y": 0.5
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 0,
+      "x": -300,
       "y": 0,
       "z": 0
     },
