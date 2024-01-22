@@ -2,7 +2,7 @@ cc.Class({
     extends: require("FileImport"),
 
     acceptFile() {
-        this._fileSelector.accept = "audio/*";
+        this._fileSelector.accept = "audio/mpeg,audio/wav,audio/ogg";
     },
 
     loadFile(file) {
