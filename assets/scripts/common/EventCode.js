@@ -21,6 +21,8 @@ const EventCode = {
     TIMELINE: {
         UPDATE_TIMELINE: "UPDATE_TIMELINE",
         SET_DURATION_TIME: "SET_DURATION_TIME",
+        SET_EVENT_KEY:"SET_EVENT_KEY",
+        SET_CHILDREN:"SET_CHILDREN",
     },
 
     AUDIO:{

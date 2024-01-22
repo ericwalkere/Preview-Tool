@@ -64,6 +64,4 @@ cc.Class({
         }
         Emitter.instance.emit(EventCode.SPINE_CTRL.SET_PAUSED, this._isPause);
     },
-
-    
 });

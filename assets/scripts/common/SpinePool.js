@@ -109,7 +109,7 @@ cc.Class({
 
     loadEvent(name) {
         if(!this._jsons[name].events) return;
-        cc.log(Object.keys(this._jsons[name].events)) 
+        
         const events = Object.keys(this._jsons[name].events);
         this.eventNode.removeAllChildren();
         for (let i = 0; i < events.length; i++) {
