@@ -34,12 +34,17 @@ cc.Class({
     onClick() {
         switch (this.type) {
             case "anim":
+                Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
+
                 Emitter.instance.emit(
                     EventCode.SPINE_CTRL.SET_ANIM,
                     this.textValue
                 );
-                if(this.json.animations[this.textValue].events){
-                    cc.log(this.json.animations[this.textValue].events);
+                if (this.json.animations[this.textValue].events) {
+                    const anim = this.json.animations[this.textValue];
+                    for (let i = 0; i < anim.events.length; i++) {
+                        Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, anim.events[i].time);
+                    }
                 }
                 break;
             case "skin":
