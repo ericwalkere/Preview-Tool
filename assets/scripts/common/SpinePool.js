@@ -54,20 +54,12 @@ cc.Class({
         spine.textureNames.push(this._textures[name].name);
         this._spines[name] = spine;
 
-        this.loadSkeletonData(spine);
+        // todo
         // this.loadSpines();
+        this.loadSkeletonData(spine);
         this.loadAnimations(name);
         this.loadSkins(name);
         this.loadEvent(name);
-        // todo
-
-        // cc.log(this._jsons);
-        // this._spineNode.setEventListener(()=>{
-        //     cc.log('alo');
-        // })
-
-        // this._jsons[name].animations['idle'].events = [];
-        // cc.log(this._jsons[name].animations['idle']);
     },
 
     loadSkeletonData(data) {
