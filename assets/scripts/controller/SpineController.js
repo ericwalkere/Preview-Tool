@@ -31,15 +31,16 @@ cc.Class({
         if (!trackEntry) return;
 
         let currentTime = trackEntry.animationLast;
-        if (currentTime <= 0 && this.spine.paused) currentTime = trackEntry.trackTime;
+        if (this.spine.paused) currentTime = trackEntry.trackTime;
         Emitter.instance.emit(EventCode.TIMELINE.UPDATE_TIMELINE, currentTime);
     },
 
     updateTime(time) {
-        const animation = this.spine.animation;
+        const trackEntry = this.spine.getCurrent(0);
+        if (!trackEntry) return;
+
         this.spine.paused = false;
-        this.spine.setAnimation(0, animation, this._loop);
-        this.spine.update(time);
+        this.spine.update(time - trackEntry.trackTime);
         this.spine.paused = true;
     },
 
