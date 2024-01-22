@@ -65,8 +65,9 @@ cc.Class({
         // this._spineNode.setEventListener(()=>{
         //     cc.log('alo');
         // })
-        this._jsons[name].animations['idle'].events = [];
-        cc.log(this._jsons[name].animations['idle']);
+
+        // this._jsons[name].animations['idle'].events = [];
+        // cc.log(this._jsons[name].animations['idle']);
     },
 
     loadSkeletonData(data) {
@@ -89,7 +90,9 @@ cc.Class({
         this.animNode.removeAllChildren();
         for (let i = 0; i < animations.length; i++) {
             const anim = cc.instantiate(this.itemPrefabs);
-            anim.getComponent("LoadData").setData(animations[i], 'anim');
+            const data = anim.getComponent("LoadData");
+            data.setData(animations[i], "anim");
+            data.getJson(this._jsons[name]);
             anim.parent = this.animNode;
         }
     },
@@ -99,17 +102,19 @@ cc.Class({
         this.skinNode.removeAllChildren();
         for (let i = 0; i < skins.length; i++) {
             const skin = cc.instantiate(this.itemPrefabs);
-            skin.getComponent("LoadData").setData(skins[i], 'skin');
+            skin.getComponent("LoadData").setData(skins[i], "skin");
             skin.parent = this.skinNode;
         }
     },
 
     loadEvent(name) {
+        if(!this._jsons[name].events) return;
+        cc.log(Object.keys(this._jsons[name].events)) 
         const events = Object.keys(this._jsons[name].events);
         this.eventNode.removeAllChildren();
         for (let i = 0; i < events.length; i++) {
             const event = cc.instantiate(this.itemPrefabs);
-            event.getComponent("LoadData").setData(events[i], 'event');
+            event.getComponent("LoadData").setData(events[i], "event");
             event.parent = this.eventNode;
         }
     },

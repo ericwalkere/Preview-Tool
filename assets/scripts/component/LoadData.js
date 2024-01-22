@@ -21,6 +21,10 @@ cc.Class({
         this.node.on("click", this.onClick.bind(this));
     },
 
+    getJson(json) {
+        this.json = json;
+    },
+
     setData(text, type) {
         this.text.string = text;
         this.textValue = text;
@@ -34,6 +38,9 @@ cc.Class({
                     EventCode.SPINE_CTRL.SET_ANIM,
                     this.textValue
                 );
+                if(this.json.animations[this.textValue].events){
+                    cc.log(this.json.animations[this.textValue].events);
+                }
                 break;
             case "skin":
                 cc.log("click skin :", this.textValue);
