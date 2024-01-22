@@ -108,10 +108,10 @@ cc.Class({
     },
 
     loadEvent(name) {
-        if(!this._jsons[name].events) return;
-        
-        const events = Object.keys(this._jsons[name].events);
         this.eventNode.removeAllChildren();
+        if(!this._jsons[name].events) return;
+
+        const events = Object.keys(this._jsons[name].events);
         for (let i = 0; i < events.length; i++) {
             const event = cc.instantiate(this.itemPrefabs);
             event.getComponent("LoadData").setData(events[i], "event");
