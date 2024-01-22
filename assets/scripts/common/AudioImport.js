@@ -1,9 +1,5 @@
 cc.Class({
     extends: require("FileImport"),
-    
-    start() {
-        cc.log(Editor)
-    },
 
     acceptFile() {
         this._fileSelector.accept = "audio/*";
