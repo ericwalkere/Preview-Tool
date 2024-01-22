@@ -45,6 +45,7 @@ cc.Class({
 
     setAnimation(name) {
         const trackEntry = this.spine.setAnimation(0, name, this._loop);
+        this.spine.paused = false;
         Emitter.instance.emit(EventCode.TIMELINE.SET_DURATION_TIME, trackEntry.animationEnd);
     },
 
