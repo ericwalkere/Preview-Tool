@@ -1,18 +1,12 @@
 cc.Class({
-    extends: cc.Component,
+    extends: cc.Slider,
 
     properties: {
-        slide: cc.Slider,
-        bar: cc.Node,
-        background: cc.Node,
+        progressBar: cc.ProgressBar,
     },
 
-    updateSlide() {
-        this.bar.width = this.slide.progress * this.background.width;
-    },
-
-    updateProgress(progress) {
-        this.slide.progress = progress;
-        this.updateSlide();
-    },
+    _updateHandlePosition() {
+        this._super();
+        this.progressBar.progress = this.progress;
+    }
 });
