@@ -43,7 +43,11 @@ cc.Class({
                 if (this.json.animations[this.textValue].events) {
                     const anim = this.json.animations[this.textValue];
                     for (let i = 0; i < anim.events.length; i++) {
-                        Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, anim.events[i].time);
+                        Emitter.instance.emit(
+                            EventCode.TIMELINE.SET_EVENT_KEY,
+                            anim.events[i].time,
+                            anim.events[i].name
+                        );
                     }
                 }
                 break;
@@ -52,6 +56,7 @@ cc.Class({
                 break;
             case "event":
                 cc.log("click event :", this.textValue);
+                // Emitter.instance.emit('hi', this.textValue);
                 break;
         }
     },
