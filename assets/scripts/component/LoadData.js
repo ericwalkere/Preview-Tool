@@ -5,10 +5,14 @@ cc.Class({
 
     properties: {
         text: cc.Label,
+
+        audioCheck:cc.Node,
+        addAudio:cc.Node,
     },
 
     onLoad() {
         this.node.on("click", this.onClick.bind(this));
+        this.addAudio.on('click', this.addSound.bind(this));
     },
 
     getJson(json) {
@@ -19,10 +23,17 @@ cc.Class({
         this.text.string = text;
         this.textValue = text;
         this.type = type;
+
+        if(type === 'event'){
+            this.addAudio.active = true;
+        }
     },
 
-    onDestroy(){
-        cc.log('alo');
+    addSound(){
+        cc.log('click add audio');
+
+        //if has sound 
+        // this.audioCheck.active = true;
     },
 
     onClick() {
