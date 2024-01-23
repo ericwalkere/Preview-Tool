@@ -15,8 +15,16 @@ cc.Class({
     },
 
     onLoad() {
-        registerEvent(EventCode.TIMELINE.SET_EVENT_KEY, this.createEventKey, this);
-        registerEvent(EventCode.TIMELINE.SET_CHILDREN, this.removeChildren, this);
+        registerEvent(
+            EventCode.TIMELINE.SET_EVENT_KEY,
+            this.createEventKey,
+            this
+        );
+        registerEvent(
+            EventCode.TIMELINE.SET_CHILDREN,
+            this.removeChildren,
+            this
+        );
     },
 
     setDurationTime(durationTime) {
@@ -34,14 +42,18 @@ cc.Class({
         Emitter.instance.emit(EventCode.SPINE_CTRL.UPDATE_TIME, currentTime);
     },
 
-    createEventKey(eventTime) {
+    createEventKey(eventTime, eventName) {
         const percent = eventTime / this._durationTime;
         const key = cc.instantiate(this.eventKey);
+        key.getComponent('clickEvent').hint(eventName);
         key.x = percent * 600;
         key.parent = this.eventNode;
     },
 
-    removeChildren(){
-        this.eventNode.removeAllChildren();
-    }
+    removeChildren() {
+        const arr = this.eventNode.children;
+        arr.forEach(element => {
+            element.destroy();
+        });
+    },
 });

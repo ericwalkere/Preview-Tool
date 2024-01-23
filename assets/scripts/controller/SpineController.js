@@ -17,7 +17,6 @@ cc.Class({
         this.spine.setEventListener((_, event) => {
             const listener = this._eventListeners[event.data.name];
             listener && listener();
-            cc.log("play audio", event.data.name);
         });
     },
 

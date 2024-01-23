@@ -23,6 +23,7 @@ cc.Class({
 
             Emitter.instance.emit(EventCode.SPINE_CTRL.SET_EVENT_LISTENER, this._eventName, () => {
                 cc.audioEngine.playEffect(audioClip, false);
+                cc.log("play audio", audioClip);
             });
         });
     },

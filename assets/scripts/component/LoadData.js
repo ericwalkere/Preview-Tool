@@ -1,13 +1,3 @@
-// Learn cc.Class:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://docs.cocos2d-x.org/creator/manual/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://docs.cocos2d-x.org/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
-
 const Emitter = require("EventEmitter");
 const EventCode = require("EventCode");
 cc.Class({
@@ -15,10 +5,14 @@ cc.Class({
 
     properties: {
         text: cc.Label,
+
+        audioCheck:cc.Node,
+        addAudio:cc.Node,
     },
 
     onLoad() {
         this.node.on("click", this.onClick.bind(this));
+        this.addAudio.on('click', this.addSound.bind(this));
     },
 
     getJson(json) {
@@ -29,13 +23,26 @@ cc.Class({
         this.text.string = text;
         this.textValue = text;
         this.type = type;
+
+        if(type === 'event'){
+            this.addAudio.addComponent('AudioImport').setEventName(text);
+            this.addAudio.active = true;
+        }
+    },
+
+    addSound(){
+        cc.log('click add audio');
+
+        //if has sound 
+        this.audioCheck.active = true;
     },
 
     onClick() {
         switch (this.type) {
             case "anim":
+                Emitter.instance.emit(EventCode.SPINE_POOL.REMOVE_EVENT_CHILDREN);
+                const set = new Set();
                 Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
-
                 Emitter.instance.emit(
                     EventCode.SPINE_CTRL.SET_ANIM,
                     this.textValue
@@ -43,9 +50,19 @@ cc.Class({
                 if (this.json.animations[this.textValue].events) {
                     const anim = this.json.animations[this.textValue];
                     for (let i = 0; i < anim.events.length; i++) {
-                        Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, anim.events[i].time);
+                        Emitter.instance.emit(
+                            EventCode.TIMELINE.SET_EVENT_KEY,
+                            anim.events[i].time,
+                            anim.events[i].name
+                        );
                     }
+                    this.json.animations[this.textValue].events.forEach((e) => {
+                        set.add(e.name);
+                    });
                 }
+                set.forEach((element) => {
+                    Emitter.instance.emit(EventCode.SPINE_POOL.LOAD_EVENT_BY_ANIM, element);
+                });
                 break;
             case "skin":
                 cc.log("click skin :", this.textValue);
