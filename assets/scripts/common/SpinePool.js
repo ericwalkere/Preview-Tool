@@ -114,6 +114,7 @@ cc.Class({
         this.eventNode.removeAllChildren();
         for (let i = 0; i < events.length; i++) {
             const event = cc.instantiate(this.itemPrefabs);
+            // event.addComponent("AudioImport").setEventName(events[i]);
             event.getComponent("LoadData").setData(events[i], "event");
             event.parent = this.eventNode;
         }

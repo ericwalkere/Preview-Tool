@@ -12,6 +12,12 @@ cc.Class({
 
     onLoad() {
         this.initEvents();
+
+        this._eventListeners = {};
+        this.spine.setEventListener((_, event) => {
+            const listener = this._eventListeners[event.data.name];
+            listener && listener();
+        });
     },
 
     onDestroy() {
@@ -21,6 +27,7 @@ cc.Class({
     initEvents() {
         registerEvent(EventCode.SPINE_CTRL.SET_ANIM, this.setAnimation, this);
         registerEvent(EventCode.SPINE_CTRL.SET_SKIN, this.setSkin, this);
+        registerEvent(EventCode.SPINE_CTRL.SET_EVENT_LISTENER, this.setEventListener, this);
         registerEvent(EventCode.SPINE_CTRL.SET_LOOP, this.setAnimLoop, this);
         registerEvent(EventCode.SPINE_CTRL.SET_PAUSED, this.setPaused, this);
         registerEvent(EventCode.SPINE_CTRL.UPDATE_TIME, this.updateTime, this);
@@ -40,7 +47,10 @@ cc.Class({
         if (!trackEntry) return;
 
         this.spine.paused = false;
-        this.spine.update(time - trackEntry.trackTime);
+        // this.spine.update(time - trackEntry.trackTime);
+        const animation = this.spine.animation;
+        this.spine.setAnimation(0, animation, this._loop);
+        this.spine.update(time);
         this.spine.paused = true;
     },
 
@@ -60,5 +70,11 @@ cc.Class({
         this.spine.paused = paused;
     },
 
-    setSkin(name) {},
+    setSkin(name) {
+        // this.spine.setSkin(name);
+    },
+
+    setEventListener(name, callback) {
+        this._eventListeners[name] = callback;
+    },
 });
