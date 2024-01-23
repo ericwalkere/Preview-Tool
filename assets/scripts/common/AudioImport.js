@@ -17,7 +17,7 @@ cc.Class({
         const type = file.name.split(".").pop();
         cc.loader.load({ url: path, type }, (err, audioClip) => {
             Emitter.instance.emit(EventCode.SPINE_CTRL.SET_EVENT_LISTENER, this._eventName, () => {
-                cc.audioEngine.play(audioClip, false, 1);
+                cc.audioEngine.playEffect(audioClip, false);
             });
             URL.revokeObjectURL(path);
         });
