@@ -25,6 +25,7 @@ cc.Class({
         this.type = type;
 
         if(type === 'event'){
+            this.addAudio.addComponent('AudioImport').setEventName(text);
             this.addAudio.active = true;
         }
     },
@@ -33,7 +34,7 @@ cc.Class({
         cc.log('click add audio');
 
         //if has sound 
-        // this.audioCheck.active = true;
+        this.audioCheck.active = true;
     },
 
     onClick() {
