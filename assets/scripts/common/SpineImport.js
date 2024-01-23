@@ -12,7 +12,7 @@ cc.Class({
     },
 
     acceptFile() {
-        this._fileSelector.accept = "application/zip";
+        return "application/zip";
     },
 
     loadFile(file) {

@@ -17,6 +17,7 @@ cc.Class({
         this.spine.setEventListener((_, event) => {
             const listener = this._eventListeners[event.data.name];
             listener && listener();
+            cc.log("play audio", event.data.name);
         });
     },
 
@@ -47,10 +48,7 @@ cc.Class({
         if (!trackEntry) return;
 
         this.spine.paused = false;
-        // this.spine.update(time - trackEntry.trackTime);
-        const animation = this.spine.animation;
-        this.spine.setAnimation(0, animation, this._loop);
-        this.spine.update(time);
+        this.spine.update(time - trackEntry.trackTime);
         this.spine.paused = true;
     },
 
