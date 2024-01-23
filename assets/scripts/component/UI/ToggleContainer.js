@@ -13,13 +13,21 @@ cc.Class({
 
     properties: {
         toggleContainer: cc.ToggleContainer,
+        addEventBtn: cc.Node,
     },
 
-    onLoad() {},
+    onLoad() {
+        cc.log(this.toggleContainer.toggleItems[2]._pressed) 
+    },
 
     setToggle() {
         this.toggleContainer.toggleItems.forEach((toggle) => {
             toggle.getComponent("Toggle").setSplash();
         });
+        if(this.toggleContainer.toggleItems[2]._pressed === true){
+            this.addEventBtn.active = true;
+        } else {
+            this.addEventBtn.active = false;
+        }
     },
 });
