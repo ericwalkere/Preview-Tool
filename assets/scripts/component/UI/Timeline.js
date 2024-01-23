@@ -51,7 +51,9 @@ cc.Class({
     },
 
     removeChildren() {
-        this.eventNode.removeAllChildren();
+        const arr = this.eventNode.children;
+        arr.forEach(element => {
+            element.destroy();
+        });
     },
-
 });
