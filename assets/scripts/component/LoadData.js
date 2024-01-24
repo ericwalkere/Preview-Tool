@@ -33,7 +33,7 @@ cc.Class({
         cc.log('click add audio');
 
         //if has sound 
-        // this.audioCheck.active = true;
+        this.audioCheck.active = true;
     },
 
     onClick() {
