@@ -12,19 +12,28 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        button:cc.Node,
-        box:cc.Node,
+        button: cc.Node,
+        box: cc.EditBox,
     },
 
-    clickButton(){
+    clickButton() {
         this.button.active = false;
-        this.box.active = true;
-        this.box.getComponent(cc.EditBox).string = "";
+        this.box.node.active = true;
+        this.box.string = "";
     },
 
-    enterText(){
+    enterText() {
         this.button.active = true;
-        this.box.active = false;
-        cc.log(this.box.getComponent(cc.EditBox).string);
-    }
+        this.box.node.active = false;
+        cc.log(this.box.string);
+    },
+
+    onLeave() {
+        if (this.box.string.trim() !== "") {
+            return;
+        }
+        this.button.active = true;
+        this.box.node.active = false;
+    },
+
 });
