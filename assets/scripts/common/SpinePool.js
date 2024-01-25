@@ -9,11 +9,6 @@ cc.Class({
         spinePrefab: cc.Prefab,
         _spineNode: null,
         itemPrefab: cc.Prefab,
-        animNode: cc.Node,
-        eventNode: cc.Node,
-        skinNode: cc.Node,
-
-        addEventNode: cc.Node,
     },
 
     onLoad() {
