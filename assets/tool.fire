@@ -174,7 +174,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 551.6581822106874
+      "z": 360.2665679743265
     },
     "_scale": {
       "__type__": "cc.Vec3",
@@ -7299,6 +7299,7 @@
     "contactMenu": {
       "__id__": 161
     },
+    "slide": null,
     "_id": "4eqbKdq2NIfbSlc9tx+yxC"
   },
   {
