@@ -25,13 +25,8 @@ cc.Class({
             if (!this._isLoop) {
                 this.spine.paused = true;
                 this._isComplete = true;
-                cc.log("complete");
             }
         });
-    },
-
-    start() {
-        cc.log(this.getJson());
     },
 
     onDestroy() {
@@ -48,8 +43,6 @@ cc.Class({
     },
 
     update(dt) {
-        if (this._isComplete) return;
-
         const trackEntry = this.spine.getCurrent(0);
         if (!trackEntry) return;
 
