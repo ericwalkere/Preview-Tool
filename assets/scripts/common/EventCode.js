@@ -9,8 +9,11 @@ const EventCode = {
     SPINE_CTRL: {
         SET_ANIM: "SET_ANIM",
         SET_EVENT_LISTENER: "SET_EVENT_LISTENER",
-        SET_LOOP: "SET_LOOP",
+        SET_LOOP: "SET_ANIM_LOOP",
+        SET_PAUSED: "SET_ANIM_PAUSED",
         UPDATE_TIME: "UPDATE_TIME",
+        ADD_EVENT_KEY: "ADD_EVENT_KEY",
+        REMOVE_EVENT_KEY: "REMOVE_EVENT_KEY",
     },
 
     UI_BOTTOM: {
@@ -23,7 +26,7 @@ const EventCode = {
         SET_EVENT_KEY: "SET_EVENT_KEY",
         SET_CHILDREN: "SET_CHILDREN",
     },
-
+  
     AUDIO: {
         PLAY_SOUND: "PLAY_SOUND",
     },
@@ -32,6 +35,11 @@ const EventCode = {
         GET_JSON: "GET_JSON",
         LOAD_EVENT: "LOAD_EVENT",
         SET_CHILDREN: "SET_CHILDREN",
+    },
+  
+    BUTTON: {
+        SET_PAUSED: "SET_PAUSED",
+        SET_LOOP: "SET_LOOP",
     },
 };
 
