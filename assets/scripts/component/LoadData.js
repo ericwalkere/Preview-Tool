@@ -37,6 +37,10 @@ cc.Class({
     onClick() {
         switch (this.type) {
             case "anim":
+                Emitter.instance.emit(key.MENU.SET_CHILDREN);
+                Emitter.instance.emit(key.TIMELINE.SET_CHILDREN);
+                Emitter.instance.emit(key.SPINE_CTRL.SET_ANIM, this.value);
+                
                 const anim = this.json.animations[this.value];
                 const set = new Set();
 
@@ -57,9 +61,6 @@ cc.Class({
                     Emitter.instance.emit(key.MENU.LOAD_EVENT, element);
                 });
 
-                Emitter.instance.emit(key.MENU.SET_CHILDREN);
-                Emitter.instance.emit(key.TIMELINE.SET_CHILDREN);
-                Emitter.instance.emit(key.SPINE_CTRL.SET_ANIM, this.value);
                 Emitter.instance.emit("clickAnim", this.value);
 
                 break;
