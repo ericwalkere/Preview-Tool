@@ -63,4 +63,6 @@ cc.Class({
             element.destroy();
         });
     },
+
+    
 });
