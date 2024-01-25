@@ -40,6 +40,7 @@ cc.Class({
     onClick() {
         switch (this.type) {
             case "anim":
+                
                 Emitter.instance.emit(EventCode.SPINE_POOL.REMOVE_EVENT_CHILDREN);
                 const set = new Set();
                 Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
@@ -63,6 +64,7 @@ cc.Class({
                 set.forEach((element) => {
                     Emitter.instance.emit(EventCode.SPINE_POOL.LOAD_EVENT_BY_ANIM, element);
                 });
+                Emitter.instance.emit('clickAnim', this.textValue);
                 break;
             case "skin":
                 cc.log("click skin :", this.textValue);

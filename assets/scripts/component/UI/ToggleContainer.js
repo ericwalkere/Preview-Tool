@@ -13,7 +13,6 @@ cc.Class({
 
     properties: {
         toggleContainer: cc.ToggleContainer,
-        addEventBtn: cc.Node,
         showAll: cc.Node,
     },
 
@@ -22,10 +21,8 @@ cc.Class({
             toggle.getComponent("Toggle").setSplash();
         });
         if (this.toggleContainer.toggleItems[2]._pressed === true) {
-            this.addEventBtn.active = true;
             this.showAll.active = true;
         } else {
-            this.addEventBtn.active = false;
             this.showAll.active = false;
         }
     },
