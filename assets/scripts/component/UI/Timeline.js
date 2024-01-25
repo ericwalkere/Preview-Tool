@@ -15,8 +15,23 @@ cc.Class({
     },
 
     onLoad() {
-        registerEvent(EventCode.TIMELINE.SET_EVENT_KEY, this.createEventKey, this);
-        registerEvent(EventCode.TIMELINE.SET_CHILDREN, this.removeChildren, this);
+        registerEvent(
+            EventCode.TIMELINE.SET_EVENT_KEY,
+            this.createEventKey,
+            this
+        );
+        registerEvent(
+            EventCode.TIMELINE.SET_CHILDREN,
+            this.removeChildren,
+            this
+        );
+        
+        registerEvent('clickAnim', this.getDuration, this);
+
+    },
+
+    getDuration(anim){
+        Emitter.instance.emit('getDuration', this._durationTime, anim);
     },
 
     setDurationTime(durationTime) {
@@ -37,8 +52,8 @@ cc.Class({
     createEventKey(eventTime, eventName) {
         const percent = eventTime / this._durationTime;
         const key = cc.instantiate(this.eventKey);
-        key.getComponent("clickEvent").hint(eventName);
-        key.x = percent * 600;
+        key.getComponent('clickEvent').hint(eventName);
+        key.x = percent * 800;
         key.parent = this.eventNode;
     },
 
@@ -48,4 +63,6 @@ cc.Class({
             element.destroy();
         });
     },
+
+    
 });
