@@ -1,16 +1,16 @@
 const Emitter = require("EventEmitter");
 
 const registerEvent = (eventName, listener, target) => {
-    if (!target.eventMap) {
-        target.eventMap = {};
+    if (!target.__eventMap) {
+        target.__eventMap = {};
     }
 
-    if (!target.eventMap[eventName]) {
-        target.eventMap[eventName] = [];
+    if (!target.__eventMap[eventName]) {
+        target.__eventMap[eventName] = [];
     }
 
     const func = listener.bind(target);
-    target.eventMap[eventName].push(func);
+    target.__eventMap[eventName].push(func);
     Emitter.instance.registerEvent(eventName, func);
 };
 
@@ -20,25 +20,25 @@ const registerOnce = (eventName, listener, target) => {
 };
 
 const removeEvent = (eventName, target) => {
-    if (!Emitter.instance || !target.eventMap || !target.eventMap[eventName]) {
+    if (!Emitter.instance || !target.__eventMap || !target.__eventMap[eventName]) {
         return;
     }
 
-    target.eventMap[eventName].forEach((func) =>
+    target.__eventMap[eventName].forEach((func) =>
         Emitter.instance.removeEvent(eventName, func)
     );
-    delete target.eventMap[eventName];
+    delete target.__eventMap[eventName];
 };
 
 const removeEvents = (target) => {
-    if (!Emitter.instance || !target.eventMap) {
+    if (!Emitter.instance || !target.__eventMap) {
         return;
     }
 
-    for (const eventName in target.eventMap) {
+    for (const eventName in target.__eventMap) {
         removeEvent(eventName, target);
     }
-    target.eventMap = {};
+    target.__eventMap = {};
 };
 
 module.exports = {
