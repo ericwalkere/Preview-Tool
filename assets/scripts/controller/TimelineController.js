@@ -9,8 +9,7 @@ cc.Class({
         timeline: require("Timeline"),
         currentTime: cc.Label,
         durationTime: cc.Label,
-        // play/pause
-        // loop
+
         _isLoop: false,
         _isPause: true,
         loopButton: cc.Node,

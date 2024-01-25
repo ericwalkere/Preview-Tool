@@ -25,6 +25,13 @@ cc.Class({
             this.removeChildren,
             this
         );
+        
+        registerEvent('clickAnim', this.getDuration, this);
+
+    },
+
+    getDuration(anim){
+        Emitter.instance.emit('getDuration', this._durationTime, anim);
     },
 
     setDurationTime(durationTime) {
@@ -46,7 +53,7 @@ cc.Class({
         const percent = eventTime / this._durationTime;
         const key = cc.instantiate(this.eventKey);
         key.getComponent('clickEvent').hint(eventName);
-        key.x = percent * 600;
+        key.x = percent * 800;
         key.parent = this.eventNode;
     },
 

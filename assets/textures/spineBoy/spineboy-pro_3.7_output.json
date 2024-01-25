@@ -3815,7 +3815,8 @@
 		},
 		"events": [
 			{ "time": 0, "name": "footstep" },
-			{ "time": 0.3667, "name": "footstep" }
+			{ "time": 0.3667, "name": "footstep" },
+			{ "time": 0.2, "name": "runrun" }
 		]
 	},
 	"run-to-idle": {

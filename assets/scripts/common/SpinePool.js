@@ -6,12 +6,13 @@ cc.Class({
 
     properties: {
         spinePrefab: cc.Prefab,
+        _spineNode: null,
         itemPrefab: cc.Prefab,
         animNode: cc.Node,
         eventNode: cc.Node,
         skinNode: cc.Node,
 
-        _spineNode: null,
+        addEventNode:cc.Node,
     },
 
     onLoad() {
@@ -70,6 +71,7 @@ cc.Class({
         this.loadSkeletonData(spine);
         this.loadAnimations(name);
         this.loadSkins(name);
+        this.loadEvent(name);
     },
 
     loadSkeletonData(data) {
@@ -113,6 +115,18 @@ cc.Class({
         const event = cc.instantiate(this.itemPrefab);
         event.getComponent("LoadData").setData(name, "event");
         event.parent = this.eventNode;
+    },
+
+    loadEvent(name){
+        this.addEventNode.removeAllChildren();
+        if(!this._jsons[name].events) return;
+
+        const events = Object.keys(this._jsons[name].events);
+        for (let i = 0; i < events.length; i++) {
+            const event = cc.instantiate(this.itemPrefab);
+            event.getComponent("LoadData").setData(events[i], "event");
+            event.parent = this.addEventNode;
+        }
     },
 
     removeAllEventChildren() {
