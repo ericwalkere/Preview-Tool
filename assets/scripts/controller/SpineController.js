@@ -23,7 +23,7 @@ cc.Class({
 
         this.spine.setCompleteListener(() => {
             if (!this._isLoop) {
-                this.spine.paused = true;
+                this.setPaused(true);
                 this._isComplete = true;
             }
         });
@@ -40,6 +40,8 @@ cc.Class({
         registerEvent(EventCode.SPINE_CTRL.SET_LOOP, this.setLoop, this);
         registerEvent(EventCode.SPINE_CTRL.SET_PAUSED, this.setPaused, this);
         registerEvent(EventCode.SPINE_CTRL.UPDATE_TIME, this.updateTime, this);
+        registerEvent(EventCode.SPINE_CTRL.ADD_EVENT_KEY, this.addEventKey, this);
+        registerEvent(EventCode.SPINE_CTRL.REMOVE_EVENT_KEY, this.removeEventKey, this);
     },
 
     update(dt) {
@@ -62,9 +64,10 @@ cc.Class({
 
     setAnimation(name) {
         const trackEntry = this.spine.setAnimation(0, name, this._isLoop);
-        this.spine.paused = false;
         this._isComplete = false;
+        this.setPaused(false);
         Emitter.instance.emit(EventCode.TIMELINE.SET_DURATION_TIME, trackEntry.animationEnd);
+        Emitter.instance.emit(EventCode.TIMELINE.UPDATE_TIMELINE, 0);
     },
 
     setLoop(loop) {
@@ -77,10 +80,18 @@ cc.Class({
         }
         trackEntry.loop = loop;
         this._isLoop = loop;
+        Emitter.instance.emit(EventCode.BUTTON.SET_LOOP, loop);
     },
 
     setPaused(paused) {
+        if (!paused && this._isComplete) this.updateTime(0);
         this.spine.paused = paused;
+        Emitter.instance.emit(EventCode.BUTTON.SET_PAUSED, paused);
+    },
+
+    restart() {
+        this.updateTime(0);
+        this.setPaused(false);
     },
 
     setSkin(name) {
@@ -93,5 +104,39 @@ cc.Class({
 
     getJson() {
         return this.spine.skeletonData.skeletonJson;
+    },
+
+    addEventKey(data) {
+        const { anim, event, time } = data;
+        const json = this.getJson();
+        if (!json.events) {
+            json.events = {};
+        }
+
+        if (!json.events[event]) {
+            json.events[event] = {};
+        }
+
+        const animation = json.animations[anim];
+        if (!animation.events) {
+            animation.events = [];
+        }
+
+        const hasEventTime = animation.events.some((value) => value.name === event && value.time === time);
+        if (!hasEventTime) {
+            const eventTime = { name: event, time };
+            animation.events.push(eventTime);
+        }
+    },
+
+    removeEventKey(data) {
+        const { anim, event, time } = data;
+        const json = this.getJson();
+        const animation = json.animations[anim];
+        if (!animation.events) {
+            return;
+        }
+
+        animation.events = animation.events.filter((value) => value.name !== event && value.time !== time);
     },
 });
