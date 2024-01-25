@@ -1,77 +1,79 @@
 const Emitter = require("EventEmitter");
-const EventCode = require("EventCode");
+const key = require("EventCode");
 cc.Class({
     extends: cc.Component,
 
     properties: {
         text: cc.Label,
 
-        audioCheck:cc.Node,
-        addAudio:cc.Node,
+        audioCheck: cc.Node,
+        addAudio: cc.Node,
     },
 
     onLoad() {
         this.node.on("click", this.onClick.bind(this));
-        this.addAudio.on('click', this.addSound.bind(this));
+        this.addAudio.on("click", this.addSound.bind(this));
     },
 
-    getJson(json) {
-        this.json = json;
-    },
-
-    setData(text, type) {
-        this.text.string = text;
-        this.textValue = text;
+    setData(name, type, json) {
+        this.text.string = name;
+        this.value = name;
         this.type = type;
+        this.json = json;
 
-        if(type === 'event'){
-            this.addAudio.addComponent('AudioImport').setEventName(text);
+        if (type === "event") {
+            this.addAudio.addComponent("AudioImport").setEventName(name);
             this.addAudio.active = true;
         }
     },
 
-    addSound(){
-        cc.log('click add audio');
+    addSound() {
+        cc.log("click add audio");
 
-        //if has sound 
+        //if has sound
         this.audioCheck.active = true;
     },
 
     onClick() {
         switch (this.type) {
             case "anim":
-                
-                Emitter.instance.emit(EventCode.SPINE_POOL.REMOVE_EVENT_CHILDREN);
+                const anim = this.json.animations[this.value];
                 const set = new Set();
-                Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
-                Emitter.instance.emit(
-                    EventCode.SPINE_CTRL.SET_ANIM,
-                    this.textValue
-                );
-                if (this.json.animations[this.textValue].events) {
-                    const anim = this.json.animations[this.textValue];
+
+                if (anim.events) {
                     for (let i = 0; i < anim.events.length; i++) {
-                        Emitter.instance.emit(
-                            EventCode.TIMELINE.SET_EVENT_KEY,
-                            anim.events[i].time,
-                            anim.events[i].name
-                        );
+                        let data = {
+                            time: anim.events[i].time,
+                            name: anim.events[i].name,
+                        };
+                        Emitter.instance.emit(key.TIMELINE.SET_EVENT_KEY, data);
                     }
-                    this.json.animations[this.textValue].events.forEach((e) => {
+                    anim.events.forEach((e) => {
                         set.add(e.name);
                     });
                 }
+
                 set.forEach((element) => {
-                    Emitter.instance.emit(EventCode.SPINE_POOL.LOAD_EVENT_BY_ANIM, element);
+                    Emitter.instance.emit(key.MENU.LOAD_EVENT, element);
                 });
-                Emitter.instance.emit('clickAnim', this.textValue);
+
+                Emitter.instance.emit(key.MENU.SET_CHILDREN);
+                Emitter.instance.emit(key.TIMELINE.SET_CHILDREN);
+                Emitter.instance.emit(key.SPINE_CTRL.SET_ANIM, this.value);
+                Emitter.instance.emit("clickAnim", this.value);
+
                 break;
             case "skin":
-                cc.log("click skin :", this.textValue);
+                cc.log("click skin :", this.value);
                 break;
             case "event":
-                cc.log("click event :", this.textValue);
+                cc.log("click event :", this.value);
                 break;
         }
+    },
+
+    loadEvent() {
+        this.text.string = this.value;
+        this.type = "event";
     },
 });

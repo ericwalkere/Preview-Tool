@@ -4,10 +4,6 @@ const EventCode = {
         ADD_ATLAS: "ADD_ATLAS",
         ADD_TEXTURE: "ADD_TEXTURE",
         ADD_SPINE: "ADD_SPINE",
-        LOAD_ANIMATIONS: "LOAD_ANIMATIONS",
-        LOAD_SKINS: "LOAD_SKINS",
-        LOAD_EVENT_BY_ANIM: "LOAD_EVENT_BY_ANIM",
-        REMOVE_EVENT_CHILDREN: "REMOVE_EVENT_CHILDREN",
     },
 
     SPINE_CTRL: {
@@ -30,14 +26,20 @@ const EventCode = {
         SET_EVENT_KEY: "SET_EVENT_KEY",
         SET_CHILDREN: "SET_CHILDREN",
     },
+  
+    AUDIO: {
+        PLAY_SOUND: "PLAY_SOUND",
+    },
 
+    MENU: {
+        GET_JSON: "GET_JSON",
+        LOAD_EVENT: "LOAD_EVENT",
+        SET_CHILDREN: "SET_CHILDREN",
+    },
+  
     BUTTON: {
         SET_PAUSED: "SET_PAUSED",
         SET_LOOP: "SET_LOOP",
-    },
-
-    AUDIO: {
-        PLAY_SOUND: "PLAY_SOUND",
     },
 };
 

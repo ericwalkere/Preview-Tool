@@ -49,10 +49,10 @@ cc.Class({
         Emitter.instance.emit(EventCode.SPINE_CTRL.SET_PAUSED, true);
     },
 
-    createEventKey(eventTime, eventName) {
-        const percent = eventTime / this._durationTime;
+    createEventKey(data) {
+        const percent = data.time / this._durationTime;
         const key = cc.instantiate(this.eventKey);
-        key.getComponent('clickEvent').hint(eventName);
+        key.getComponent('clickEvent').hint(data.name);
         key.x = percent * 800;
         key.parent = this.eventNode;
     },
