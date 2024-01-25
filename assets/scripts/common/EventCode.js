@@ -4,16 +4,12 @@ const EventCode = {
         ADD_ATLAS: "ADD_ATLAS",
         ADD_TEXTURE: "ADD_TEXTURE",
         ADD_SPINE: "ADD_SPINE",
-        LOAD_ANIMATIONS: "LOAD_ANIMATIONS",
-        LOAD_SKINS: "LOAD_SKINS",
-        LOAD_EVENT_BY_ANIM:"LOAD_EVENT_BY_ANIM",
-        REMOVE_EVENT_CHILDREN:"REMOVE_EVENT_CHILDREN"
     },
 
     SPINE_CTRL: {
         SET_ANIM: "SET_ANIM",
         SET_EVENT_LISTENER: "SET_EVENT_LISTENER",
-        SET_LOOP:"SET_LOOP",
+        SET_LOOP: "SET_LOOP",
         UPDATE_TIME: "UPDATE_TIME",
     },
 
@@ -24,13 +20,19 @@ const EventCode = {
     TIMELINE: {
         UPDATE_TIMELINE: "UPDATE_TIMELINE",
         SET_DURATION_TIME: "SET_DURATION_TIME",
-        SET_EVENT_KEY:"SET_EVENT_KEY",
-        SET_CHILDREN:"SET_CHILDREN",
+        SET_EVENT_KEY: "SET_EVENT_KEY",
+        SET_CHILDREN: "SET_CHILDREN",
     },
 
-    AUDIO:{
-        PLAY_SOUND:"PLAY_SOUND",
-    }
+    AUDIO: {
+        PLAY_SOUND: "PLAY_SOUND",
+    },
+
+    MENU: {
+        GET_JSON: "GET_JSON",
+        LOAD_EVENT: "LOAD_EVENT",
+        SET_CHILDREN: "SET_CHILDREN",
+    },
 };
 
 module.exports = EventCode;

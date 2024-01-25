@@ -26,6 +26,7 @@ cc.Class({
     },
 
     addNewToTimeLine() {
+        cc.log
         this.contactMenu.active = true;
     },
 

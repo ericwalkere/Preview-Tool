@@ -1,5 +1,6 @@
 const EventCode = require("EventCode");
 const { registerEvent, removeEvents } = require("eventHelper");
+const Emitter = require("EventEmitter");
 
 cc.Class({
     extends: cc.Component,
@@ -12,7 +13,7 @@ cc.Class({
         eventNode: cc.Node,
         skinNode: cc.Node,
 
-        addEventNode:cc.Node,
+        addEventNode: cc.Node,
     },
 
     onLoad() {
@@ -33,17 +34,6 @@ cc.Class({
         registerEvent(EventCode.SPINE_POOL.ADD_ATLAS, this.addAtlas, this);
         registerEvent(EventCode.SPINE_POOL.ADD_TEXTURE, this.addTexture, this);
         registerEvent(EventCode.SPINE_POOL.ADD_SPINE, this.addSpine, this);
-
-        registerEvent(
-            EventCode.SPINE_POOL.LOAD_EVENT_BY_ANIM,
-            this.loadEventByAnim,
-            this
-        );
-        registerEvent(
-            EventCode.SPINE_POOL.REMOVE_EVENT_CHILDREN,
-            this.removeAllEventChildren,
-            this
-        );
     },
 
     addJson(name, json) {
@@ -67,11 +57,9 @@ cc.Class({
         this._spines[name] = spine;
 
         // todo
-        // this.loadSpines();
         this.loadSkeletonData(spine);
-        this.loadAnimations(name);
-        this.loadSkins(name);
-        this.loadEvent(name);
+
+        Emitter.instance.emit(EventCode.MENU.GET_JSON, spine.skeletonJson);
     },
 
     loadSkeletonData(data) {
@@ -87,52 +75,5 @@ cc.Class({
         const spineNames = Object.keys(this._spines);
         cc.log(spineNames);
         // todo
-    },
-
-    loadAnimations(name) {
-        const animations = Object.keys(this._jsons[name].animations);
-        this.animNode.removeAllChildren();
-        for (let i = 0; i < animations.length; i++) {
-            const anim = cc.instantiate(this.itemPrefab);
-            const data = anim.getComponent("LoadData");
-            data.setData(animations[i], "anim");
-            data.getJson(this._jsons[name]);
-            anim.parent = this.animNode;
-        }
-    },
-
-    loadSkins(name) {
-        const skins = Object.keys(this._jsons[name].skins);
-        this.skinNode.removeAllChildren();
-        for (let i = 0; i < skins.length; i++) {
-            const skin = cc.instantiate(this.itemPrefab);
-            skin.getComponent("LoadData").setData(skins[i], "skin");
-            skin.parent = this.skinNode;
-        }
-    },
-
-    loadEventByAnim(name) {
-        const event = cc.instantiate(this.itemPrefab);
-        event.getComponent("LoadData").setData(name, "event");
-        event.parent = this.eventNode;
-    },
-
-    loadEvent(name){
-        this.addEventNode.removeAllChildren();
-        if(!this._jsons[name].events) return;
-
-        const events = Object.keys(this._jsons[name].events);
-        for (let i = 0; i < events.length; i++) {
-            const event = cc.instantiate(this.itemPrefab);
-            event.getComponent("LoadData").setData(events[i], "event");
-            event.parent = this.addEventNode;
-        }
-    },
-
-    removeAllEventChildren() {
-        const arr = this.eventNode.children;
-        arr.forEach((element) => {
-            element.destroy();
-        });
     },
 });
