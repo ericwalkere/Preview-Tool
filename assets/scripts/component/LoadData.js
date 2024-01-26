@@ -64,6 +64,7 @@ cc.Class({
                 Emitter.instance.emit(EventCode.BUTTON.SAVE_KEY);
                 break;
             case "animEvent":
+                Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
                 Emitter.instance.emit(EventCode.MENU.FILTER_EVENT, this.value);
                 break;
         }

@@ -1,13 +1,3 @@
-// Learn cc.Class:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://docs.cocos2d-x.org/creator/manual/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://docs.cocos2d-x.org/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
-const EventCode = require("EventCode");
 const Emitter = require("EventEmitter");
 const { registerEvent, removeEvents } = require("eventHelper");
 
@@ -93,12 +83,8 @@ cc.Class({
         const anim = this._json.animations[this.eventName];
         if (anim.events) {
             for (let i = 0; i < anim.events.length; i++) {
-                if (anim.events[i] === name) {
-                    let data = {
-                        time: anim.events[i].time,
-                        name: anim.events[i].name,
-                    };
-                    Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, data);
+                if (anim.events[i].name === name) {
+                    Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, anim.events[i]);
                 }
             }
         }

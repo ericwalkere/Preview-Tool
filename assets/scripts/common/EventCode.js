@@ -37,7 +37,7 @@ const EventCode = {
     MENU: {
         GET_JSON: "GET_JSON",
         LOAD_EVENT: "LOAD_EVENT",
-        SET_CHILDREN: "SET_CHILDREN",
+        SET_CHILDREN: "SET_CHILDREN_MENU",
         UPDATE_EVENT: "SET_ALL_EVENT",
         FILTER_EVENT: "FILTER_EVENT",
     },
