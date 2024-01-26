@@ -42,6 +42,7 @@ const EventCode = {
         SET_CHILDREN: "SET_CHILDREN_MENU",
         UPDATE_EVENT: "SET_ALL_EVENT",
         FILTER_EVENT: "FILTER_EVENT",
+        ADD_AUDIO: "ADD_AUDIO",
     },
 
     BUTTON: {
