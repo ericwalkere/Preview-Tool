@@ -8,7 +8,7 @@
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 const EventCode = require("EventCode");
-const Emitter = require('EventEmitter');
+const Emitter = require("EventEmitter");
 const { registerEvent, removeEvents } = require("eventHelper");
 
 cc.Class({
@@ -32,8 +32,8 @@ cc.Class({
         registerEvent(EventCode.MENU.GET_JSON, this.getJson, this);
         registerEvent(EventCode.MENU.SET_CHILDREN, this.removeChildren, this);
         registerEvent(EventCode.MENU.LOAD_EVENT, this.loadAnimEvent, this);
-
-        registerEvent('testUpdate', this.loadAllEvent, this);
+        registerEvent(EventCode.MENU.UPDATE_EVENT, this.updateEvents, this);
+        registerEvent(EventCode.MENU.FILTER_EVENT, this.filterEvent, this);
     },
 
     getJson(json) {
@@ -64,7 +64,7 @@ cc.Class({
         if (!this._json.events) return;
         const events = Object.keys(this._json.events);
         for (let i = 0; i < events.length; i++) {
-            this.createItem(events[i], "event", this.addEventList);
+            this.createItem(events[i], "eventAll", this.addEventList);
         }
     },
 
@@ -85,13 +85,30 @@ cc.Class({
             });
         }
         set.forEach((element) => {
-            this.createItem(element, 'event', this.eventList);
+            this.createItem(element, "animEvent", this.eventList);
         });
     },
 
-    loadAllEvent() {
+    filterEvent(name) {
+        const anim = this._json.animations[this.eventName];
+        if (anim.events) {
+            for (let i = 0; i < anim.events.length; i++) {
+                if (anim.events[i] === name) {
+                    let data = {
+                        time: anim.events[i].time,
+                        name: anim.events[i].name,
+                    };
+                    Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, data);
+                }
+            }
+        }
+        cc.log(this._json);
+    },
+
+    updateEvents() {
         this.loadEvent();
         this.loadAnimEvent(this.eventName);
+        cc.log(this._json);
     },
 
     createItem(name, type, parent) {
