@@ -12,6 +12,8 @@ cc.Class({
 
         eventKey: cc.Prefab,
         eventNode: cc.Node,
+
+        removeBtn: cc.Node,
     },
 
     onLoad() {
@@ -25,9 +27,13 @@ cc.Class({
             this.removeChildren,
             this
         );
-        
-        registerEvent('clickAnim', this.getDuration, this);
 
+        registerEvent(
+            EventCode.TIMELINE.REMOVE_EVENT_KEY,
+            this.setRemoveKey,
+            this
+        );
+        registerEvent('clickAnim', this.getDuration, this);
     },
 
     getDuration(anim){
@@ -51,10 +57,26 @@ cc.Class({
 
     createEventKey(data) {
         const percent = data.time / this._durationTime;
-        const key = cc.instantiate(this.eventKey);
-        key.getComponent('clickEvent').hint(data.name);
-        key.x = percent * 800;
-        key.parent = this.eventNode;
+        this.key = cc.instantiate(this.eventKey);
+        this.key.getComponent('clickEvent').hint(data.name);
+        this.key.x = percent * 800;
+        this.key.parent = this.eventNode;
+        // this.key.on(cc.Node.EventType.MOUSE_DOWN, this.function, this); 
+        Emitter.instance.emit(EventCode.TIMELINE.REMOVE_EVENT_KEY, data);
+    },
+
+    setRemoveKey(data) {
+        this.removeBtn.active = true;
+        const anim = data.anim;
+        const event = data.name;
+        const time = data.time;
+        this.dataRemoved = {anim, event, time};
+        this.removeEventKey();
+    },
+
+    removeEventKey(){
+        // this.eventKey.getComponent('SpineController').setRemoveKey(this.dataRemoved);
+        cc.log(this.dataRemoved);
     },
 
     removeChildren() {

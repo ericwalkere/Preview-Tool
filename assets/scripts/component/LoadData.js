@@ -27,6 +27,10 @@ cc.Class({
         }
     },
 
+    getAnimName(name) {
+        this.animName = name;
+    },
+
     addSound() {
         cc.log("click add audio");
 
@@ -47,6 +51,7 @@ cc.Class({
                 if (anim.events) {
                     for (let i = 0; i < anim.events.length; i++) {
                         let data = {
+                            anim: this.value,
                             time: anim.events[i].time,
                             name: anim.events[i].name,
                         };
