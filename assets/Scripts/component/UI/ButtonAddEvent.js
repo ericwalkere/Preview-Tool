@@ -26,7 +26,7 @@ cc.Class({
     },
 
     addNewToTimeLine() {
-        cc.log
+        cc.log;
         this.contactMenu.active = true;
     },
 
@@ -44,12 +44,16 @@ cc.Class({
         this.addNew.active = true;
         this.box.node.active = false;
 
-        cc.warn("TODO -> add new event", this.box.string);
-        cc.log({
-            anim:this.anim,
-            name: this.box.string,
-            time: this.slide.progress * this.duration,
-        });
+        const data = {
+            anim: this.anim,
+            event: this.box.string,
+            time: this.duration * this.slide.progress,
+        };
+
+        Emitter.instance.emit(EventCode.SPINE_CTRL.ADD_EVENT_KEY, data);
+        Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
+        Emitter.instance.emit(EventCode.MENU.SET_CHILDREN);
+        Emitter.instance.emit("testUpdate");
     },
 
     getDuration(duration, anim) {

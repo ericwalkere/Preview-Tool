@@ -36,12 +36,24 @@ cc.Class({
     initEvents() {
         registerEvent(EventCode.SPINE_CTRL.SET_ANIM, this.setAnimation, this);
         registerEvent(EventCode.SPINE_CTRL.SET_SKIN, this.setSkin, this);
-        registerEvent(EventCode.SPINE_CTRL.SET_EVENT_LISTENER, this.setEventListener, this);
+        registerEvent(
+            EventCode.SPINE_CTRL.SET_EVENT_LISTENER,
+            this.setEventListener,
+            this
+        );
         registerEvent(EventCode.SPINE_CTRL.SET_LOOP, this.setLoop, this);
         registerEvent(EventCode.SPINE_CTRL.SET_PAUSED, this.setPaused, this);
         registerEvent(EventCode.SPINE_CTRL.UPDATE_TIME, this.updateTime, this);
-        registerEvent(EventCode.SPINE_CTRL.ADD_EVENT_KEY, this.addEventKey, this);
-        registerEvent(EventCode.SPINE_CTRL.REMOVE_EVENT_KEY, this.removeEventKey, this);
+        registerEvent(
+            EventCode.SPINE_CTRL.ADD_EVENT_KEY,
+            this.addEventKey,
+            this
+        );
+        registerEvent(
+            EventCode.SPINE_CTRL.REMOVE_EVENT_KEY,
+            this.removeEventKey,
+            this
+        );
     },
 
     update(dt) {
@@ -66,7 +78,10 @@ cc.Class({
         const trackEntry = this.spine.setAnimation(0, name, this._isLoop);
         this._isComplete = false;
         this.setPaused(false);
-        Emitter.instance.emit(EventCode.TIMELINE.SET_DURATION_TIME, trackEntry.animationEnd);
+        Emitter.instance.emit(
+            EventCode.TIMELINE.SET_DURATION_TIME,
+            trackEntry.animationEnd
+        );
         Emitter.instance.emit(EventCode.TIMELINE.UPDATE_TIMELINE, 0);
     },
 
@@ -122,7 +137,9 @@ cc.Class({
             animation.events = [];
         }
 
-        const hasEventTime = animation.events.some((value) => value.name === event && value.time === time);
+        const hasEventTime = animation.events.some(
+            (value) => value.name === event && value.time === time
+        );
         if (!hasEventTime) {
             const eventTime = { name: event, time };
             animation.events.push(eventTime);
@@ -137,6 +154,8 @@ cc.Class({
             return;
         }
 
-        animation.events = animation.events.filter((value) => value.name !== event && value.time !== time);
+        animation.events = animation.events.filter(
+            (value) => value.name !== event && value.time !== time
+        );
     },
 });
