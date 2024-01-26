@@ -81,7 +81,10 @@ cc.Class({
             });
         }
         set.forEach((element) => {
-            this.createItem(element, "animEvent", this.eventList);
+            const item = this.createItem(element, "animEvent", this.eventList);
+            const listeners = this._json.listeners;
+            const hasListener = listeners[name] && listeners[name][element];
+            item.getComponent("LoadData").setAudioImport(name, element, hasListener);
         });
     },
 
@@ -112,6 +115,7 @@ cc.Class({
         const data = item.getComponent("LoadData");
         data.setData(name, type, this._json);
         item.parent = parent;
+        return item;
     },
 
     removeChildren() {

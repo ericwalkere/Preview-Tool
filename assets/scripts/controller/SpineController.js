@@ -31,6 +31,12 @@ cc.Class({
         });
     },
 
+    start() {
+        const json = this.getJson();
+        json.listeners = {};
+        this._eventListeners = json.listeners;
+    },
+
     onDestroy() {
         removeEvents(this);
     },

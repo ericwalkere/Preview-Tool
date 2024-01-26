@@ -22,9 +22,11 @@ cc.Class({
                 return;
             }
 
+            const anim = this._anim;
+            const event = this._event;
             Emitter.instance.emit(EventCode.SPINE_CTRL.SET_EVENT_LISTENER, this._anim, this._event, () => {
                 cc.audioEngine.playEffect(audioClip, false);
-                cc.log(`play audio at ${this._event} in ${this._anim}`);
+                cc.log(`play sound at ${event} in ${anim}`);
             });
         });
     },
