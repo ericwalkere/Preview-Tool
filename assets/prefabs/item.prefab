@@ -827,7 +827,7 @@
     "node": {
       "__id__": 1
     },
-    "_enabled": false,
+    "_enabled": true,
     "duration": 0.1,
     "zoomScale": 0.9,
     "clickEvents": [],
