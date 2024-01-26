@@ -5,7 +5,8 @@ cc.Class({
     extends: require("FileImport"),
 
     properties: {
-        _eventName: "",
+        _anim: "",
+        _event: "",
     },
 
     acceptFile() {
@@ -21,14 +22,20 @@ cc.Class({
                 return;
             }
 
-            Emitter.instance.emit(EventCode.SPINE_CTRL.SET_EVENT_LISTENER, this._eventName, () => {
+            const anim = this._anim;
+            const event = this._event;
+            Emitter.instance.emit(EventCode.SPINE_CTRL.SET_EVENT_LISTENER, this._anim, this._event, () => {
                 cc.audioEngine.playEffect(audioClip, false);
-                cc.log("play audio", audioClip);
+                cc.log(`play sound at ${event} in ${anim}`);
             });
         });
     },
 
-    setEventName(eventName) {
-        this._eventName = eventName;
+    setAnim(anim) {
+        this._anim = anim;
+    },
+
+    setEventName(event) {
+        this._event = event;
     },
 });

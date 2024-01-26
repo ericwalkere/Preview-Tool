@@ -16,8 +16,10 @@ cc.Class({
         this.initEvents();
 
         this._eventListeners = {};
-        this.spine.setEventListener((_, event) => {
-            const listener = this._eventListeners[event.data.name];
+        this.spine.setEventListener((trackEntry, event) => {
+            const listeners = this._eventListeners[trackEntry.animation.name];
+            if (!listeners) return;
+            const listener = listeners[event.data.name];
             listener && listener();
         });
 
@@ -29,6 +31,12 @@ cc.Class({
         });
     },
 
+    start() {
+        const json = this.getJson();
+        json.listeners = {};
+        this._eventListeners = json.listeners;
+    },
+
     onDestroy() {
         removeEvents(this);
     },
@@ -36,24 +44,13 @@ cc.Class({
     initEvents() {
         registerEvent(EventCode.SPINE_CTRL.SET_ANIM, this.setAnimation, this);
         registerEvent(EventCode.SPINE_CTRL.SET_SKIN, this.setSkin, this);
-        registerEvent(
-            EventCode.SPINE_CTRL.SET_EVENT_LISTENER,
-            this.setEventListener,
-            this
-        );
+        registerEvent(EventCode.SPINE_CTRL.SET_EVENT_LISTENER, this.setEventListener, this);
+        registerEvent(EventCode.SPINE_CTRL.REMOVE_EVENT_LISTENER, this.removeEventListener, this);
         registerEvent(EventCode.SPINE_CTRL.SET_LOOP, this.setLoop, this);
         registerEvent(EventCode.SPINE_CTRL.SET_PAUSED, this.setPaused, this);
         registerEvent(EventCode.SPINE_CTRL.UPDATE_TIME, this.updateTime, this);
-        registerEvent(
-            EventCode.SPINE_CTRL.ADD_EVENT_KEY,
-            this.addEventKey,
-            this
-        );
-        registerEvent(
-            EventCode.SPINE_CTRL.REMOVE_EVENT_KEY,
-            this.removeEventKey,
-            this
-        );
+        registerEvent(EventCode.SPINE_CTRL.ADD_EVENT_KEY, this.addEventKey, this);
+        registerEvent(EventCode.SPINE_CTRL.REMOVE_EVENT_KEY, this.removeEventKey, this);
     },
 
     update(dt) {
@@ -80,10 +77,7 @@ cc.Class({
         const trackEntry = this.spine.setAnimation(0, name, this._isLoop);
         this._isCompleted = false;
         this.setPaused(false);
-        Emitter.instance.emit(
-            EventCode.TIMELINE.SET_DURATION_TIME,
-            trackEntry.animationEnd
-        );
+        Emitter.instance.emit(EventCode.TIMELINE.SET_DURATION_TIME, trackEntry.animationEnd);
         Emitter.instance.emit(EventCode.TIMELINE.UPDATE_TIMELINE, 0);
     },
 
@@ -113,8 +107,17 @@ cc.Class({
         // this.spine.setSkin(name);
     },
 
-    setEventListener(name, callback) {
-        this._eventListeners[name] = callback;
+    setEventListener(anim, event, callback) {
+        if (!this._eventListeners[anim]) {
+            this._eventListeners[anim] = {};
+        }
+        this._eventListeners[anim][event] = callback;
+    },
+
+    removeEventListener(anim, event) {
+        const listeners = this._eventListeners[anim];
+        if (!listeners || !listeners[event]) return;
+        delete listeners[event];
     },
 
     getJson() {
@@ -137,9 +140,7 @@ cc.Class({
             animation.events = [];
         }
 
-        const hasEventTime = animation.events.some(
-            (value) => value.name === event && value.time === time
-        );
+        const hasEventTime = animation.events.some((value) => value.name === event && value.time === time);
         if (!hasEventTime) {
             const eventTime = { name: event, time };
             animation.events.push(eventTime);
@@ -154,8 +155,6 @@ cc.Class({
             return;
         }
 
-        animation.events = animation.events.filter(
-            (value) => value.name !== event && value.time !== time
-        );
+        animation.events = animation.events.filter((value) => value.name !== event && value.time !== time);
     },
 });

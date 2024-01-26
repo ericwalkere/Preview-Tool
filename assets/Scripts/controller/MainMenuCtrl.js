@@ -19,6 +19,10 @@ cc.Class({
         this.initEvents();
     },
 
+    onDestroy() {
+        removeEvents(this);
+    },
+
     initEvents() {
         registerEvent(EventCode.MENU.GET_JSON, this.getJson, this);
         registerEvent(EventCode.MENU.SET_CHILDREN, this.removeChildren, this);
@@ -61,7 +65,7 @@ cc.Class({
     },
 
     loadAnimEvent(name) {
-        this.eventName = name;
+        this.animName = name;
         const set = new Set();
         const anim = this._json.animations[name];
         if (anim.events) {
@@ -77,12 +81,15 @@ cc.Class({
             });
         }
         set.forEach((element) => {
-            this.createItem(element, "animEvent", this.eventList);
+            const item = this.createItem(element, "animEvent", this.eventList);
+            const listeners = this._json.listeners;
+            const hasListener = listeners[name] && listeners[name][element];
+            item.getComponent("LoadData").setAudioImport(name, element, hasListener);
         });
     },
 
     filterEvent(name) {
-        const anim = this._json.animations[this.eventName];
+        const anim = this._json.animations[this.animName];
         if (anim.events) {
             for (let i = 0; i < anim.events.length; i++) {
                 if (anim.events[i].name === name) {
@@ -95,12 +102,12 @@ cc.Class({
     updateEvents() {
         Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
         Emitter.instance.emit(EventCode.MENU.SET_CHILDREN);
-        this.loadAnimEvent(this.eventName);
+        this.loadAnimEvent(this.animName);
         this.loadEvent();
     },
 
     addAudio() {
-        cc.error("TODO Add sound", this.eventName);
+        cc.error("TODO Add sound", this.animName);
     },
 
     createItem(name, type, parent) {
@@ -108,6 +115,7 @@ cc.Class({
         const data = item.getComponent("LoadData");
         data.setData(name, type, this._json);
         item.parent = parent;
+        return item;
     },
 
     removeChildren() {

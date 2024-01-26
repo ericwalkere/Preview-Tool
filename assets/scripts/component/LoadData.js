@@ -30,13 +30,21 @@ cc.Class({
                 this.node.removeComponent(cc.Button);
                 break;
             case "animEvent":
-                this.addAudio.addComponent("AudioImport").setEventName(name);
                 this.addAudio.active = true;
                 this.node.removeComponent(cc.Button);
                 break;
             case "eventAll":
                 this.node.removeComponent(cc.Toggle);
                 break;
+        }
+    },
+
+    setAudioImport(anim, event, hasListener) {
+        const audioImport = this.addAudio.addComponent("AudioImport");
+        audioImport.setEventName(event);
+        audioImport.setAnim(anim);
+        if (hasListener) {
+            this.audioCheck.active = true;
         }
     },
 
