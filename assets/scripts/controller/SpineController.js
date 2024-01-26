@@ -10,6 +10,7 @@ cc.Class({
 
         _isLoop: false,
         _isCompleted: false,
+        eventEfx: cc.Prefab,
     },
 
     onLoad() {
@@ -17,6 +18,10 @@ cc.Class({
 
         this._eventListeners = {};
         this.spine.setEventListener((trackEntry, event) => {
+            const eventKeyEfx = cc.instantiate(this.eventEfx);
+            eventKeyEfx.getComponent("EventKeyEfx").setText(event.data.name);
+            eventKeyEfx.parent = this.node;
+
             const listeners = this._eventListeners[trackEntry.animation.name];
             if (!listeners) return;
             const listener = listeners[event.data.name];
@@ -27,6 +32,7 @@ cc.Class({
             if (!this._isLoop) {
                 this.setPaused(true);
                 this._isCompleted = true;
+                this.node.removeAllChildren();
             }
         });
     },
