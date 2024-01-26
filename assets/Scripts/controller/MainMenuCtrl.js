@@ -1,4 +1,5 @@
 const Emitter = require("EventEmitter");
+const EventCode = require("EventCode");
 const { registerEvent, removeEvents } = require("eventHelper");
 
 cc.Class({
@@ -88,13 +89,13 @@ cc.Class({
                 }
             }
         }
-        cc.log(this._json);
     },
 
     updateEvents() {
+        Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
+        Emitter.instance.emit(EventCode.MENU.SET_CHILDREN);
         this.loadEvent();
         this.loadAnimEvent(this.eventName);
-        cc.log(this._json);
     },
 
     createItem(name, type, parent) {
