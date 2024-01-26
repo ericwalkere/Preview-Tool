@@ -19,6 +19,10 @@ cc.Class({
         this.initEvents();
     },
 
+    onDestroy() {
+        removeEvents(this);
+    },
+
     initEvents() {
         registerEvent(EventCode.MENU.GET_JSON, this.getJson, this);
         registerEvent(EventCode.MENU.SET_CHILDREN, this.removeChildren, this);
@@ -61,7 +65,7 @@ cc.Class({
     },
 
     loadAnimEvent(name) {
-        this.eventName = name;
+        this.animName = name;
         const set = new Set();
         const anim = this._json.animations[name];
         if (anim.events) {
@@ -82,7 +86,7 @@ cc.Class({
     },
 
     filterEvent(name) {
-        const anim = this._json.animations[this.eventName];
+        const anim = this._json.animations[this.animName];
         if (anim.events) {
             for (let i = 0; i < anim.events.length; i++) {
                 if (anim.events[i].name === name) {
@@ -95,12 +99,12 @@ cc.Class({
     updateEvents() {
         Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
         Emitter.instance.emit(EventCode.MENU.SET_CHILDREN);
-        this.loadAnimEvent(this.eventName);
+        this.loadAnimEvent(this.animName);
         this.loadEvent();
     },
 
     addAudio() {
-        cc.error("TODO Add sound", this.eventName);
+        cc.error("TODO Add sound", this.animName);
     },
 
     createItem(name, type, parent) {
