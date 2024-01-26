@@ -58,8 +58,6 @@ cc.Class({
             time: this.slide.progress * this.duration,
         });
 
-        Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
-        Emitter.instance.emit(EventCode.MENU.SET_CHILDREN);
         Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
     },
 
