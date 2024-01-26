@@ -9,7 +9,7 @@ cc.Class({
         spine: sp.Skeleton,
 
         _isLoop: false,
-        _isComplete: false,
+        _isCompleted: false,
     },
 
     onLoad() {
@@ -24,7 +24,7 @@ cc.Class({
         this.spine.setCompleteListener(() => {
             if (!this._isLoop) {
                 this.setPaused(true);
-                this._isComplete = true;
+                this._isCompleted = true;
             }
         });
     },
@@ -45,6 +45,8 @@ cc.Class({
     },
 
     update(dt) {
+        if (this._isCompleted) return;
+
         const trackEntry = this.spine.getCurrent(0);
         if (!trackEntry) return;
 
@@ -64,7 +66,7 @@ cc.Class({
 
     setAnimation(name) {
         const trackEntry = this.spine.setAnimation(0, name, this._isLoop);
-        this._isComplete = false;
+        this._isCompleted = false;
         this.setPaused(false);
         Emitter.instance.emit(EventCode.TIMELINE.SET_DURATION_TIME, trackEntry.animationEnd);
         Emitter.instance.emit(EventCode.TIMELINE.UPDATE_TIMELINE, 0);
@@ -74,7 +76,7 @@ cc.Class({
         const trackEntry = this.spine.getCurrent(0);
         if (!trackEntry) return;
 
-        if (!this._isComplete) {
+        if (!this._isCompleted) {
             const time = trackEntry.getAnimationTime();
             this.updateTime(time);
         }
@@ -84,14 +86,12 @@ cc.Class({
     },
 
     setPaused(paused) {
-        if (!paused && this._isComplete) this.updateTime(0);
+        if (!paused && this._isCompleted) {
+            this.updateTime(0);
+            this._isCompleted = false;
+        }
         this.spine.paused = paused;
         Emitter.instance.emit(EventCode.BUTTON.SET_PAUSED, paused);
-    },
-
-    restart() {
-        this.updateTime(0);
-        this.setPaused(false);
     },
 
     setSkin(name) {
