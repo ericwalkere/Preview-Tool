@@ -25,6 +25,7 @@ cc.Class({
         registerEvent(EventCode.MENU.LOAD_EVENT, this.loadAnimEvent, this);
         registerEvent(EventCode.MENU.UPDATE_EVENT, this.updateEvents, this);
         registerEvent(EventCode.MENU.FILTER_EVENT, this.filterEvent, this);
+        registerEvent(EventCode.MENU.ADD_AUDIO, this.addAudio, this);
     },
 
     getJson(json) {
@@ -94,8 +95,12 @@ cc.Class({
     updateEvents() {
         Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
         Emitter.instance.emit(EventCode.MENU.SET_CHILDREN);
-        this.loadEvent();
         this.loadAnimEvent(this.eventName);
+        this.loadEvent();
+    },
+
+    addAudio() {
+        cc.error("TODO Add sound", this.eventName);
     },
 
     createItem(name, type, parent) {
