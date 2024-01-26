@@ -1,13 +1,4 @@
-// Learn cc.Class:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/class.html
-//  - [English] http://docs.cocos2d-x.org/creator/manual/en/scripting/class.html
-// Learn Attribute:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/reference/attributes.html
-//  - [English] http://docs.cocos2d-x.org/creator/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
-//  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
-const EventCode = require("EventCode");
+const Emitter = require("EventEmitter");
 const { registerEvent, removeEvents } = require("eventHelper");
 
 cc.Class({
@@ -31,6 +22,8 @@ cc.Class({
         registerEvent(EventCode.MENU.GET_JSON, this.getJson, this);
         registerEvent(EventCode.MENU.SET_CHILDREN, this.removeChildren, this);
         registerEvent(EventCode.MENU.LOAD_EVENT, this.loadAnimEvent, this);
+        registerEvent(EventCode.MENU.UPDATE_EVENT, this.updateEvents, this);
+        registerEvent(EventCode.MENU.FILTER_EVENT, this.filterEvent, this);
     },
 
     getJson(json) {
@@ -61,12 +54,47 @@ cc.Class({
         if (!this._json.events) return;
         const events = Object.keys(this._json.events);
         for (let i = 0; i < events.length; i++) {
-            this.createItem(events[i], "event", this.addEventList);
+            this.createItem(events[i], "eventAll", this.addEventList);
         }
     },
 
     loadAnimEvent(name) {
-        this.createItem(name, "event", this.eventList);
+        this.eventName = name;
+        const set = new Set();
+        const anim = this._json.animations[name];
+        if (anim.events) {
+            for (let i = 0; i < anim.events.length; i++) {
+                let data = {
+                    time: anim.events[i].time,
+                    name: anim.events[i].name,
+                };
+                Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, data);
+            }
+            anim.events.forEach((e) => {
+                set.add(e.name);
+            });
+        }
+        set.forEach((element) => {
+            this.createItem(element, "animEvent", this.eventList);
+        });
+    },
+
+    filterEvent(name) {
+        const anim = this._json.animations[this.eventName];
+        if (anim.events) {
+            for (let i = 0; i < anim.events.length; i++) {
+                if (anim.events[i].name === name) {
+                    Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, anim.events[i]);
+                }
+            }
+        }
+        cc.log(this._json);
+    },
+
+    updateEvents() {
+        this.loadEvent();
+        this.loadAnimEvent(this.eventName);
+        cc.log(this._json);
     },
 
     createItem(name, type, parent) {

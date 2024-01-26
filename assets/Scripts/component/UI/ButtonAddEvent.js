@@ -22,11 +22,11 @@ cc.Class({
     },
 
     onLoad() {
-        registerEvent("getDuration", this.getDuration, this);
+        registerEvent(EventCode.BUTTON.GET_EVENT, this.getEvent, this);
+        registerEvent(EventCode.BUTTON.SAVE_KEY, this.saveEventKey, this);
     },
 
     addNewToTimeLine() {
-        cc.log
         this.contactMenu.active = true;
     },
 
@@ -43,18 +43,30 @@ cc.Class({
     enterText() {
         this.addNew.active = true;
         this.box.node.active = false;
-
-        cc.warn("TODO -> add new event", this.box.string);
-        cc.log({
-            anim:this.anim,
-            name: this.box.string,
-            time: this.slide.progress * this.duration,
-        });
+        this.saveEventKey();
     },
 
-    getDuration(duration, anim) {
-        this.anim = anim;
-        this.duration = duration;
+    saveEventKey() {
+        if (this.box.string.trim() !== "") {
+            this.evenName = this.box.string;
+            this.box.string = "";
+        }
+
+        Emitter.instance.emit(EventCode.SPINE_CTRL.ADD_EVENT_KEY, {
+            anim: this.anim,
+            event: this.evenName,
+            time: this.slide.progress * this.duration,
+        });
+
+        Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
+        Emitter.instance.emit(EventCode.MENU.SET_CHILDREN);
+        Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
+    },
+
+    getEvent(data) {
+        this.anim = data.anim;
+        this.evenName = data.event;
+        this.duration = data.time;
     },
 
     onLeave() {

@@ -17,27 +17,23 @@ cc.Class({
     },
 
     onLoad() {
-        registerEvent(
-            EventCode.TIMELINE.SET_EVENT_KEY,
-            this.createEventKey,
-            this
-        );
-        registerEvent(
-            EventCode.TIMELINE.SET_CHILDREN,
-            this.removeChildren,
-            this
-        );
-
-        registerEvent(
-            EventCode.TIMELINE.REMOVE_EVENT_KEY,
-            this.setRemoveKey,
-            this
-        );
-        registerEvent('clickAnim', this.getDuration, this);
+        registerEvent(EventCode.TIMELINE.SET_EVENT_KEY, this.createEventKey, this);
+        registerEvent(EventCode.TIMELINE.SET_CHILDREN, this.removeChildren, this);
+        registerEvent(EventCode.TIMELINE.GET_ANIM, this.getAnim, this);
+        registerEvent(EventCode.TIMELINE.GET_EVENT_NAME, this.getEventName, this);
     },
 
-    getDuration(anim){
-        Emitter.instance.emit('getDuration', this._durationTime, anim);
+    getAnim(anim) {
+        this.anim = anim;
+        Emitter.instance.emit(EventCode.BUTTON.GET_EVENT, { anim: anim, event: "", time: this._durationTime });
+    },
+
+    getEventName(eventName) {
+        Emitter.instance.emit(EventCode.BUTTON.GET_EVENT, {
+            anim: this.anim,
+            event: eventName,
+            time: this._durationTime,
+        });
     },
 
     setDurationTime(durationTime) {
@@ -85,6 +81,4 @@ cc.Class({
             element.destroy();
         });
     },
-
-    
 });
