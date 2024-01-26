@@ -1,5 +1,5 @@
 const Emitter = require("EventEmitter");
-const key = require("EventCode");
+const EventCode = require("EventCode");
 cc.Class({
     extends: cc.Component,
 
@@ -37,32 +37,11 @@ cc.Class({
     onClick() {
         switch (this.type) {
             case "anim":
-                Emitter.instance.emit(key.MENU.SET_CHILDREN);
-                Emitter.instance.emit(key.TIMELINE.SET_CHILDREN);
-                Emitter.instance.emit(key.SPINE_CTRL.SET_ANIM, this.value);
-                
-                const anim = this.json.animations[this.value];
-                const set = new Set();
-
-                if (anim.events) {
-                    for (let i = 0; i < anim.events.length; i++) {
-                        let data = {
-                            time: anim.events[i].time,
-                            name: anim.events[i].name,
-                        };
-                        Emitter.instance.emit(key.TIMELINE.SET_EVENT_KEY, data);
-                    }
-                    anim.events.forEach((e) => {
-                        set.add(e.name);
-                    });
-                }
-
-                set.forEach((element) => {
-                    Emitter.instance.emit(key.MENU.LOAD_EVENT, element);
-                });
-
+                Emitter.instance.emit(EventCode.MENU.SET_CHILDREN);
+                Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
+                Emitter.instance.emit(EventCode.SPINE_CTRL.SET_ANIM, this.value);
+                Emitter.instance.emit(EventCode.MENU.LOAD_EVENT, this.value);
                 Emitter.instance.emit("clickAnim", this.value);
-
                 break;
             case "skin":
                 cc.log("click skin :", this.value);

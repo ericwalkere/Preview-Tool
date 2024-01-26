@@ -8,6 +8,7 @@
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 const EventCode = require("EventCode");
+const Emitter = require('EventEmitter');
 const { registerEvent, removeEvents } = require("eventHelper");
 
 cc.Class({
@@ -31,6 +32,8 @@ cc.Class({
         registerEvent(EventCode.MENU.GET_JSON, this.getJson, this);
         registerEvent(EventCode.MENU.SET_CHILDREN, this.removeChildren, this);
         registerEvent(EventCode.MENU.LOAD_EVENT, this.loadAnimEvent, this);
+
+        registerEvent('testUpdate', this.loadAllEvent, this);
     },
 
     getJson(json) {
@@ -66,7 +69,29 @@ cc.Class({
     },
 
     loadAnimEvent(name) {
-        this.createItem(name, "event", this.eventList);
+        this.eventName = name;
+        const set = new Set();
+        const anim = this._json.animations[name];
+        if (anim.events) {
+            for (let i = 0; i < anim.events.length; i++) {
+                let data = {
+                    time: anim.events[i].time,
+                    name: anim.events[i].name,
+                };
+                Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, data);
+            }
+            anim.events.forEach((e) => {
+                set.add(e.name);
+            });
+        }
+        set.forEach((element) => {
+            this.createItem(element, 'event', this.eventList);
+        });
+    },
+
+    loadAllEvent() {
+        this.loadEvent();
+        this.loadAnimEvent(this.eventName);
     },
 
     createItem(name, type, parent) {

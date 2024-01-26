@@ -12,6 +12,7 @@ const EventCode = {
         SET_LOOP: "SET_ANIM_LOOP",
         SET_PAUSED: "SET_ANIM_PAUSED",
         UPDATE_TIME: "UPDATE_TIME",
+        
         ADD_EVENT_KEY: "ADD_EVENT_KEY",
         REMOVE_EVENT_KEY: "REMOVE_EVENT_KEY",
     },
