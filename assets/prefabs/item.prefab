@@ -299,7 +299,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "x": -87.013,
-      "y": 2.728,
+      "y": 1.5,
       "z": 0
     },
     "_scale": {
@@ -399,7 +399,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "6c627a7a-f7bd-4dbc-bd63-e61b2a3b870f"
+      "__uuid__": "88ffc590-a552-44b5-bd0c-ed7cb5a9b005"
     },
     "_type": 1,
     "_sizeMode": 0,
@@ -827,7 +827,7 @@
     "node": {
       "__id__": 1
     },
-    "_enabled": false,
+    "_enabled": true,
     "duration": 0.1,
     "zoomScale": 0.9,
     "clickEvents": [],

@@ -21,10 +21,26 @@ cc.Class({
         this.type = type;
         this.json = json;
 
-        if (type === "event") {
-            this.addAudio.addComponent("AudioImport").setEventName(name);
-            this.addAudio.active = true;
+        switch (type) {
+            case "anim":
+                this.node.removeComponent(cc.Button);
+                break;
+            case "skin":
+                this.node.removeComponent(cc.Button);
+                break;
+            case "animEvent":
+                this.addAudio.addComponent("AudioImport").setEventName(name);
+                this.addAudio.active = true;
+                this.node.removeComponent(cc.Button);
+                break;
+            case "eventAll":
+                this.node.removeComponent(cc.Toggle);
+                break;
         }
+    },
+
+    getAnimName(name) {
+        this.animName = name;
     },
 
     addSound() {
@@ -37,23 +53,24 @@ cc.Class({
     onClick() {
         switch (this.type) {
             case "anim":
+                this.eventName = this.value;
                 Emitter.instance.emit(EventCode.MENU.SET_CHILDREN);
                 Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
                 Emitter.instance.emit(EventCode.SPINE_CTRL.SET_ANIM, this.value);
                 Emitter.instance.emit(EventCode.MENU.LOAD_EVENT, this.value);
-                Emitter.instance.emit("clickAnim", this.value);
+                Emitter.instance.emit(EventCode.TIMELINE.GET_ANIM, this.value);
                 break;
             case "skin":
                 cc.log("click skin :", this.value);
                 break;
-            case "event":
-                cc.log("click event :", this.value);
+            case "eventAll":
+                Emitter.instance.emit(EventCode.TIMELINE.GET_EVENT_NAME, this.value);
+                Emitter.instance.emit(EventCode.BUTTON.SAVE_KEY);
+                break;
+            case "animEvent":
+                Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
+                Emitter.instance.emit(EventCode.MENU.FILTER_EVENT, this.value);
                 break;
         }
-    },
-
-    loadEvent() {
-        this.text.string = this.value;
-        this.type = "event";
     },
 });

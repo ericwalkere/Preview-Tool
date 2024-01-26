@@ -26,7 +26,10 @@ const EventCode = {
         UPDATE_TIMELINE: "UPDATE_TIMELINE",
         SET_DURATION_TIME: "SET_DURATION_TIME",
         SET_EVENT_KEY: "SET_EVENT_KEY",
+        REMOVE_EVENT_KEY: "REMOVE_KEY_TIMELINE",
         SET_CHILDREN: "SET_CHILDREN",
+        GET_ANIM: "GET_ANIM",
+        GET_EVENT_NAME: "GET_EVENT_NAME",
     },
 
     AUDIO: {
@@ -36,12 +39,16 @@ const EventCode = {
     MENU: {
         GET_JSON: "GET_JSON",
         LOAD_EVENT: "LOAD_EVENT",
-        SET_CHILDREN: "SET_CHILDREN",
+        SET_CHILDREN: "SET_CHILDREN_MENU",
+        UPDATE_EVENT: "SET_ALL_EVENT",
+        FILTER_EVENT: "FILTER_EVENT",
     },
 
     BUTTON: {
         SET_PAUSED: "SET_PAUSED",
         SET_LOOP: "SET_LOOP",
+        SAVE_KEY: "SAVE_KEY",
+        GET_EVENT: "GET_EVENT",
     },
 };
 
