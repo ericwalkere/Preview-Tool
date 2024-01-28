@@ -13,6 +13,12 @@ cc.Class({
         skinList: cc.Node,
         eventList: cc.Node,
         addEventList: cc.Node,
+
+        showEventButton: cc.Toggle,
+    },
+
+    canShow() {
+        Emitter.instance.emit(EventCode.SPINE_CTRL.SHOW_EVENT, this.showEventButton.isChecked);
     },
 
     onLoad() {
@@ -37,6 +43,7 @@ cc.Class({
         this.loadAnims();
         this.loadSkins();
         this.loadEvent();
+        Emitter.instance.emit(EventCode.SPINE_CTRL.SHOW_EVENT, true);
     },
 
     loadAnims() {
