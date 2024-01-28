@@ -16,6 +16,7 @@ const EventCode = {
         UPDATE_TIME: "UPDATE_TIME",
         ADD_EVENT_KEY: "ADD_EVENT_KEY",
         REMOVE_EVENT_KEY: "REMOVE_EVENT_KEY",
+        SHOW_EVENT: "SHOW_EVENT",
     },
 
     UI_BOTTOM: {

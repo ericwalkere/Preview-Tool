@@ -18,10 +18,7 @@ cc.Class({
 
         this._eventListeners = {};
         this.spine.setEventListener((trackEntry, event) => {
-            const eventKeyEfx = cc.instantiate(this.eventEfx);
-            eventKeyEfx.getComponent("EventKeyEfx").setText(event.data.name);
-            eventKeyEfx.parent = this.node;
-
+            this.showEvenKey(event.data.name);
             const listeners = this._eventListeners[trackEntry.animation.name];
             if (!listeners) return;
             const listener = listeners[event.data.name];
@@ -35,6 +32,18 @@ cc.Class({
                 this.node.removeAllChildren();
             }
         });
+    },
+
+    canShow(isShow = true) {
+        this.isShow = isShow;
+    },
+
+    showEvenKey(name) {
+        if (this.isShow) {
+            const eventKeyEfx = cc.instantiate(this.eventEfx);
+            eventKeyEfx.getComponent("EventKeyEfx").setText(name);
+            eventKeyEfx.parent = this.node;
+        }
     },
 
     start() {
@@ -57,6 +66,7 @@ cc.Class({
         registerEvent(EventCode.SPINE_CTRL.UPDATE_TIME, this.updateTime, this);
         registerEvent(EventCode.SPINE_CTRL.ADD_EVENT_KEY, this.addEventKey, this);
         registerEvent(EventCode.SPINE_CTRL.REMOVE_EVENT_KEY, this.removeEventKey, this);
+        registerEvent(EventCode.SPINE_CTRL.SHOW_EVENT, this.canShow, this);
     },
 
     update(dt) {
