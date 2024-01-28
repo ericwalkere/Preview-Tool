@@ -19,6 +19,7 @@ cc.Class({
         this._eventListeners = {};
         this.spine.setEventListener((trackEntry, event) => {
             this.showEvenKey(event.data.name);
+            cc.log(event.data.name);
             const listeners = this._eventListeners[trackEntry.animation.name];
             if (!listeners) return;
             const listener = listeners[event.data.name];
