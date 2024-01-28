@@ -19,7 +19,8 @@ cc.Class({
         this._eventListeners = {};
         this.spine.setEventListener((trackEntry, event) => {
             this.showEvenKey(event.data.name);
-            cc.log(event.data.name);
+            cc.log(trackEntry.animation.name, event.data.name, event.time);
+
             const listeners = this._eventListeners[trackEntry.animation.name];
             if (!listeners) return;
             const listener = listeners[event.data.name];
@@ -71,7 +72,8 @@ cc.Class({
     },
 
     update(dt) {
-        if (this._isCompleted) return;
+        // ! bug
+        // if (this._isCompleted && this._isLoop) return;
 
         const trackEntry = this.spine.getCurrent(0);
         if (!trackEntry) return;
@@ -88,6 +90,11 @@ cc.Class({
         this.spine.paused = false;
         this.spine.update(time - trackEntry.trackTime);
         this.spine.paused = paused;
+    },
+
+    loadSkeleton(skeletonData) {
+        // todo: reload skeleton when update skeleton data
+        // ? fix: this method use to fix bug #1
     },
 
     setAnimation(name) {
@@ -141,6 +148,21 @@ cc.Class({
         return this.spine.skeletonData.skeletonJson;
     },
 
+    reloadJson() {
+        const trackEntry = this.spine.getCurrent(0);
+        this.spine.skeletonData.skeletonJson = this.getJson();
+        this.spine._updateSkeletonData();
+
+        if (!trackEntry) return;
+        const name = trackEntry.animation.name;
+        const time = trackEntry.getAnimationTime();
+        const paused = this.spine.paused;
+        this.spine.paused = false;
+        this.spine.setAnimation(0, name, this._isLoop);
+        this.spine.update(time);
+        this.spine.paused = paused;
+    },
+
     addEventKey(data) {
         const { anim, event, time } = data;
         const json = this.getJson();
@@ -159,8 +181,10 @@ cc.Class({
 
         const hasEventTime = animation.events.some((value) => value.name === event && value.time === time);
         if (!hasEventTime) {
-            const eventTime = { name: event, time };
+            const eventTime = { time, name: event };
             animation.events.push(eventTime);
+            animation.events.sort((a, b) => a.time - b.time);
+            this.reloadJson();
         }
     },
 

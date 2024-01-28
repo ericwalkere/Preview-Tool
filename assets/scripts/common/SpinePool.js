@@ -44,6 +44,7 @@ cc.Class({
     },
 
     addSpine(name) {
+        // ! bug #1: occur error when change spine
         const spine = new sp.SkeletonData();
         spine.skeletonJson = this._jsons[name];
         spine.atlasText = this._atlases[name];
