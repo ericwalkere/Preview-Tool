@@ -52,28 +52,30 @@ cc.Class({
     },
 
     createEventKey(data) {
-        const percent = data.time / this._durationTime;
-        this.key = cc.instantiate(this.eventKey);
-        this.key.getComponent('clickEvent').hint(data.name);
-        this.key.x = percent * 800;
-        this.key.parent = this.eventNode;
-        // this.key.on(cc.Node.EventType.MOUSE_DOWN, this.function, this); 
-        Emitter.instance.emit(EventCode.TIMELINE.REMOVE_EVENT_KEY, data);
+        for (let i = 0 ; i < data.length ; i++) {
+            const percent = data[i].time / this._durationTime;
+            const key = cc.instantiate(this.eventKey);
+            key.getComponent('clickEvent').hint(data[i].name);
+            key.x = percent * 800;
+            key.parent = this.eventNode;
+            
+            const keyNode = key.getComponent('clickEvent');
+            if (keyNode) {
+                key.on('mousedown', (event) => this.getRemoveData(event, data[i]), this);
+            }
+        }
     },
 
-    setRemoveKey(data) {
+    getRemoveData(event, data) {
         this.removeBtn.active = true;
-        const anim = data.anim;
-        const event = data.name;
-        const time = data.time;
-        this.dataRemoved = {anim, event, time};
-        this.removeEventKey();
+        this.dataKey = data;
     },
 
-    removeEventKey(){
-        // this.eventKey.getComponent('SpineController').setRemoveKey(this.dataRemoved);
-        cc.log(this.dataRemoved);
-    },
+    removeEvent() {
+        cc.log('remove KEY: ', this.dataKey)
+        Emitter.instance.emit('REMOVE_KEY', this.dataKey);
+        this.eventNode.children.active = false;
+    },  
 
     removeChildren() {
         const arr = this.eventNode.children;

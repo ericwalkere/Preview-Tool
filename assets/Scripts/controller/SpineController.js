@@ -34,6 +34,8 @@ cc.Class({
                 this.node.removeAllChildren();
             }
         });
+
+        registerEvent('REMOVE_KEY', this.removeEventKey, this);
     },
 
     canShow(isShow = true) {
@@ -189,6 +191,7 @@ cc.Class({
     },
 
     removeEventKey(data) {
+        cc.log('access JSON')
         const { anim, event, time } = data;
         const json = this.getJson();
         const animation = json.animations[anim];
