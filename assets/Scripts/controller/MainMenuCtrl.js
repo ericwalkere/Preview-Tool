@@ -13,8 +13,8 @@ cc.Class({
         skinList: cc.Node,
         eventList: cc.Node,
         addEventList: cc.Node,
-
         showEventButton: cc.Toggle,
+        allEventButton: cc.Prefab,
     },
 
     canShow() {
@@ -87,6 +87,11 @@ cc.Class({
                 set.add(e.name);
             });
         }
+
+        const allEventButton = cc.instantiate(this.allEventButton);
+        allEventButton.on("click", this.updateEvents.bind(this));
+        allEventButton.parent = this.eventList;
+
         set.forEach((element) => {
             const item = this.createItem(element, "animEvent", this.eventList);
             const listeners = this._json.listeners;
