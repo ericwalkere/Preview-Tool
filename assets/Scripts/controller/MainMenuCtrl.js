@@ -72,7 +72,6 @@ cc.Class({
     },
 
     loadAnimEvent(name) {
-        const keyData = [];
         this.animName = name;
         const set = new Set();
         const anim = this._json.animations[name];
@@ -83,10 +82,8 @@ cc.Class({
                     time: anim.events[i].time,
                     name: anim.events[i].name,
                 };
-                keyData.push(data)
-                // Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, data);
+                Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, data, name);
             }
-                Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, keyData);
                 anim.events.forEach((e) => {
                 set.add(e.name);
             });

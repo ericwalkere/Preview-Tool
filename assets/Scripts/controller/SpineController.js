@@ -198,7 +198,7 @@ cc.Class({
         if (!animation.events) {
             return;
         }
-
-        animation.events = animation.events.filter((value) => value.name !== event && value.time !== time);
-    },
+        animation.events = animation.events.filter((value) => !(value.name === event && value.time === time));
+        this.reloadJson();
+    },      
 });
