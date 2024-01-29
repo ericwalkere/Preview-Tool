@@ -13,17 +13,11 @@ cc.Class({
 
     properties: {
         toggleContainer: cc.ToggleContainer,
-        showAll: cc.Node,
     },
 
     setToggle() {
         this.toggleContainer.toggleItems.forEach((toggle) => {
             toggle.getComponent("Toggle").setSplash();
         });
-        if (this.toggleContainer.toggleItems[2]._pressed === true) {
-            this.showAll.active = true;
-        } else {
-            this.showAll.active = false;
-        }
     },
 });
