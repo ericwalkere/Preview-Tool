@@ -19,7 +19,6 @@ cc.Class({
         this._eventListeners = {};
         this.spine.setEventListener((trackEntry, event) => {
             this.showEvenKey(event.data.name);
-            cc.log(trackEntry.animation.name, event.data.name, event.time);
 
             const listeners = this._eventListeners[trackEntry.animation.name];
             if (!listeners) return;
@@ -35,7 +34,7 @@ cc.Class({
             }
         });
 
-        registerEvent('REMOVE_KEY', this.removeEventKey, this);
+        registerEvent("REMOVE_KEY", this.removeEventKey, this);
     },
 
     canShow(isShow = true) {
@@ -187,11 +186,11 @@ cc.Class({
             animation.events.push(eventTime);
             animation.events.sort((a, b) => a.time - b.time);
             this.reloadJson();
+            Emitter.instance.emit(EventCode.EXPORT.GET_JSON, json);
         }
     },
 
     removeEventKey(data) {
-        cc.log('access JSON')
         const { anim, event, time } = data;
         const json = this.getJson();
         const animation = json.animations[anim];
@@ -200,5 +199,6 @@ cc.Class({
         }
         animation.events = animation.events.filter((value) => !(value.name === event && value.time === time));
         this.reloadJson();
-    },      
+        Emitter.instance.emit(EventCode.EXPORT.GET_JSON, json);
+    },
 });

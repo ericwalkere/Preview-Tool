@@ -54,7 +54,7 @@ cc.Class({
 
         // todo
         this.loadSkeletonData(spine);
-
+        Emitter.instance.emit(EventCode.EXPORT.GET_JSON, spine.skeletonJson);
         Emitter.instance.emit(EventCode.MENU.GET_JSON, spine.skeletonJson);
     },
 
