@@ -60,21 +60,26 @@ cc.Class({
     },
 
     loadAnimEvent(name) {
+        const keyData = [];
         this.eventName = name;
         const set = new Set();
         const anim = this._json.animations[name];
         if (anim.events) {
             for (let i = 0; i < anim.events.length; i++) {
                 let data = {
+                    anim: name,
                     time: anim.events[i].time,
                     name: anim.events[i].name,
                 };
-                Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, data);
+                keyData.push(data)
+                // Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, data);
             }
-            anim.events.forEach((e) => {
+                Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, keyData);
+                anim.events.forEach((e) => {
                 set.add(e.name);
             });
         }
+
         set.forEach((element) => {
             this.createItem(element, "animEvent", this.eventList);
         });
@@ -111,4 +116,6 @@ cc.Class({
             element.destroy();
         });
     },
+
+    
 });

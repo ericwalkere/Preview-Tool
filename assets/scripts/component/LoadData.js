@@ -39,10 +39,6 @@ cc.Class({
         }
     },
 
-    getAnimName(name) {
-        this.animName = name;
-    },
-
     addSound() {
         cc.log("click add audio");
 

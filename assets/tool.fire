@@ -9,7 +9,6 @@
     }
   },
   {
-    
     "__type__": "cc.Scene",
     "_objFlags": 0,
     "_parent": null,
@@ -175,7 +174,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 551.6581822106874
+      "z": 360.2665679743265
     },
     "_scale": {
       "__type__": "cc.Vec3",
@@ -1716,8 +1715,8 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
+      "x": -316,
+      "y": -226.566,
       "z": 0
     },
     "_scale": {
@@ -6515,7 +6514,7 @@
     },
     "component": "",
     "_componentId": "e3eeaCx5DlFxbdU+DaLJzlk",
-    "handler": "removeEventKey",
+    "handler": "removeEvent",
     "customEventData": ""
   },
   {
