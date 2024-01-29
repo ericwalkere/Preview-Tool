@@ -35,7 +35,6 @@ cc.Class({
         registerEvent(EventCode.MENU.LOAD_EVENT, this.loadAnimEvent, this);
         registerEvent(EventCode.MENU.UPDATE_EVENT, this.updateEvents, this);
         registerEvent(EventCode.MENU.FILTER_EVENT, this.filterEvent, this);
-        registerEvent(EventCode.MENU.ADD_AUDIO, this.addAudio, this);
     },
 
     getJson(json) {
@@ -119,10 +118,6 @@ cc.Class({
         this.loadEvent();
     },
 
-    addAudio() {
-        cc.error("TODO Add sound", this.animName);
-    },
-
     createItem(name, type, parent) {
         const item = cc.instantiate(this.itemPrefab);
         const data = item.getComponent("LoadData");
@@ -137,6 +132,4 @@ cc.Class({
             element.destroy();
         });
     },
-
-    
 });

@@ -52,6 +52,10 @@ const EventCode = {
         SAVE_KEY: "SAVE_KEY",
         GET_EVENT: "GET_EVENT",
     },
+
+    EXPORT: {
+        GET_JSON: "GET_EXPORT_JSON",
+    },
 };
 
 module.exports = EventCode;

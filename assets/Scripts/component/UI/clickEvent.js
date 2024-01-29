@@ -6,13 +6,14 @@ cc.Class({
 
     properties: {
         hintText: cc.Label,
-        removeBtn: cc.Node
+        removeBtn: cc.Node,
     },
 
     onLoad() {
         this.node.on("mouseenter", this.onEnter.bind(this));
         this.node.on("mouseleave", this.onExit.bind(this));
-        this.node.on('mousedown', this.onClick.bind(this));
+        this.node.on("mousedown", this.onClick.bind(this));
+        this.removeBtn.on("click", this.removeEvent.bind(this));
     },
 
     onClick() {
@@ -20,9 +21,10 @@ cc.Class({
     },
 
     removeEvent() {
-        Emitter.instance.emit(EventCode.SPINE_CTRL.REMOVE_EVENT_KEY, this.data)
-        this.node.destroy();
-        this.removeBtn.active = false;
+        if (this.data) {
+            Emitter.instance.emit(EventCode.SPINE_CTRL.REMOVE_EVENT_KEY, this.data);
+            Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
+        }
     },
 
     onEnter() {

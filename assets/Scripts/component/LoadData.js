@@ -13,7 +13,6 @@ cc.Class({
 
     onLoad() {
         this.node.on("click", this.onClick.bind(this));
-        this.addAudio.on("click", this.addSound.bind(this));
     },
 
     setData(name, type, json) {
@@ -46,12 +45,6 @@ cc.Class({
         if (hasListener) {
             this.audioCheck.active = true;
         }
-    },
-
-    addSound() {
-        Emitter.instance.emit(EventCode.MENU.ADD_AUDIO);
-        //if has sound
-        this.audioCheck.active = true;
     },
 
     onClick() {
