@@ -8,13 +8,15 @@ const EventCode = {
 
     SPINE_CTRL: {
         SET_ANIM: "SET_ANIM",
+        SET_SKIN: "SET_SKIN",
         SET_EVENT_LISTENER: "SET_EVENT_LISTENER",
+        REMOVE_EVENT_LISTENER: "REMOVE_EVENT_LISTENER",
         SET_LOOP: "SET_ANIM_LOOP",
         SET_PAUSED: "SET_ANIM_PAUSED",
         UPDATE_TIME: "UPDATE_TIME",
-
         ADD_EVENT_KEY: "ADD_EVENT_KEY",
         REMOVE_EVENT_KEY: "REMOVE_EVENT_KEY",
+        SHOW_EVENT: "SHOW_EVENT",
     },
 
     UI_BOTTOM: {
@@ -41,6 +43,7 @@ const EventCode = {
         SET_CHILDREN: "SET_CHILDREN_MENU",
         UPDATE_EVENT: "SET_ALL_EVENT",
         FILTER_EVENT: "FILTER_EVENT",
+        ADD_AUDIO: "ADD_AUDIO",
     },
 
     BUTTON: {

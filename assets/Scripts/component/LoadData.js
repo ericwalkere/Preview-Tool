@@ -1,5 +1,6 @@
 const Emitter = require("EventEmitter");
 const EventCode = require("EventCode");
+
 cc.Class({
     extends: cc.Component,
 
@@ -29,7 +30,6 @@ cc.Class({
                 this.node.removeComponent(cc.Button);
                 break;
             case "animEvent":
-                this.addAudio.addComponent("AudioImport").setEventName(name);
                 this.addAudio.active = true;
                 this.node.removeComponent(cc.Button);
                 break;
@@ -39,9 +39,17 @@ cc.Class({
         }
     },
 
-    addSound() {
-        cc.log("click add audio");
+    setAudioImport(anim, event, hasListener) {
+        const audioImport = this.addAudio.addComponent("AudioImport");
+        audioImport.setEventName(event);
+        audioImport.setAnim(anim);
+        if (hasListener) {
+            this.audioCheck.active = true;
+        }
+    },
 
+    addSound() {
+        Emitter.instance.emit(EventCode.MENU.ADD_AUDIO);
         //if has sound
         this.audioCheck.active = true;
     },
@@ -49,7 +57,6 @@ cc.Class({
     onClick() {
         switch (this.type) {
             case "anim":
-                this.eventName = this.value;
                 Emitter.instance.emit(EventCode.MENU.SET_CHILDREN);
                 Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
                 Emitter.instance.emit(EventCode.SPINE_CTRL.SET_ANIM, this.value);

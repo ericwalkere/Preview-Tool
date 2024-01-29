@@ -13,10 +13,20 @@ cc.Class({
         skinList: cc.Node,
         eventList: cc.Node,
         addEventList: cc.Node,
+
+        showEventButton: cc.Toggle,
+    },
+
+    canShow() {
+        Emitter.instance.emit(EventCode.SPINE_CTRL.SHOW_EVENT, this.showEventButton.isChecked);
     },
 
     onLoad() {
         this.initEvents();
+    },
+
+    onDestroy() {
+        removeEvents(this);
     },
 
     initEvents() {
@@ -25,6 +35,7 @@ cc.Class({
         registerEvent(EventCode.MENU.LOAD_EVENT, this.loadAnimEvent, this);
         registerEvent(EventCode.MENU.UPDATE_EVENT, this.updateEvents, this);
         registerEvent(EventCode.MENU.FILTER_EVENT, this.filterEvent, this);
+        registerEvent(EventCode.MENU.ADD_AUDIO, this.addAudio, this);
     },
 
     getJson(json) {
@@ -32,6 +43,7 @@ cc.Class({
         this.loadAnims();
         this.loadSkins();
         this.loadEvent();
+        Emitter.instance.emit(EventCode.SPINE_CTRL.SHOW_EVENT, true);
     },
 
     loadAnims() {
@@ -61,7 +73,7 @@ cc.Class({
 
     loadAnimEvent(name) {
         const keyData = [];
-        this.eventName = name;
+        this.animName = name;
         const set = new Set();
         const anim = this._json.animations[name];
         if (anim.events) {
@@ -81,12 +93,15 @@ cc.Class({
         }
 
         set.forEach((element) => {
-            this.createItem(element, "animEvent", this.eventList);
+            const item = this.createItem(element, "animEvent", this.eventList);
+            const listeners = this._json.listeners;
+            const hasListener = listeners[name] && listeners[name][element];
+            item.getComponent("LoadData").setAudioImport(name, element, hasListener);
         });
     },
 
     filterEvent(name) {
-        const anim = this._json.animations[this.eventName];
+        const anim = this._json.animations[this.animName];
         if (anim.events) {
             for (let i = 0; i < anim.events.length; i++) {
                 if (anim.events[i].name === name) {
@@ -99,8 +114,12 @@ cc.Class({
     updateEvents() {
         Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
         Emitter.instance.emit(EventCode.MENU.SET_CHILDREN);
+        this.loadAnimEvent(this.animName);
         this.loadEvent();
-        this.loadAnimEvent(this.eventName);
+    },
+
+    addAudio() {
+        cc.error("TODO Add sound", this.animName);
     },
 
     createItem(name, type, parent) {
@@ -108,6 +127,7 @@ cc.Class({
         const data = item.getComponent("LoadData");
         data.setData(name, type, this._json);
         item.parent = parent;
+        return item;
     },
 
     removeChildren() {
