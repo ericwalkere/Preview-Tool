@@ -29,6 +29,7 @@ cc.Class({
         registerEvent(EventCode.SPINE_POOL.ADD_ATLAS, this.addAtlas, this);
         registerEvent(EventCode.SPINE_POOL.ADD_TEXTURE, this.addTexture, this);
         registerEvent(EventCode.SPINE_POOL.ADD_SPINE, this.addSpine, this);
+        registerEvent(EventCode.SPINE_POOL.GET_JSON, this.GETJSON, this);
     },
 
     addJson(name, json) {
@@ -71,5 +72,10 @@ cc.Class({
         const spineNames = Object.keys(this._spines);
         cc.log(spineNames);
         // todo
+    },
+
+    GETJSON(json) {
+        cc.error("json mới nè e híu");
+        cc.log(json);
     },
 });
