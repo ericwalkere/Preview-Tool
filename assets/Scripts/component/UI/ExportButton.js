@@ -13,6 +13,7 @@ cc.Class({
 
     onClick() {
         const filename = "data.json";
+        delete this.json.listeners;
         const jsonStr = JSON.stringify(this.json, null, 2);
 
         let element = document.createElement("a");

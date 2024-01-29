@@ -7,6 +7,7 @@ cc.Class({
     properties: {
         hintText: cc.Label,
         removeBtn: cc.Node,
+        anim:cc.Animation
     },
 
     onLoad() {
@@ -18,6 +19,7 @@ cc.Class({
 
     onClick() {
         this.removeBtn.active = true;
+        this.anim.play();
     },
 
     removeEvent() {

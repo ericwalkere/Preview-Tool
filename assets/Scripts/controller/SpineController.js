@@ -70,15 +70,20 @@ cc.Class({
         registerEvent(EventCode.SPINE_CTRL.ADD_EVENT_KEY, this.addEventKey, this);
         registerEvent(EventCode.SPINE_CTRL.REMOVE_EVENT_KEY, this.removeEventKey, this);
         registerEvent(EventCode.SPINE_CTRL.SHOW_EVENT, this.canShow, this);
+
+        registerEvent("hi", this.isDragging, this);
+    },
+
+    isDragging(drag) {
+        this.dragging = drag;
+        cc.log(drag);
     },
 
     update(dt) {
         // ! bug
         // if (this._isCompleted && this._isLoop) return;
-
         const trackEntry = this.spine.getCurrent(0);
         if (!trackEntry) return;
-
         const currentTime = trackEntry.getAnimationTime();
         Emitter.instance.emit(EventCode.TIMELINE.UPDATE_TIMELINE, currentTime);
     },
@@ -198,6 +203,7 @@ cc.Class({
             return;
         }
         animation.events = animation.events.filter((value) => !(value.name === event && value.time === time));
+        if (animation.events.length === 0) delete animation.events;
         this.reloadJson();
         Emitter.instance.emit(EventCode.EXPORT.GET_JSON, json);
     },
