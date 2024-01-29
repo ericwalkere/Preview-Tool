@@ -51,31 +51,13 @@ cc.Class({
         Emitter.instance.emit(EventCode.SPINE_CTRL.SET_PAUSED, true);
     },
 
-    createEventKey(data) {
-        for (let i = 0 ; i < data.length ; i++) {
-            const percent = data[i].time / this._durationTime;
-            const key = cc.instantiate(this.eventKey);
-            key.getComponent('clickEvent').hint(data[i].name);
-            key.x = percent * 800;
-            key.parent = this.eventNode;
-            
-            const keyNode = key.getComponent('clickEvent');
-            if (keyNode) {
-                key.on('mousedown', (event) => this.getRemoveData(event, data[i]), this);
-            }
-        }
+    createEventKey(data, animName) {
+        const percent = data.time / this._durationTime;
+        const key = cc.instantiate(this.eventKey);
+        key.getComponent('clickEvent').hint({ anim: animName, event: data.name, time: data.time });
+        key.x = percent * 800;
+        key.parent = this.eventNode;
     },
-
-    getRemoveData(event, data) {
-        this.removeBtn.active = true;
-        this.dataKey = data;
-    },
-
-    removeEvent() {
-        cc.log('remove KEY: ', this.dataKey)
-        Emitter.instance.emit('REMOVE_KEY', this.dataKey);
-        this.eventNode.children.active = false;
-    },  
 
     removeChildren() {
         const arr = this.eventNode.children;
