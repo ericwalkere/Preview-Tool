@@ -54,6 +54,7 @@ cc.Class({
         skeleton.textures.push(this._texture);
         skeleton.textureNames.push(this._texture.name);
         this.loadSkeletonData(skeleton);
+        Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
     },
 
     loadSkeletonData(data) {
@@ -73,6 +74,7 @@ cc.Class({
         const skeleton = this._spineNode.skeletonData;
         skeleton.skeletonJson = json;
         this.loadSkeletonData(skeleton);
+        Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
     },
 
     exportJson() {

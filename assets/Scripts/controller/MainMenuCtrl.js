@@ -112,10 +112,8 @@ cc.Class({
     },
 
     updateEvents() {
-        cc.log("reload event");
         Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
         Emitter.instance.emit(EventCode.MENU.SET_CHILDREN);
-        this.loadAnimEvent(this.animName);
         this.loadEvent();
     },
 

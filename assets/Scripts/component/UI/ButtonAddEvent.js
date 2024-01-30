@@ -66,6 +66,7 @@ cc.Class({
         });
 
         Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
+        Emitter.instance.emit(EventCode.MENU.LOAD_EVENT, this.anim);
     },
 
     getEvent(data) {
