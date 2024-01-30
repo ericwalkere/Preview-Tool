@@ -51,8 +51,8 @@ cc.Class({
         const skeleton = new sp.SkeletonData();
         skeleton.skeletonJson = this._json;
         skeleton.atlasText = this._atlas;
-        skeleton.textures.push(this._texture);
-        skeleton.textureNames.push(this._texture.name);
+        skeleton.textures = [this._texture];
+        skeleton.textureNames = [this._texture.name];
         this.loadSkeletonData(skeleton);
     },
 

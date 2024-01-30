@@ -23,31 +23,34 @@ cc.Class({
 
     loadZip(event) {
         const jszip = new JSZip();
-        jszip.loadAsync(event.target.result).then((zip) => {
-            const files = zip.files;
-            this._countFile = Object.keys(files).length;
-            for (const fileName in files) {
-                if (fileName.includes("__MACOSX")) {
-                    this.loadCountCheck();
-                    continue;
-                }
+        jszip
+            .loadAsync(event.target.result)
+            .then((zip) => {
+                const files = zip.files;
+                this._countFile = Object.keys(files).length;
+                for (const fileName in files) {
+                    if (fileName.includes("__MACOSX")) {
+                        this.loadCountCheck();
+                        continue;
+                    }
 
-                const types = fileName.split(".");
-                const type = types[types.length - 1];
-                const subtype = types[types.length - 2];
+                    const types = fileName.split(".");
+                    const type = types[types.length - 1];
+                    const subtype = types[types.length - 2];
 
-                const zipFile = zip.file(fileName);
-                if (type === "json") {
-                    this.loadJson(zipFile);
-                } else if (type === "atlas" || (type === "txt" && subtype === "atlas")) {
-                    this.loadAtlas(zipFile);
-                } else if (type === "png") {
-                    this.loadTexture(zipFile);
-                } else {
-                    this.loadCountCheck();
+                    const zipFile = zip.file(fileName);
+                    if (type === "json") {
+                        this.loadJson(zipFile);
+                    } else if (type === "atlas" || (type === "txt" && subtype === "atlas")) {
+                        this.loadAtlas(zipFile);
+                    } else if (type === "png") {
+                        this.loadTexture(zipFile);
+                    } else {
+                        this.loadCountCheck();
+                    }
                 }
-            }
-        });
+            })
+            .catch((err) => cc.error("ERROR:", err));
     },
 
     loadCountCheck() {

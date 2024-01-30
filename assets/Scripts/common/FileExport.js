@@ -1,6 +1,6 @@
 const EventCode = require("EventCode");
 const Emitter = require("EventEmitter");
-const { registerEvent } = require("eventHelper");
+const { registerEvent, removeEvents } = require("eventHelper");
 
 cc.Class({
     extends: cc.Component,
@@ -13,6 +13,11 @@ cc.Class({
 
         // this.node.on('click', this.onClick, this);
         this.initEvents();
+    },
+
+    onDestroy() {
+        // this.node.off("click", this.onClick, this);
+        removeEvents(this);
     },
 
     initEvents() {
@@ -50,12 +55,10 @@ cc.Class({
     },
 
     useDownload(name, json) {
-        const filename = `${name}.json`;
-        const jsonStr = JSON.stringify(json);
+        const a = document.createElement("a");
+        a.href = "data:application/json;charset=utf-8," + encodeURIComponent(JSON.stringify(json));
+        a.download = `${name}.json`;
 
-        let element = document.createElement("a");
-        element.setAttribute("href", "data:application/json;charset=utf-8," + encodeURIComponent(jsonStr));
-        element.setAttribute("download", filename);
-        element.click();
+        a.click();
     },
 });

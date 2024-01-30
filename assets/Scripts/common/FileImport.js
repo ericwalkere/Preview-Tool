@@ -6,7 +6,6 @@ cc.Class({
     },
 
     onLoad() {
-        this.initFileSelector();
         this.node.on("click", this.onClick, this);
     },
 
@@ -14,23 +13,21 @@ cc.Class({
         this.node.off("click", this.onClick, this);
     },
 
-    initFileSelector() {
-        this._fileSelector = document.createElement("input");
-        this._fileSelector.type = "file";
-        this._fileSelector.accept = this.acceptFile();
-        this._fileSelector.onchange = (event) => {
+    onClick() {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = this.acceptFile();
+        input.onchange = (event) => {
             const file = event.target.files[0];
             if (!file) return;
             this.loadFile(file);
         };
+
+        input.click();
     },
 
     acceptFile() {
-        return "";
-    },
-
-    onClick() {
-        this._fileSelector.click();
+        return "*";
     },
 
     loadFile(file) {},
