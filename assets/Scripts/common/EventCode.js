@@ -17,7 +17,7 @@ const EventCode = {
         ADD_EVENT_KEY: "ADD_EVENT_KEY",
         REMOVE_EVENT_KEY: "REMOVE_EVENT_KEY",
         SHOW_EVENT: "SHOW_EVENT",
-        GET_JSON:"GET_JSON_IMPORT",
+        GET_JSON: "GET_JSON_IMPORT",
     },
 
     UI_BOTTOM: {
