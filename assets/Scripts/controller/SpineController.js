@@ -1,58 +1,27 @@
 const EventCode = require("EventCode");
 const Emitter = require("EventEmitter");
 const { registerEvent, removeEvents } = require("eventHelper");
+const { inRange } = require("maths");
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
         spine: sp.Skeleton,
+        eventEfx: cc.Prefab,
 
         _isLoop: false,
         _isCompleted: false,
-        eventEfx: cc.Prefab,
+
+        _fromTime: 0,
+        _toTime: 0,
+        _isUpdate: false,
+        _isReload: false,
     },
 
     onLoad() {
         this.initEvents();
-
-        this._eventListeners = {};
-        this.spine.setEventListener((trackEntry, event) => {
-            this.showEvenKey(event.data.name);
-
-            const listeners = this._eventListeners[trackEntry.animation.name];
-            if (!listeners) return;
-            const listener = listeners[event.data.name];
-            listener && listener();
-        });
-
-        this.spine.setCompleteListener(() => {
-            if (!this._isLoop) {
-                this.setPaused(true);
-                this._isCompleted = true;
-                this.node.removeAllChildren();
-            }
-        });
-
-        registerEvent("REMOVE_KEY", this.removeEventKey, this);
-    },
-
-    canShow(isShow = true) {
-        this.isShow = isShow;
-    },
-
-    showEvenKey(name) {
-        if (this.isShow) {
-            const eventKeyEfx = cc.instantiate(this.eventEfx);
-            eventKeyEfx.getComponent("EventKeyEfx").setText(name);
-            eventKeyEfx.parent = this.node;
-        }
-    },
-
-    start() {
-        const json = this.getJson();
-        json.listeners = {};
-        this._eventListeners = json.listeners;
+        this.initSpineListeners();
     },
 
     onDestroy() {
@@ -66,41 +35,86 @@ cc.Class({
         registerEvent(EventCode.SPINE_CTRL.REMOVE_EVENT_LISTENER, this.removeEventListener, this);
         registerEvent(EventCode.SPINE_CTRL.SET_LOOP, this.setLoop, this);
         registerEvent(EventCode.SPINE_CTRL.SET_PAUSED, this.setPaused, this);
-        registerEvent(EventCode.SPINE_CTRL.UPDATE_TIME, this.updateTime, this);
+        registerEvent(EventCode.SPINE_CTRL.UPDATE_TIME, this.updateAnimTime, this);
         registerEvent(EventCode.SPINE_CTRL.ADD_EVENT_KEY, this.addEventKey, this);
         registerEvent(EventCode.SPINE_CTRL.REMOVE_EVENT_KEY, this.removeEventKey, this);
         registerEvent(EventCode.SPINE_CTRL.SHOW_EVENT, this.canShow, this);
-
-        registerEvent("hi", this.isDragging, this);
     },
 
-    isDragging(drag) {
-        this.dragging = drag;
-        cc.log(drag);
+    initSpineListeners() {
+        this.spine.setEventListener((trackEntry, event) => {
+            if (this._isReload) return;
+
+            const time = event.time;
+            if (this._isUpdate && !inRange(time, this._fromTime, this._toTime)) return;
+
+            this.showEvenKey(event.data.name);
+
+            const listeners = this._eventListeners[trackEntry.animation.name];
+            if (!listeners) return;
+            const listener = listeners[event.data.name];
+            listener && listener();
+        });
+
+        this.spine.setCompleteListener((trackEntry) => {
+            if (!this._isLoop) {
+                this.setPaused(true);
+                this._isCompleted = true;
+                this.node.removeAllChildren();
+            }
+        });
+    },
+
+    loadSkeleton(skeletonData) {
+        this.spine.skeletonData = skeletonData;
+
+        const json = this.getJson();
+        if (!json.listeners) json.listeners = {};
+        this._eventListeners = json.listeners;
     },
 
     update(dt) {
-        // ! bug
-        // if (this._isCompleted && this._isLoop) return;
+        if (this._isCompleted && this._isLoop) return;
+
         const trackEntry = this.spine.getCurrent(0);
         if (!trackEntry) return;
-        const currentTime = trackEntry.getAnimationTime();
+
+        let currentTime = trackEntry.getAnimationTime();
         Emitter.instance.emit(EventCode.TIMELINE.UPDATE_TIMELINE, currentTime);
     },
 
-    updateTime(time) {
-        const trackEntry = this.spine.getCurrent(0);
-        if (!trackEntry) return;
+    updateTrackEntryTime(trackEntry, time) {
+        this._fromTime = trackEntry.getAnimationTime();
+        this._toTime = time;
+        this._isUpdate = true;
 
+        if (time === trackEntry.animationEnd) time -= Number.EPSILON;
         const paused = this.spine.paused;
         this.spine.paused = false;
         this.spine.update(time - trackEntry.trackTime);
         this.spine.paused = paused;
+
+        this._isUpdate = false;
+        this._isCompleted = !this._isLoop && trackEntry.isComplete();
     },
 
-    loadSkeleton(skeletonData) {
-        // todo: reload skeleton when update skeleton data
-        // ? fix: this method use to fix bug #1
+    updateAnimTime(time) {
+        const trackEntry = this.spine.getCurrent(0);
+        if (!trackEntry) return;
+
+        this.updateTrackEntryTime(trackEntry, time);
+    },
+
+    canShow(isShow = true) {
+        this.isShow = isShow;
+    },
+
+    showEvenKey(name) {
+        if (this.isShow) {
+            const eventKeyEfx = cc.instantiate(this.eventEfx);
+            eventKeyEfx.getComponent("EventKeyEfx").setText(name);
+            eventKeyEfx.parent = this.node;
+        }
     },
 
     setAnimation(name) {
@@ -117,7 +131,7 @@ cc.Class({
 
         if (!this._isCompleted) {
             const time = trackEntry.getAnimationTime();
-            this.updateTime(time);
+            this.updateTrackEntryTime(trackEntry, time);
         }
         trackEntry.loop = loop;
         this._isLoop = loop;
@@ -126,15 +140,23 @@ cc.Class({
 
     setPaused(paused) {
         if (!paused && this._isCompleted) {
-            this.updateTime(0);
-            this._isCompleted = false;
+            this.restart();
+            return;
         }
         this.spine.paused = paused;
         Emitter.instance.emit(EventCode.BUTTON.SET_PAUSED, paused);
     },
 
+    restart() {
+        const trackEntry = this.spine.getCurrent(0);
+        if (!trackEntry) return;
+
+        const anim = trackEntry.animation.name;
+        this.setAnimation(anim);
+    },
+
     setSkin(name) {
-        // this.spine.setSkin(name);
+        this.spine.setSkin(name);
     },
 
     setEventListener(anim, event, callback) {
@@ -158,15 +180,14 @@ cc.Class({
         const trackEntry = this.spine.getCurrent(0);
         this.spine.skeletonData.skeletonJson = this.getJson();
         this.spine._updateSkeletonData();
-
         if (!trackEntry) return;
-        const name = trackEntry.animation.name;
+
+        this._isReload = true;
+        const anim = trackEntry.animation.name;
         const time = trackEntry.getAnimationTime();
-        const paused = this.spine.paused;
-        this.spine.paused = false;
-        this.spine.setAnimation(0, name, this._isLoop);
-        this.spine.update(time);
-        this.spine.paused = paused;
+        const entry = this.spine.setAnimation(0, anim, this._isLoop);
+        this.updateTrackEntryTime(entry, time);
+        this._isReload = false;
     },
 
     addEventKey(data) {
@@ -186,25 +207,26 @@ cc.Class({
         }
 
         const hasEventTime = animation.events.some((value) => value.name === event && value.time === time);
-        if (!hasEventTime) {
-            const eventTime = { time, name: event };
-            animation.events.push(eventTime);
-            animation.events.sort((a, b) => a.time - b.time);
-            this.reloadJson();
-            Emitter.instance.emit(EventCode.EXPORT.GET_JSON, json);
-        }
+        if (hasEventTime) return;
+
+        const eventTime = { time, name: event };
+        animation.events.push(eventTime);
+        animation.events.sort((a, b) => a.time - b.time);
+        this.reloadJson();
+
+        Emitter.instance.emit(EventCode.EXPORT.GET_JSON, json);
     },
 
     removeEventKey(data) {
         const { anim, event, time } = data;
         const json = this.getJson();
         const animation = json.animations[anim];
-        if (!animation.events) {
-            return;
-        }
+        if (!animation || !animation.events) return;
+
         animation.events = animation.events.filter((value) => !(value.name === event && value.time === time));
         if (animation.events.length === 0) delete animation.events;
         this.reloadJson();
+
         Emitter.instance.emit(EventCode.EXPORT.GET_JSON, json);
     },
 });
