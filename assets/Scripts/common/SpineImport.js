@@ -1,7 +1,7 @@
 const JSZip = require("jszip");
 
-const Emitter = require("EventEmitter");
 const EventCode = require("EventCode");
+const Emitter = require("EventEmitter");
 
 cc.Class({
     extends: require("FileImport"),
