@@ -14,12 +14,17 @@ cc.Class({
     properties: {
         _isOpen: false,
         option: cc.Node,
+        anim: cc.Animation,
     },
 
     onClick() {
         this._isOpen = !this._isOpen;
-        this._isOpen
-            ? (this.option.active = true)
-            : (this.option.active = false);
+        if (this._isOpen) {
+            this.option.active = true;
+            this.anim.play();
+        } else {
+            this.option.active = false;
+            this.anim.stop();
+        }
     },
 });
