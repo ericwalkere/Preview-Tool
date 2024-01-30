@@ -7,17 +7,15 @@ cc.Class({
 
     properties: {
         spinePrefab: cc.Prefab,
-        itemPrefab: cc.Prefab,
 
         _spineNode: null,
         _curName: "",
     },
 
     onLoad() {
-        this._skeletons = {};
-        this._jsons = {};
-        this._atlases = {};
-        this._textures = {};
+        this._json = null;
+        this._atlas = null;
+        this._texture = null;
 
         this.initEvents();
     },
@@ -34,27 +32,26 @@ cc.Class({
         registerEvent(EventCode.SPINE_POOL.LOAD_JSON, this.loadJson, this);
     },
 
-    addJson(name, json) {
-        this._jsons[name] = json;
+    addJson(json) {
+        this._json = json;
     },
 
-    addAtlas(name, atlas) {
-        this._atlases[name] = atlas;
+    addAtlas(atlas) {
+        this._atlas = atlas;
     },
 
-    addTexture(name, texture) {
-        this._textures[name] = texture;
+    addTexture(texture) {
+        this._texture = texture;
     },
 
     addSpine(name) {
-        const skeleton = new sp.SkeletonData();
-        skeleton.skeletonJson = this._jsons[name];
-        skeleton.atlasText = this._atlases[name];
-        skeleton.textures.push(this._textures[name]);
-        skeleton.textureNames.push(this._textures[name].name);
-        this._skeletons[name] = skeleton;
         this._curName = name;
 
+        const skeleton = new sp.SkeletonData();
+        skeleton.skeletonJson = this._json;
+        skeleton.atlasText = this._atlas;
+        skeleton.textures.push(this._texture);
+        skeleton.textureNames.push(this._texture.name);
         this.loadSkeletonData(skeleton);
     },
 
@@ -71,9 +68,10 @@ cc.Class({
     },
 
     loadJson(json) {
-        const name = this._curName;
-        this._jsons[name] = json;
-        this._skeletons[name].skeletonJson = json;
-        this.loadSkeletonData(this._skeletons[name]);
+        if (!this._spineNode) return;
+
+        const skeleton = this._spineNode.skeletonData;
+        skeleton.skeletonJson = json;
+        this.loadSkeletonData(skeleton);
     },
 });

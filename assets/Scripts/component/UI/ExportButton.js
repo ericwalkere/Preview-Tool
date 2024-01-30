@@ -17,7 +17,7 @@ cc.Class({
         const jsonStr = JSON.stringify(this.json, null, 2);
 
         let element = document.createElement("a");
-        element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(jsonStr));
+        element.setAttribute("href", "data:application/json;charset=utf-8," + encodeURIComponent(jsonStr));
         element.setAttribute("download", filename);
         element.style.display = "none";
         document.body.appendChild(element);
