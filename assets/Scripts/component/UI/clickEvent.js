@@ -7,7 +7,7 @@ cc.Class({
     properties: {
         hintText: cc.Label,
         removeBtn: cc.Node,
-        anim:cc.Animation
+        anim: cc.Animation,
     },
 
     onLoad() {
@@ -26,6 +26,7 @@ cc.Class({
         if (this.data) {
             Emitter.instance.emit(EventCode.SPINE_CTRL.REMOVE_EVENT_KEY, this.data);
             Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
+            Emitter.instance.emit(EventCode.MENU.LOAD_EVENT, this.data.anim);
         }
     },
 
