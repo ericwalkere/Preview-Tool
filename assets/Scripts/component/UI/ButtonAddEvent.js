@@ -19,6 +19,7 @@ cc.Class({
 
         contactMenu: cc.Node,
         slide: cc.Slider,
+        _isOpen: false,
     },
 
     onLoad() {
@@ -27,10 +28,16 @@ cc.Class({
     },
 
     addNewToTimeLine() {
-        this.contactMenu.active = true;
+        this._isOpen = !this._isOpen;
+        if (this._isOpen) {
+            this.contactMenu.active = true;
+        } else {
+            this.contactMenu.active = false;
+        }
     },
 
     quitContact() {
+        this._isOpen = !this._isOpen;
         this.contactMenu.active = false;
     },
 
