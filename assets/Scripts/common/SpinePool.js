@@ -65,7 +65,7 @@ cc.Class({
             node.parent = this.node;
             this._spineNode = node.getComponent(sp.Skeleton);
         }
-        this._spineNode.skeletonData = data;
+        this._spineNode.getComponent("SpineController").loadSkeleton(data);
     },
 
     loadSpines() {

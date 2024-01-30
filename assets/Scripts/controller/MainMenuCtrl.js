@@ -83,7 +83,7 @@ cc.Class({
                 };
                 Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, data, name);
             }
-                anim.events.forEach((e) => {
+            anim.events.forEach((e) => {
                 set.add(e.name);
             });
         }
@@ -91,7 +91,7 @@ cc.Class({
         const allEventButton = cc.instantiate(this.allEventButton);
         allEventButton.on("click", this.updateEvents.bind(this));
         allEventButton.parent = this.eventList;
-      
+
         set.forEach((element) => {
             const item = this.createItem(element, "animEvent", this.eventList);
             const listeners = this._json.listeners;
@@ -112,7 +112,7 @@ cc.Class({
     },
 
     updateEvents() {
-        cc.log('reload event');
+        cc.log("reload event");
         Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
         Emitter.instance.emit(EventCode.MENU.SET_CHILDREN);
         this.loadAnimEvent(this.animName);
