@@ -12,8 +12,6 @@ cc.Class({
 
         eventKey: cc.Prefab,
         eventNode: cc.Node,
-
-        removeBtn: cc.Node,
     },
 
     onLoad() {
