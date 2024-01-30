@@ -1,7 +1,7 @@
 const JSZip = require("jszip");
 
-const Emitter = require("EventEmitter");
 const EventCode = require("EventCode");
+const Emitter = require("EventEmitter");
 
 cc.Class({
     extends: require("FileImport"),
@@ -61,7 +61,8 @@ cc.Class({
         this._spineName = zipFile.name.split("/")[0];
         zipFile.async("string").then((data) => {
             const json = JSON.parse(data);
-            Emitter.instance.emit(EventCode.SPINE_POOL.ADD_JSON, this._spineName, json);
+            Emitter.instance.emit(EventCode.SPINE_POOL.ADD_JSON, json);
+            cc.log(`LOADED: ${zipFile.name}`);
             this.loadCountCheck();
         });
     },
@@ -69,7 +70,8 @@ cc.Class({
     loadAtlas(zipFile) {
         this._spineName = zipFile.name.split("/")[0];
         zipFile.async("string").then((data) => {
-            Emitter.instance.emit(EventCode.SPINE_POOL.ADD_ATLAS, this._spineName, data);
+            Emitter.instance.emit(EventCode.SPINE_POOL.ADD_ATLAS, data);
+            cc.log(`LOADED: ${zipFile.name}`);
             this.loadCountCheck();
         });
     },
@@ -86,7 +88,8 @@ cc.Class({
                 texture.initWithElement(img);
                 texture.name = imageName;
 
-                Emitter.instance.emit(EventCode.SPINE_POOL.ADD_TEXTURE, this._spineName, texture);
+                Emitter.instance.emit(EventCode.SPINE_POOL.ADD_TEXTURE, texture);
+                cc.log(`LOADED: ${zipFile.name}`);
                 this.loadCountCheck();
             };
         });
