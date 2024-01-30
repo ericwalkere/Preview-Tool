@@ -9,7 +9,7 @@ cc.Class({
         spinePrefab: cc.Prefab,
 
         _spineNode: null,
-        _curName: "",
+        _spineName: "",
     },
 
     onLoad() {
@@ -30,6 +30,7 @@ cc.Class({
         registerEvent(EventCode.SPINE_POOL.ADD_TEXTURE, this.addTexture, this);
         registerEvent(EventCode.SPINE_POOL.ADD_SPINE, this.addSpine, this);
         registerEvent(EventCode.SPINE_POOL.LOAD_JSON, this.loadJson, this);
+        registerEvent(EventCode.SPINE_POOL.EXPORT_JSON, this.exportJson, this);
     },
 
     addJson(json) {
@@ -45,7 +46,7 @@ cc.Class({
     },
 
     addSpine(name) {
-        this._curName = name;
+        this._spineName = name;
 
         const skeleton = new sp.SkeletonData();
         skeleton.skeletonJson = this._json;
@@ -63,7 +64,6 @@ cc.Class({
         }
 
         this._spineNode.getComponent("SpineController").loadSkeleton(data);
-        Emitter.instance.emit(EventCode.EXPORT.GET_JSON, data.skeletonJson);
         Emitter.instance.emit(EventCode.MENU.GET_JSON, data.skeletonJson);
     },
 
@@ -73,5 +73,10 @@ cc.Class({
         const skeleton = this._spineNode.skeletonData;
         skeleton.skeletonJson = json;
         this.loadSkeletonData(skeleton);
+    },
+
+    exportJson() {
+        const json = Object.assign({}, this._json);
+        Emitter.instance.emit(EventCode.EXPORT.GET_DATA, this._spineName, json);
     },
 });

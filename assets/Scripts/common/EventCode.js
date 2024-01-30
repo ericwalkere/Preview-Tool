@@ -56,7 +56,7 @@ const EventCode = {
     },
 
     EXPORT: {
-        GET_JSON: "GET_EXPORT_JSON",
+        GET_DATA: "GET_DATA_JSON",
     },
 };
 
