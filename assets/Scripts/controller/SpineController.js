@@ -88,7 +88,7 @@ cc.Class({
         this._toTime = time;
         this._isUpdate = true;
 
-        if (time === trackEntry.animationEnd) time -= Number.EPSILON;
+        if (this._isLoop && time === trackEntry.animationEnd) time -= Number.EPSILON;
         const paused = this.spine.paused;
         this.spine.paused = false;
         this.spine.update(time - trackEntry.trackTime);
@@ -213,8 +213,6 @@ cc.Class({
         animation.events.push(eventTime);
         animation.events.sort((a, b) => a.time - b.time);
         this.reloadJson();
-
-        Emitter.instance.emit(EventCode.EXPORT.GET_JSON, json);
     },
 
     removeEventKey(data) {
@@ -226,7 +224,5 @@ cc.Class({
         animation.events = animation.events.filter((value) => !(value.name === event && value.time === time));
         if (animation.events.length === 0) delete animation.events;
         this.reloadJson();
-
-        Emitter.instance.emit(EventCode.EXPORT.GET_JSON, json);
     },
 });

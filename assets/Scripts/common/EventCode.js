@@ -4,6 +4,7 @@ const EventCode = {
         ADD_ATLAS: "ADD_ATLAS",
         ADD_TEXTURE: "ADD_TEXTURE",
         ADD_SPINE: "ADD_SPINE",
+        LOAD_JSON: "LOAD_JSON",
     },
 
     SPINE_CTRL: {
@@ -55,7 +56,7 @@ const EventCode = {
     },
 
     EXPORT: {
-        GET_JSON: "GET_EXPORT_JSON",
+        GET_DATA: "GET_DATA_JSON",
     },
 };
 
