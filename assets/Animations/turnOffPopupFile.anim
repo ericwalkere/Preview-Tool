@@ -22,6 +22,20 @@
             }
           ]
         }
+      },
+      "fileMenu/Option": {
+        "props": {
+          "active": [
+            {
+              "frame": 0,
+              "value": true
+            },
+            {
+              "frame": 2,
+              "value": false
+            }
+          ]
+        }
       }
     }
   },

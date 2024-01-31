@@ -50,8 +50,9 @@ cc.Class({
     onClick() {
         switch (this.type) {
             case "anim":
-                Emitter.instance.emit(EventCode.MENU.SET_CHILDREN);
+                Emitter.instance.emit(EventCode.MENU.SET_CHILDREN, 'all');
                 Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
+                Emitter.instance.emit(EventCode.MENU.FILTER_ALL);
                 Emitter.instance.emit(EventCode.SPINE_CTRL.SET_ANIM, this.value);
                 Emitter.instance.emit(EventCode.MENU.LOAD_EVENT, this.value);
                 Emitter.instance.emit(EventCode.TIMELINE.GET_ANIM, this.value);
