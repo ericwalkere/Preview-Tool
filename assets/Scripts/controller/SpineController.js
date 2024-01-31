@@ -36,6 +36,7 @@ cc.Class({
         registerEvent(EventCode.SPINE_CTRL.SET_LOOP, this.setLoop, this);
         registerEvent(EventCode.SPINE_CTRL.SET_PAUSED, this.setPaused, this);
         registerEvent(EventCode.SPINE_CTRL.UPDATE_TIME, this.updateAnimTime, this);
+        registerEvent(EventCode.SPINE_CTRL.CREATE_EVENT_KEY, this.createEventKey, this);
         registerEvent(EventCode.SPINE_CTRL.ADD_EVENT_KEY, this.addEventKey, this);
         registerEvent(EventCode.SPINE_CTRL.REMOVE_EVENT_KEY, this.removeEventKey, this);
         registerEvent(EventCode.SPINE_CTRL.SHOW_EVENT, this.canShow, this);
@@ -190,8 +191,7 @@ cc.Class({
         this._isReload = false;
     },
 
-    addEventKey(data) {
-        const { anim, event, time } = data;
+    createEventKey(event) {
         const json = this.getJson();
         if (!json.events) {
             json.events = {};
@@ -200,11 +200,14 @@ cc.Class({
         if (!json.events[event]) {
             json.events[event] = {};
         }
+    },
+
+    addEventKey(data) {
+        const { anim, event, time } = data;
+        const json = this.getJson();
 
         const animation = json.animations[anim];
-        if (!animation.events) {
-            animation.events = [];
-        }
+        if (!animation.events) animation.events = [];
 
         const hasEventTime = animation.events.some((value) => value.name === event && value.time === time);
         if (hasEventTime) return;
