@@ -35,6 +35,7 @@ cc.Class({
         registerEvent(EventCode.MENU.LOAD_EVENT, this.loadAnimEvent, this);
         registerEvent(EventCode.MENU.UPDATE_EVENT, this.updateEvents, this);
         registerEvent(EventCode.MENU.FILTER_EVENT, this.filterEvent, this);
+        registerEvent(EventCode.MENU.FILTER_ALL, this.createAllEventButton, this);
     },
 
     getJson(json) {
@@ -87,17 +88,29 @@ cc.Class({
                 set.add(e.name);
             });
         }
-
-        const allEventButton = cc.instantiate(this.allEventButton);
-        allEventButton.on("click", this.updateEvents.bind(this));
-        allEventButton.parent = this.eventList;
-
         set.forEach((element) => {
             const item = this.createItem(element, "animEvent", this.eventList);
             const listeners = this._json.listeners;
             const hasListener = listeners[name] && listeners[name][element];
             item.getComponent("LoadData").setAudioImport(name, element, hasListener);
         });
+    },
+
+    createAllEventButton() {
+        const allEventButton = cc.instantiate(this.allEventButton);
+        allEventButton.on(
+            "click",
+            (() => {
+                Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
+                const anim = this._json.animations[this.animName];
+                if (anim.events) {
+                    for (let i = 0; i < anim.events.length; i++) {
+                        Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, anim.events[i]);
+                    }
+                }
+            }).bind(this)
+        );
+        allEventButton.parent = this.eventList;
     },
 
     filterEvent(name) {
@@ -125,10 +138,17 @@ cc.Class({
         return item;
     },
 
-    removeChildren() {
+    removeChildren(option = '') {
         const arr = this.eventList.children;
-        arr.forEach((element) => {
-            element.destroy();
-        });
+
+        if (option === "all") {
+            for (let i = 0; i < arr.length; i++) {
+                arr[i].destroy();
+            }
+        } else {
+            for (let i = 1; i < arr.length; i++) {
+                arr[i].destroy();
+            }
+        }
     },
 });

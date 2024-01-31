@@ -17,7 +17,6 @@ cc.Class({
         addNew: cc.Node,
         box: cc.EditBox,
 
-        contactMenu: cc.Node,
         slide: cc.Slider,
         _isOpen: false,
     },
@@ -25,20 +24,6 @@ cc.Class({
     onLoad() {
         registerEvent(EventCode.BUTTON.GET_EVENT, this.getEvent, this);
         registerEvent(EventCode.BUTTON.SAVE_KEY, this.saveEventKey, this);
-    },
-
-    addNewToTimeLine() {
-        this._isOpen = !this._isOpen;
-        if (this._isOpen) {
-            this.contactMenu.active = true;
-        } else {
-            this.contactMenu.active = false;
-        }
-    },
-
-    quitContact() {
-        this._isOpen = !this._isOpen;
-        this.contactMenu.active = false;
     },
 
     clickButtonAddNew() {
