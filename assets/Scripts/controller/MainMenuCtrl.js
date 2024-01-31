@@ -8,13 +8,17 @@ cc.Class({
     properties: {
         _json: null,
 
-        itemPrefab: cc.Prefab,
+        animPrefab: cc.Prefab,
+        skinPrefab: cc.Prefab,
+        allEventPrefab: cc.Prefab,
+        animEventPrefab: cc.Prefab,
+
         animList: cc.Node,
         skinList: cc.Node,
         eventList: cc.Node,
-        addEventList: cc.Node,
+        allEventList: cc.Node,
         showEventButton: cc.Toggle,
-        allEventButton: cc.Prefab,
+        showAllEventButton: cc.Prefab,
     },
 
     canShow() {
@@ -31,11 +35,12 @@ cc.Class({
 
     initEvents() {
         registerEvent(EventCode.MENU.GET_JSON, this.getJson, this);
-        registerEvent(EventCode.MENU.SET_CHILDREN, this.removeChildren, this);
-        registerEvent(EventCode.MENU.LOAD_EVENT, this.loadAnimEvent, this);
-        registerEvent(EventCode.MENU.UPDATE_EVENT, this.updateEvents, this);
-        registerEvent(EventCode.MENU.FILTER_EVENT, this.filterEvent, this);
-        registerEvent(EventCode.MENU.FILTER_ALL, this.createAllEventButton, this);
+        registerEvent(EventCode.MENU.LOAD_ANIM, this.loadAnims, this);
+        registerEvent(EventCode.MENU.GET_ANIM_NAME, this.getAnimName, this);
+        registerEvent(EventCode.MENU.UPDATE_EVENT, this.loadEvent, this);
+        registerEvent(EventCode.MENU.UPDATE_ANIM_EVENT, this.updateAnimEvents, this);
+        registerEvent(EventCode.MENU.FILTER_EVENT, this.filterEventKey, this);
+        registerEvent(EventCode.MENU.FILTER_ALL, this.filterAll, this);
     },
 
     getJson(json) {
@@ -46,11 +51,16 @@ cc.Class({
         Emitter.instance.emit(EventCode.SPINE_CTRL.SHOW_EVENT, true);
     },
 
+    getAnimName(anim) {
+        this.animName = anim;
+    },
+
     loadAnims() {
         this.animList.removeAllChildren();
+        if (!this._json) return;
         const animations = Object.keys(this._json.animations);
         for (let i = 0; i < animations.length; i++) {
-            this.createItem(animations[i], "anim", this.animList);
+            this.createItem(this.animPrefab, animations[i], this.animList, "AnimItem");
         }
     },
 
@@ -58,97 +68,76 @@ cc.Class({
         const skins = Object.keys(this._json.skins);
         this.skinList.removeAllChildren();
         for (let i = 0; i < skins.length; i++) {
-            this.createItem(skins[i], "skin", this.skinList);
+            this.createItem(this.skinPrefab, skins[i], this.skinList, "SkinItem");
         }
     },
 
     loadEvent() {
-        this.addEventList.removeAllChildren();
+        this.allEventList.removeAllChildren();
         if (!this._json.events) return;
         const events = Object.keys(this._json.events);
         for (let i = 0; i < events.length; i++) {
-            this.createItem(events[i], "eventAll", this.addEventList);
+            this.createItem(this.allEventPrefab, events[i], this.allEventList, "AllEventItem");
         }
     },
 
-    loadAnimEvent(name) {
-        this.animName = name;
+    loadAnimEvent() {
+        if (!this.animName || !this._json.events || !this._json.animations[this.animName]) return;
         const set = new Set();
-        const anim = this._json.animations[name];
-        if (anim.events) {
-            for (let i = 0; i < anim.events.length; i++) {
-                let data = {
-                    anim: name,
-                    time: anim.events[i].time,
-                    name: anim.events[i].name,
-                };
-                Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, data, name);
-            }
-            anim.events.forEach((e) => {
-                set.add(e.name);
+        const events = this._json.animations[this.animName].events;
+
+        const button = cc.instantiate(this.showAllEventButton);
+        button.parent = this.eventList;
+        if (events) {
+            events.forEach((element) => {
+                Emitter.instance.emit(EventCode.TIMELINE.CREATE_EVENT_KEY, element, this.animName);
+                set.add(element.name);
             });
         }
         set.forEach((element) => {
-            const item = this.createItem(element, "animEvent", this.eventList);
+            const item = this.createItem(this.animEventPrefab, element, this.eventList, "AnimEventItem");
             const listeners = this._json.listeners;
-            const hasListener = listeners[name] && listeners[name][element];
-            item.getComponent("LoadData").setAudioImport(name, element, hasListener);
+            const hasListener = listeners[this.animName] && listeners[this.animName][element];
+            item.getComponent("AnimEventItem").setAudioImport(this.animName, element, hasListener);
         });
     },
 
-    createAllEventButton() {
-        const allEventButton = cc.instantiate(this.allEventButton);
-        allEventButton.on(
-            "click",
-            (() => {
-                Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
-                const anim = this._json.animations[this.animName];
-                if (anim.events) {
-                    for (let i = 0; i < anim.events.length; i++) {
-                        Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, anim.events[i]);
-                    }
-                }
-            }).bind(this)
-        );
-        allEventButton.parent = this.eventList;
+    filterEventKey(eventName) {
+        const events = this._json.animations[this.animName].events;
+        Emitter.instance.emit(EventCode.TIMELINE.REMOVE_EVENT_KEY);
+        if (!events) return;
+        events.forEach((element) => {
+            if (eventName === element.name)
+                Emitter.instance.emit(EventCode.TIMELINE.CREATE_EVENT_KEY, element, this.animName);
+        });
     },
 
-    filterEvent(name) {
-        const anim = this._json.animations[this.animName];
-        if (anim.events) {
-            for (let i = 0; i < anim.events.length; i++) {
-                if (anim.events[i].name === name) {
-                    Emitter.instance.emit(EventCode.TIMELINE.SET_EVENT_KEY, anim.events[i]);
-                }
-            }
-        }
+    filterAll() {
+        const events = this._json.animations[this.animName].events;
+        Emitter.instance.emit(EventCode.TIMELINE.REMOVE_EVENT_KEY);
+        if (!events) return;
+        events.forEach((element) => {
+            Emitter.instance.emit(EventCode.TIMELINE.CREATE_EVENT_KEY, element, this.animName);
+        });
     },
 
-    updateEvents() {
-        Emitter.instance.emit(EventCode.TIMELINE.SET_CHILDREN);
-        Emitter.instance.emit(EventCode.MENU.SET_CHILDREN);
-        this.loadEvent();
+    updateAnimEvents() {
+        this.removeChildren();
+        this.loadAnimEvent();
     },
 
-    createItem(name, type, parent) {
-        const item = cc.instantiate(this.itemPrefab);
-        const data = item.getComponent("LoadData");
-        data.setData(name, type, this._json);
+    createItem(prefab, name, parent, script) {
+        const item = cc.instantiate(prefab);
+        const data = item.getComponent(script);
+        data.setData(name);
         item.parent = parent;
         return item;
     },
 
-    removeChildren(option = '') {
+    removeChildren() {
         const arr = this.eventList.children;
-
-        if (option === "all") {
-            for (let i = 0; i < arr.length; i++) {
-                arr[i].destroy();
-            }
-        } else {
-            for (let i = 1; i < arr.length; i++) {
-                arr[i].destroy();
-            }
+        for (let i = 0; i < arr.length; i++) {
+            arr[i].destroy();
         }
     },
 });

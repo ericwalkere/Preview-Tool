@@ -54,7 +54,10 @@ cc.Class({
         skeleton.textures = [this._texture];
         skeleton.textureNames = [this._texture.name];
         this.loadSkeletonData(skeleton);
+
         Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
+        Emitter.instance.emit(EventCode.MENU.UPDATE_ANIM_EVENT);
+        Emitter.instance.emit(EventCode.TIMELINE.REMOVE_EVENT_KEY);
     },
 
     loadSkeletonData(data) {

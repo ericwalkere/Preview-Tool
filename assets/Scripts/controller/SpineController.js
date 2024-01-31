@@ -178,6 +178,8 @@ cc.Class({
     },
 
     reloadJson() {
+        Emitter.instance.emit(EventCode.MENU.UPDATE_ANIM_EVENT);
+
         const trackEntry = this.spine.getCurrent(0);
         this.spine.skeletonData.skeletonJson = this.getJson();
         this.spine._updateSkeletonData();
@@ -200,6 +202,8 @@ cc.Class({
         if (!json.events[event]) {
             json.events[event] = {};
         }
+
+        Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
     },
 
     addEventKey(data) {
