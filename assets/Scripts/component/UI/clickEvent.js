@@ -25,8 +25,8 @@ cc.Class({
     removeEvent() {
         if (this.data) {
             Emitter.instance.emit(EventCode.SPINE_CTRL.REMOVE_EVENT_KEY, this.data);
-            Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
-            Emitter.instance.emit(EventCode.MENU.LOAD_EVENT, this.data.anim);
+            Emitter.instance.emit(EventCode.TIMELINE.REMOVE_EVENT_KEY);
+            Emitter.instance.emit(EventCode.MENU.UPDATE_ANIM_EVENT);
         }
     },
 

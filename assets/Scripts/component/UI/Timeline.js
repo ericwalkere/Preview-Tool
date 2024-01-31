@@ -15,23 +15,23 @@ cc.Class({
     },
 
     onLoad() {
-        registerEvent(EventCode.TIMELINE.SET_EVENT_KEY, this.createEventKey, this);
-        registerEvent(EventCode.TIMELINE.SET_CHILDREN, this.removeChildren, this);
+        registerEvent(EventCode.TIMELINE.CREATE_EVENT_KEY, this.createEventKey, this);
+        registerEvent(EventCode.TIMELINE.REMOVE_EVENT_KEY, this.removeChildren, this);
         registerEvent(EventCode.TIMELINE.GET_ANIM, this.getAnim, this);
-        registerEvent(EventCode.TIMELINE.GET_EVENT_NAME, this.getEventName, this);
+        registerEvent(EventCode.TIMELINE.ADD_EVENT_TO_ANIM, this.addNewEventToAnim, this);
     },
 
     getAnim(anim) {
         this.anim = anim;
-        Emitter.instance.emit(EventCode.BUTTON.GET_EVENT, { anim: anim, event: "", time: this._durationTime });
     },
 
-    getEventName(eventName) {
-        Emitter.instance.emit(EventCode.BUTTON.GET_EVENT, {
+    addNewEventToAnim(eventName) {
+        const data = {
             anim: this.anim,
             event: eventName,
-            time: this._durationTime,
-        });
+            time: this._durationTime * this.slider.progress,
+        };
+        Emitter.instance.emit(EventCode.SPINE_CTRL.ADD_EVENT_KEY, data);
     },
 
     setDurationTime(durationTime) {
