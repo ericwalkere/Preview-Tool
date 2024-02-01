@@ -33,7 +33,6 @@ cc.Class({
         Emitter.instance.emit(EventCode.SPINE_POOL.EXPORT_JSON);
         delete this._json.listeners;
 
-        cc.log(this._json);
         if ("showSaveFilePicker" in window) {
             this.useSaveFilePicker(this._name, this._json);
         } else {
