@@ -79,6 +79,7 @@ cc.Class({
         Emitter.instance.emit(EventCode.TIMELINE.REMOVE_EVENT_KEY);
         Emitter.instance.emit(EventCode.TIMELINE.SET_DURATION_TIME, 0);
         Emitter.instance.emit(EventCode.TIMELINE.UPDATE_TIMELINE, 0);
+        Emitter.instance.emit(EventCode.MENU.SHOW_ANIM_NAME);
     },
 
     loadJson(json) {

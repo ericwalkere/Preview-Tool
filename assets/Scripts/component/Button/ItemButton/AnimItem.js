@@ -10,5 +10,6 @@ cc.Class({
         Emitter.instance.emit(EventCode.TIMELINE.GET_ANIM, this.value);
         Emitter.instance.emit(EventCode.TIMELINE.REMOVE_EVENT_KEY);
         Emitter.instance.emit(EventCode.MENU.UPDATE_ANIM_EVENT);
+        Emitter.instance.emit(EventCode.MENU.SHOW_ANIM_NAME, this.value);
     },
 });
