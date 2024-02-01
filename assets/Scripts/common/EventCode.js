@@ -42,6 +42,7 @@ const EventCode = {
 
     MENU: {
         LOAD_ANIM: "LOAD_ANIM",
+        LOAD_SKIN: "LOAD_SKIN",
         GET_JSON: "GET_JSON",
         GET_ANIM_NAME: "GET_ANIM_NAME",
         UPDATE_EVENT: "SET_ALL_EVENT",

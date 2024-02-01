@@ -36,6 +36,7 @@ cc.Class({
     initEvents() {
         registerEvent(EventCode.MENU.GET_JSON, this.getJson, this);
         registerEvent(EventCode.MENU.LOAD_ANIM, this.loadAnims, this);
+        registerEvent(EventCode.MENU.LOAD_SKIN, this.loadSkins, this);
         registerEvent(EventCode.MENU.GET_ANIM_NAME, this.getAnimName, this);
         registerEvent(EventCode.MENU.UPDATE_EVENT, this.loadEvent, this);
         registerEvent(EventCode.MENU.UPDATE_ANIM_EVENT, this.updateAnimEvents, this);
