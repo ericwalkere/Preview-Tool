@@ -1,9 +1,9 @@
 const EventCode = require("EventCode");
 const Emitter = require("EventEmitter");
-const { registerEvent, removeEvents } = require("eventHelper");
+const { registerEvent } = require("eventHelper");
 
 cc.Class({
-    extends: cc.Component,
+    extends: require("CustomButton"),
 
     properties: {
         defaultColor: cc.color("#ffffff"),
@@ -12,20 +12,16 @@ cc.Class({
         _isLoop: false,
     },
 
-    onLoad() {
-        this.initEvents();
-    },
-
     start() {
         this.setLoop(false);
     },
 
-    onDestroy() {
-        removeEvents(this);
-    },
-
     initEvents() {
         registerEvent(EventCode.BUTTON.SET_LOOP, this.setLoop, this);
+    },
+
+    onClick() {
+        Emitter.instance.emit(EventCode.SPINE_CTRL.SET_LOOP, !this._isLoop);
     },
 
     setLoop(loop) {
@@ -35,9 +31,5 @@ cc.Class({
         } else {
             this.node.color = this.defaultColor;
         }
-    },
-
-    onClick() {
-        Emitter.instance.emit(EventCode.SPINE_CTRL.SET_LOOP, !this._isLoop);
     },
 });

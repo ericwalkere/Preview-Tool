@@ -2,10 +2,10 @@ const Emitter = require("EventEmitter");
 const EventCode = require("EventCode");
 
 cc.Class({
-    extends: require("LoadData"),
+    extends: require("LoadDataButton"),
 
     properties: {
-        audioButton:cc.Node,
+        audioButton: cc.Node,
         audioCheck: cc.Node,
     },
 

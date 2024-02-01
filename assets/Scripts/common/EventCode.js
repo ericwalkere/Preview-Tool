@@ -5,6 +5,7 @@ const EventCode = {
         ADD_TEXTURE: "ADD_TEXTURE",
         ADD_SPINE: "ADD_SPINE",
         LOAD_JSON: "LOAD_JSON",
+        EXPORT_JSON: "EXPORT_JSON",
     },
 
     SPINE_CTRL: {
@@ -19,15 +20,16 @@ const EventCode = {
         CREATE_EVENT_KEY: "CREATE_EVENT_KEY",
         ADD_EVENT_KEY: "ADD_EVENT_KEY",
         REMOVE_EVENT_KEY: "REMOVE_EVENT_KEY",
+        SHOW_EVENT: "SHOW_EVENT",
     },
 
     UI_BOTTOM: {
         TIME_BAR: "TIME_BAR",
-        SHOW_EVENT: "SHOW_EVENT",
     },
 
     TIMELINE: {
         UPDATE_TIMELINE: "UPDATE_TIMELINE",
+        SET_DURATION_TIME: "SET_DURATION_TIME",
         CREATE_EVENT_KEY: "CREATE_EVENT_KEY_TIMELINE",
         REMOVE_EVENT_KEY: "REMOVE_KEY_TIMELINE",
         GET_ANIM: "GET_ANIM",

@@ -57,7 +57,7 @@ cc.Class({
         skeleton.textures = this._textures;
         skeleton.textureNames = this._textureNames;
         this.loadSkeletonData(skeleton);
-      
+
         this._spineName = name;
         this.refreshData();
 

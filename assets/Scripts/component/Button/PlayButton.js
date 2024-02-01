@@ -1,9 +1,9 @@
 const EventCode = require("EventCode");
 const Emitter = require("EventEmitter");
-const { registerEvent, removeEvents } = require("eventHelper");
+const { registerEvent } = require("eventHelper");
 
 cc.Class({
-    extends: cc.Component,
+    extends: require("CustomButton"),
 
     properties: {
         buttonSprite: cc.Sprite,
@@ -13,20 +13,16 @@ cc.Class({
         _isPaused: true,
     },
 
-    onLoad() {
-        this.initEvents();
-    },
-
     start() {
         this.setPaused(true);
     },
 
-    onDestroy() {
-        removeEvents(this);
-    },
-
     initEvents() {
         registerEvent(EventCode.BUTTON.SET_PAUSED, this.setPaused, this);
+    },
+
+    onClick() {
+        Emitter.instance.emit(EventCode.SPINE_CTRL.SET_PAUSED, !this._isPaused);
     },
 
     setPaused(paused) {
@@ -36,9 +32,5 @@ cc.Class({
         } else {
             this.buttonSprite.spriteFrame = this.pauseSpriteFrame;
         }
-    },
-
-    onClick() {
-        Emitter.instance.emit(EventCode.SPINE_CTRL.SET_PAUSED, !this._isPaused);
     },
 });
