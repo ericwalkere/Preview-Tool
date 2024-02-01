@@ -52,7 +52,7 @@ cc.Class({
     createEventKey(data, animName) {
         const percent = data.time / this._durationTime;
         const key = cc.instantiate(this.eventKey);
-        key.getComponent("clickEvent").hint({ anim: animName, event: data.name, time: data.time });
+        key.getComponent("ClickEvent").hint({ anim: animName, event: data.name, time: data.time });
         key.x = percent * 800;
         key.parent = this.eventNode;
     },
