@@ -29,7 +29,7 @@ cc.Class({
             }
         } else {
             this.option.active = false;
-            if (this.anim) {
+            if (this.anim) {        
                 this.anim.stop();
             }
         }
