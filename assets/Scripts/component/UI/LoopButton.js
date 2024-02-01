@@ -1,6 +1,6 @@
 const EventCode = require("EventCode");
 const Emitter = require("EventEmitter");
-const { removeEvents, registerEvent } = require("eventHelper");
+const { registerEvent, removeEvents } = require("eventHelper");
 
 cc.Class({
     extends: cc.Component,

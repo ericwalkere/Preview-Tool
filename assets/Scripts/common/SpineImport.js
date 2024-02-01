@@ -83,18 +83,21 @@ cc.Class({
         const paths = zipFile.name.split("/");
         this._spineName = paths[0];
         const imageName = paths[paths.length - 1];
-        zipFile.async("base64").then((data) => {
-            const img = new Image();
-            img.src = "data:image/png;base64," + data;
-            img.onload = () => {
-                const texture = new cc.Texture2D();
-                texture.initWithElement(img);
-                texture.name = imageName;
+        zipFile.async("blob").then((data) => {
+            const file = new File([data], imageName);
+            const path = URL.createObjectURL(file);
+            cc.loader.load({ url: path, type: "png" }, (err, texture) => {
+                URL.revokeObjectURL(path);
+                if (err) {
+                    cc.error("ERROR:", err);
+                    return;
+                }
 
+                texture.name = imageName;
                 Emitter.instance.emit(EventCode.SPINE_POOL.ADD_TEXTURE, texture);
                 cc.log(`LOADED: ${zipFile.name}`);
                 this.loadCountCheck();
-            };
+            });
         });
     },
 });

@@ -17,6 +17,7 @@ cc.Class({
         const path = URL.createObjectURL(file);
         const type = file.name.split(".").pop();
         cc.loader.load({ url: path, type }, (err, audioClip) => {
+            URL.revokeObjectURL(path);
             if (err) {
                 cc.error("ERROR:", err);
                 return;

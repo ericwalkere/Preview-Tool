@@ -35,6 +35,7 @@ cc.Class({
         registerEvent(EventCode.SPINE_CTRL.REMOVE_EVENT_LISTENER, this.removeEventListener, this);
         registerEvent(EventCode.SPINE_CTRL.SET_LOOP, this.setLoop, this);
         registerEvent(EventCode.SPINE_CTRL.SET_PAUSED, this.setPaused, this);
+        registerEvent(EventCode.SPINE_CTRL.SET_ALPHA, this.setPremultipliedAlpha, this);
         registerEvent(EventCode.SPINE_CTRL.UPDATE_TIME, this.updateAnimTime, this);
         registerEvent(EventCode.SPINE_CTRL.CREATE_EVENT_KEY, this.createEventKey, this);
         registerEvent(EventCode.SPINE_CTRL.ADD_EVENT_KEY, this.addEventKey, this);
@@ -154,6 +155,10 @@ cc.Class({
 
         const anim = trackEntry.animation.name;
         this.setAnimation(anim);
+    },
+
+    setPremultipliedAlpha(enabled) {
+        this.spine.premultipliedAlpha = enabled;
     },
 
     setSkin(name) {
