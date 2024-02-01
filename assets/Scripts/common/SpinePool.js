@@ -61,10 +61,6 @@ cc.Class({
 
         this._spineName = name;
         this.refreshTextures();
-
-        Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
-        Emitter.instance.emit(EventCode.MENU.UPDATE_ANIM_EVENT);
-        Emitter.instance.emit(EventCode.TIMELINE.REMOVE_EVENT_KEY);
     },
 
     loadSkeletonData(data) {
@@ -76,6 +72,12 @@ cc.Class({
 
         this._spineNode.getComponent("SpineController").loadSkeleton(data);
         Emitter.instance.emit(EventCode.MENU.GET_JSON, data.skeletonJson);
+
+        Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
+        Emitter.instance.emit(EventCode.MENU.UPDATE_ANIM_EVENT);
+        Emitter.instance.emit(EventCode.TIMELINE.REMOVE_EVENT_KEY);
+        Emitter.instance.emit(EventCode.TIMELINE.SET_DURATION_TIME, 0);
+        Emitter.instance.emit(EventCode.TIMELINE.UPDATE_TIMELINE, 0);
     },
 
     loadJson(json) {
@@ -84,7 +86,6 @@ cc.Class({
         const skeleton = this._spineNode.skeletonData;
         skeleton.skeletonJson = json;
         this.loadSkeletonData(skeleton);
-        Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
     },
 
     exportJson() {
