@@ -12,13 +12,15 @@ cc.Class({
         skinPrefab: cc.Prefab,
         allEventPrefab: cc.Prefab,
         animEventPrefab: cc.Prefab,
+        showAllEventButton: cc.Prefab,
 
         animList: cc.Node,
         skinList: cc.Node,
         eventList: cc.Node,
         allEventList: cc.Node,
         showEventButton: cc.Toggle,
-        showAllEventButton: cc.Prefab,
+
+        animText: cc.Label,
     },
 
     canShow() {
@@ -42,6 +44,7 @@ cc.Class({
         registerEvent(EventCode.MENU.UPDATE_ANIM_EVENT, this.updateAnimEvents, this);
         registerEvent(EventCode.MENU.FILTER_EVENT, this.filterEventKey, this);
         registerEvent(EventCode.MENU.FILTER_ALL, this.filterAll, this);
+        registerEvent(EventCode.MENU.SHOW_ANIM_NAME, this.showAnim, this);
     },
 
     getJson(json) {
@@ -54,6 +57,11 @@ cc.Class({
 
     getAnimName(anim) {
         this.animName = anim;
+    },
+
+    showAnim(anim) {
+        if (!anim) return;
+        this.animText.string = anim;
     },
 
     loadAnims() {

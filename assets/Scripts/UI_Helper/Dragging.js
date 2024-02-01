@@ -9,10 +9,9 @@ cc.Class({
         this.node.on("mousedown", this.onMouseDown, this);
         this.node.on("mousemove", this.onMouseMove, this);
         this.node.on("mouseup", this.onMouseUp, this);
-        this.node.on("mouseleave", this.onMouseLeave, this);
     },
 
-    onMouseDown() {
+    onMouseDown(event) {
         this._canMove = true;
     },
 
@@ -25,10 +24,6 @@ cc.Class({
     },
 
     onMouseUp() {
-        this._canMove = false;
-    },
-
-    onMouseLeave() {
         this._canMove = false;
     },
 });

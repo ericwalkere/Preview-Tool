@@ -29,13 +29,10 @@
       },
       {
         "__id__": 8
-      },
-      {
-        "__id__": 9
       }
     ],
     "_prefab": {
-      "__id__": 10
+      "__id__": 9
     },
     "_opacity": 255,
     "_color": {
@@ -277,17 +274,6 @@
     "_toTime": 0,
     "_isUpdate": false,
     "_isReload": false,
-    "_id": ""
-  },
-  {
-    "__type__": "c4f93N6zClFSLez9JDf/zvN",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "_canMove": false,
     "_id": ""
   },
   {
