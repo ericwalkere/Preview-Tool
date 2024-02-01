@@ -15,6 +15,14 @@ cc.Class({
     },
 
     onLoad() {
+        this.initEvents();
+    },
+
+    onDestroy() {
+        removeEvents(this);
+    },
+
+    initEvents() {
         registerEvent(EventCode.TIMELINE.CREATE_EVENT_KEY, this.createEventKey, this);
         registerEvent(EventCode.TIMELINE.REMOVE_EVENT_KEY, this.removeChildren, this);
         registerEvent(EventCode.TIMELINE.GET_ANIM, this.getAnim, this);

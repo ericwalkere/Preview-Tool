@@ -12,6 +12,7 @@ cc.Class({
         const reader = new FileReader();
         reader.onload = this.loadJson.bind(this);
         reader.readAsText(file);
+        cc.log("LOADED:", file.name);
     },
 
     loadJson(event) {
