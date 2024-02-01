@@ -22,7 +22,7 @@
       }
     ],
     "_active": true,
-    "_level": 1,
+    "_level": 3,
     "_components": [
       {
         "__id__": 6
@@ -57,8 +57,8 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
+      "x": -283.267,
+      "y": -224.325,
       "z": 0
     },
     "_scale": {
@@ -181,7 +181,7 @@
     "node": {
       "__id__": 2
     },
-    "_enabled": true,
+    "_enabled": false,
     "alignMode": 0,
     "_target": null,
     "_alignFlags": 45,

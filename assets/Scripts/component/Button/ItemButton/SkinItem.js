@@ -5,6 +5,6 @@ cc.Class({
     extends: require("LoadDataButton"),
 
     onClick() {
-        cc.log("click skin :", this.value);
+        Emitter.instance.emit(EventCode.SPINE_CTRL.SET_SKIN, this.value);
     },
 });
