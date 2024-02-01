@@ -57,10 +57,13 @@ cc.Class({
         skeleton.textures = this._textures;
         skeleton.textureNames = this._textureNames;
         this.loadSkeletonData(skeleton);
-        Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
-
+      
         this._spineName = name;
         this.refreshData();
+
+        Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
+        Emitter.instance.emit(EventCode.MENU.UPDATE_ANIM_EVENT);
+        Emitter.instance.emit(EventCode.TIMELINE.REMOVE_EVENT_KEY);
     },
 
     loadSkeletonData(data) {

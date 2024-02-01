@@ -29,8 +29,7 @@ cc.Class({
                 cc.audioEngine.playEffect(audioClip, false);
                 cc.log(`play sound at ${event} in ${anim}`);
             });
-
-            Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
+            Emitter.instance.emit(EventCode.MENU.UPDATE_ANIM_EVENT);
         });
     },
 
