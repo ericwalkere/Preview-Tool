@@ -14,6 +14,7 @@ cc.Class({
     },
 
     loadFile(file) {
+        cc.log("LOADED:", file.name);
         const path = URL.createObjectURL(file);
         const type = file.name.split(".").pop();
         cc.loader.load({ url: path, type }, (err, audioClip) => {

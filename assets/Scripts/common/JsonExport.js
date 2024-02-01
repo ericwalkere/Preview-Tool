@@ -9,7 +9,7 @@ cc.Class({
 
     onLoad() {
         this._json = null;
-        this._name = "";
+        this._name = "Untitled";
 
         // this.node.on('click', this.onClick, this);
         this.initEvents();
@@ -33,6 +33,7 @@ cc.Class({
         Emitter.instance.emit(EventCode.SPINE_POOL.EXPORT_JSON);
         delete this._json.listeners;
 
+        cc.log(this._json);
         if ("showSaveFilePicker" in window) {
             this.useSaveFilePicker(this._name, this._json);
         } else {
@@ -49,8 +50,12 @@ cc.Class({
                 types: [{ accept: { "application/json": [".json"] } }],
             })
             .then((fileHandle) => fileHandle.createWritable())
-            .then((stream) => stream.write(blob).then(() => stream))
-            .then((stream) => stream.close())
+            .then((stream) =>
+                stream
+                    .write(blob)
+                    .then(() => stream.close())
+                    .then(() => cc.log("Exported json file"))
+            )
             .catch((err) => cc.error("ERROR:", err));
     },
 
@@ -60,5 +65,6 @@ cc.Class({
         a.download = `${name}.json`;
 
         a.click();
+        cc.log(`Exported json file`);
     },
 });

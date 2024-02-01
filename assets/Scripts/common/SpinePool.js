@@ -9,12 +9,15 @@ cc.Class({
         spinePrefab: cc.Prefab,
 
         _spineNode: null,
-        _spineName: "",
+        _spineName: "Untitled",
     },
 
     onLoad() {
         this.initEvents();
-        this.refreshData();
+
+        this._json = {};
+        this._atlas = {};
+        this.refreshTextures();
     },
 
     onDestroy() {
@@ -30,9 +33,7 @@ cc.Class({
         registerEvent(EventCode.SPINE_POOL.EXPORT_JSON, this.exportJson, this);
     },
 
-    refreshData() {
-        this._json = null;
-        this._atlas = null;
+    refreshTextures() {
         this._textures = [];
         this._textureNames = [];
     },
@@ -59,7 +60,7 @@ cc.Class({
         this.loadSkeletonData(skeleton);
 
         this._spineName = name;
-        this.refreshData();
+        this.refreshTextures();
 
         Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
         Emitter.instance.emit(EventCode.MENU.UPDATE_ANIM_EVENT);
