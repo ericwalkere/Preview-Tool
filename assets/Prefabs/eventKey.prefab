@@ -609,25 +609,6 @@
     "_id": ""
   },
   {
-    "__type__": "62cc7B7o4RMcKSPgSPYBLiF",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "hintText": {
-      "__id__": 3
-    },
-    "removeBtn": {
-      "__id__": 5
-    },
-    "anim": {
-      "__id__": 17
-    },
-    "_id": ""
-  },
-  {
     "__type__": "cc.Animation",
     "_name": "",
     "_objFlags": 0,
@@ -644,6 +625,25 @@
       }
     ],
     "playOnLoad": false,
+    "_id": ""
+  },
+  {
+    "__type__": "db54bVcI0hPM4OYmxm4hDM0",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "hintText": {
+      "__id__": 3
+    },
+    "removeBtn": {
+      "__id__": 5
+    },
+    "anim": {
+      "__id__": 16
+    },
     "_id": ""
   },
   {
