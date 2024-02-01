@@ -177,7 +177,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 359.4005425705421
+      "z": 477.1799974852257
     },
     "_scale": {
       "__type__": "cc.Vec3",
@@ -250,7 +250,7 @@
         "__id__": 10
       },
       {
-        "__id__": 12
+        "__id__": 13
       },
       {
         "__id__": 15
@@ -328,8 +328,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1022,
-      "height": 553
+      "width": 1021.26,
+      "height": 552.46
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -338,8 +338,8 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": -132.829,
-      "y": -31,
+      "x": -132.46,
+      "y": -30.62,
       "z": 0
     },
     "_scale": {
@@ -418,7 +418,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1280,
+      "width": 1281,
       "height": 166
     },
     "_anchorPoint": {
@@ -428,7 +428,7 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": -1,
+      "x": -0.5,
       "y": -276,
       "z": 0
     },
@@ -484,96 +484,6 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "BG_animEvents",
-    "_objFlags": 0,
-    "_parent": {
-      "__id__": 5
-    },
-    "_children": [],
-    "_active": true,
-    "_level": 3,
-    "_components": [
-      {
-        "__id__": 11
-      }
-    ],
-    "_prefab": null,
-    "_opacity": 198.9,
-    "_color": {
-      "__type__": "cc.Color",
-      "r": 0,
-      "g": 0,
-      "b": 0,
-      "a": 255
-    },
-    "_contentSize": {
-      "__type__": "cc.Size",
-      "width": 260,
-      "height": 164
-    },
-    "_anchorPoint": {
-      "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
-    },
-    "_position": {
-      "__type__": "cc.Vec3",
-      "x": -507,
-      "y": -276,
-      "z": 0
-    },
-    "_scale": {
-      "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
-      "z": 1
-    },
-    "_eulerAngles": {
-      "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "_skewX": 0,
-    "_skewY": 0,
-    "_is3DNode": false,
-    "groupIndex": 0,
-    "_id": "e9kvIVpo1MNYQul4WQSHnb"
-  },
-  {
-    "__type__": "cc.Sprite",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 10
-    },
-    "_enabled": true,
-    "_materials": [
-      {
-        "__uuid__": "eca5d2f2-8ef6-41c2-bbe6-f9c79d09c432"
-      }
-    ],
-    "_srcBlendFactor": 770,
-    "_dstBlendFactor": 771,
-    "_spriteFrame": {
-      "__uuid__": "a23235d1-15db-4b95-8439-a2e005bfff91"
-    },
-    "_type": 0,
-    "_sizeMode": 0,
-    "_fillType": 0,
-    "_fillCenter": {
-      "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
-    },
-    "_fillStart": 0,
-    "_fillRange": 0,
-    "_isTrimmedMode": true,
-    "_atlas": null,
-    "_id": "85prrYylhEnJ2thdHpOSwa"
-  },
-  {
-    "__type__": "cc.Node",
     "_name": "BG_editbox",
     "_objFlags": 0,
     "_parent": {
@@ -584,10 +494,10 @@
     "_level": 3,
     "_components": [
       {
-        "__id__": 13
+        "__id__": 11
       },
       {
-        "__id__": 14
+        "__id__": 12
       }
     ],
     "_prefab": null,
@@ -638,7 +548,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 12
+      "__id__": 10
     },
     "_enabled": true,
     "_materials": [
@@ -670,7 +580,7 @@
     "_name": "",
     "_objFlags": 0,
     "node": {
-      "__id__": 12
+      "__id__": 10
     },
     "_enabled": false,
     "alignMode": 0,
@@ -704,22 +614,22 @@
     "_level": 3,
     "_components": [
       {
-        "__id__": 16
+        "__id__": 14
       }
     ],
     "_prefab": null,
-    "_opacity": 168.3,
+    "_opacity": 178,
     "_color": {
       "__type__": "cc.Color",
-      "r": 116,
-      "g": 116,
-      "b": 116,
+      "r": 92,
+      "g": 89,
+      "b": 89,
       "a": 255
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 263,
-      "height": 554
+      "width": 260.1,
+      "height": 555
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -728,8 +638,8 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 511.229,
-      "y": 85,
+      "x": 509.8,
+      "y": 84.5,
       "z": 0
     },
     "_scale": {
@@ -749,6 +659,96 @@
     "_is3DNode": false,
     "groupIndex": 0,
     "_id": "33GZ+++AZG1647i8/t2sJU"
+  },
+  {
+    "__type__": "cc.Sprite",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 13
+    },
+    "_enabled": true,
+    "_materials": [
+      {
+        "__uuid__": "eca5d2f2-8ef6-41c2-bbe6-f9c79d09c432"
+      }
+    ],
+    "_srcBlendFactor": 770,
+    "_dstBlendFactor": 771,
+    "_spriteFrame": {
+      "__uuid__": "a23235d1-15db-4b95-8439-a2e005bfff91"
+    },
+    "_type": 0,
+    "_sizeMode": 0,
+    "_fillType": 0,
+    "_fillCenter": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_fillStart": 0,
+    "_fillRange": 0,
+    "_isTrimmedMode": true,
+    "_atlas": null,
+    "_id": "44fry87DZPgrQy5hNWiJmz"
+  },
+  {
+    "__type__": "cc.Node",
+    "_name": "BG_anim_Menu",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 5
+    },
+    "_children": [],
+    "_active": true,
+    "_level": 3,
+    "_components": [
+      {
+        "__id__": 16
+      }
+    ],
+    "_prefab": null,
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 136,
+      "g": 134,
+      "b": 134,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 239,
+      "height": 158
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 1
+    },
+    "_position": {
+      "__type__": "cc.Vec3",
+      "x": -638.135,
+      "y": -200,
+      "z": 0
+    },
+    "_scale": {
+      "__type__": "cc.Vec3",
+      "x": 1,
+      "y": 1,
+      "z": 1
+    },
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_is3DNode": false,
+    "groupIndex": 0,
+    "_id": "fdFRE6R+hGTYD80RHor8Rm"
   },
   {
     "__type__": "cc.Sprite",
@@ -780,7 +780,7 @@
     "_fillRange": 0,
     "_isTrimmedMode": true,
     "_atlas": null,
-    "_id": "44fry87DZPgrQy5hNWiJmz"
+    "_id": "22kbMHPs9LQIGuKTYQqg7X"
   },
   {
     "__type__": "cc.Node",
@@ -2579,7 +2579,7 @@
       "__id__": 57
     },
     "_N$background": {
-      "__id__": 13
+      "__id__": 11
     },
     "_N$inputFlag": 5,
     "_N$inputMode": 6,
