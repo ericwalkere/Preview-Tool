@@ -13,11 +13,8 @@ cc.Class({
     },
 
     onLoad() {
-        this._json = null;
-        this._atlas = null;
-        this._texture = null;
-
         this.initEvents();
+        this.refreshData();
     },
 
     onDestroy() {
@@ -33,6 +30,13 @@ cc.Class({
         registerEvent(EventCode.SPINE_POOL.EXPORT_JSON, this.exportJson, this);
     },
 
+    refreshData() {
+        this._json = null;
+        this._atlas = null;
+        this._textures = [];
+        this._textureNames = [];
+    },
+
     addJson(json) {
         this._json = json;
     },
@@ -42,18 +46,20 @@ cc.Class({
     },
 
     addTexture(texture) {
-        this._texture = texture;
+        this._textures.push(texture);
+        this._textureNames.push(texture.name);
     },
 
     addSpine(name) {
-        this._spineName = name;
-
         const skeleton = new sp.SkeletonData();
         skeleton.skeletonJson = this._json;
         skeleton.atlasText = this._atlas;
-        skeleton.textures = [this._texture];
-        skeleton.textureNames = [this._texture.name];
+        skeleton.textures = this._textures;
+        skeleton.textureNames = this._textureNames;
         this.loadSkeletonData(skeleton);
+      
+        this._spineName = name;
+        this.refreshData();
 
         Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
         Emitter.instance.emit(EventCode.MENU.UPDATE_ANIM_EVENT);
