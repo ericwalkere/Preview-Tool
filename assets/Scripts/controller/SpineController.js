@@ -52,17 +52,16 @@ cc.Class({
 
             this.showEvenKey(event.data.name);
 
-            const listeners = this._eventListeners[trackEntry.animation.name];
-            if (!listeners) return;
-            const listener = listeners[event.data.name];
-            listener && listener();
+            const audios = this._audioListener[trackEntry.animation.name];
+            if (!audios) return;
+            const audio = audios[event.data.name];
+            audio && audio.listener();
         });
 
         this.spine.setCompleteListener((trackEntry) => {
             if (!this._isLoop) {
                 this.setPaused(true);
                 this._isCompleted = true;
-                this.node.removeAllChildren();
             }
         });
     },
@@ -71,8 +70,8 @@ cc.Class({
         this.spine.skeletonData = skeletonData;
 
         const json = this.getJson();
-        if (!json.listeners) json.listeners = {};
-        this._eventListeners = json.listeners;
+        if (!json.audioListeners) json.audioListeners = {};
+        this._audioListener = json.audioListeners;
     },
 
     update(dt) {
@@ -165,15 +164,15 @@ cc.Class({
         this.spine.setSkin(name);
     },
 
-    setEventListener(anim, event, callback) {
-        if (!this._eventListeners[anim]) {
-            this._eventListeners[anim] = {};
+    setEventListener(anim, event, audioData) {
+        if (!this._audioListener[anim]) {
+            this._audioListener[anim] = {};
         }
-        this._eventListeners[anim][event] = callback;
+        this._audioListener[anim][event] = audioData;
     },
 
     removeEventListener(anim, event) {
-        const listeners = this._eventListeners[anim];
+        const listeners = this._audioListener[anim];
         if (!listeners || !listeners[event]) return;
         delete listeners[event];
     },

@@ -60,7 +60,10 @@ cc.Class({
     },
 
     showAnim(anim) {
-        if (!anim) return;
+        if (!anim) {
+            this.animText.string = "";
+            return;
+        }
         this.animText.string = anim;
     },
 
@@ -105,9 +108,12 @@ cc.Class({
         }
         set.forEach((element) => {
             const item = this.createItem(this.animEventPrefab, element, this.eventList, "AnimEventItem");
-            const listeners = this._json.listeners;
-            const hasListener = listeners[this.animName] && listeners[this.animName][element];
-            item.getComponent("AnimEventItem").setAudioImport(this.animName, element, hasListener);
+            const audioListeners = this._json.audioListeners;
+            let audioData = null;
+            if (audioListeners[this.animName] && audioListeners[this.animName][element]) {
+                audioData = audioListeners[this.animName][element];
+            }
+            item.getComponent("AnimEventItem").setAudioImport(this.animName, element, audioData);
         });
     },
 
