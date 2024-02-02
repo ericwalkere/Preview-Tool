@@ -7,6 +7,7 @@ cc.Class({
     properties: {
         _anim: "",
         _event: "",
+
     },
 
     acceptFile() {
@@ -33,6 +34,7 @@ cc.Class({
             Emitter.instance.emit(EventCode.MENU.UPDATE_ANIM_EVENT);
         });
     },
+    
 
     setAnim(anim) {
         this._anim = anim;
@@ -41,4 +43,6 @@ cc.Class({
     setEventName(event) {
         this._event = event;
     },
+
+    
 });
