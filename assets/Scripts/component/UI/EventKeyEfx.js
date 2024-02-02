@@ -8,4 +8,8 @@ cc.Class({
     setText(name) {
         this.text.string = name;
     },
+
+    destroyNode() {
+        this.node.destroy();
+    },
 });

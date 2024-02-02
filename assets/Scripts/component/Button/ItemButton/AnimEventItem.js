@@ -9,12 +9,13 @@ cc.Class({
         audioCheck: cc.Label,
     },
 
-    setAudioImport(anim, event, hasListener) {
+    setAudioImport(anim, event, audioData) {
         const audioImport = this.audioButton.addComponent("AudioImport");
         audioImport.setEventName(event);
         audioImport.setAnim(anim);
-        if (hasListener) {
+        if (audioData) {
             this.audioCheck.node.active = true;
+            this.audioCheck.string = audioData.name;
         }
     },
 

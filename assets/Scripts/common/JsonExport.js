@@ -31,7 +31,7 @@ cc.Class({
 
     onClick() {
         Emitter.instance.emit(EventCode.SPINE_POOL.EXPORT_JSON);
-        delete this._json.listeners;
+        delete this._json.audioListeners;
 
         if ("showSaveFilePicker" in window) {
             this.useSaveFilePicker(this._name, this._json);
