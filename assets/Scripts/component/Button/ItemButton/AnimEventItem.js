@@ -6,7 +6,7 @@ cc.Class({
 
     properties: {
         audioButton: cc.Node,
-        audioCheck: cc.Node,
+        audioCheck: cc.Label,
     },
 
     setAudioImport(anim, event, hasListener) {
@@ -14,7 +14,7 @@ cc.Class({
         audioImport.setEventName(event);
         audioImport.setAnim(anim);
         if (hasListener) {
-            this.audioCheck.active = true;
+            this.audioCheck.node.active = true;
         }
     },
 

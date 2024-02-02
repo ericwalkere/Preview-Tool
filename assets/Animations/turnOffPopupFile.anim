@@ -3,7 +3,7 @@
   "_name": "turnOffPopupFile",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 1.0166666666666666,
+  "_duration": 5.033333333333333,
   "sample": 60,
   "speed": 1,
   "wrapMode": 1,
@@ -17,7 +17,7 @@
               "value": true
             },
             {
-              "frame": 1.0166666666666666,
+              "frame": 5.033333333333333,
               "value": false
             }
           ]
