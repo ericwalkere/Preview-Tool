@@ -49,7 +49,6 @@ const EventCode = {
         UPDATE_ANIM_EVENT: "UPDATE_ANIM_EVENT",
         FILTER_EVENT: "FILTER_EVENT",
         FILTER_ALL: "FILTER_ALL_EVENT",
-        SHOW_ANIM_NAME: "SHOW_ANIM_NAME",
     },
 
     BUTTON: {

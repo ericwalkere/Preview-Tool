@@ -234,6 +234,17 @@ cc.Class({
 
         animation.events = animation.events.filter((value) => !(value.name === event && value.time === time));
         if (animation.events.length === 0) delete animation.events;
+
+        let hasEvent = false;
+        for (const key in json.animations) {
+            const events = json.animations[key].events;
+            if (events) {
+                hasEvent = events.some((value) => value.name === event);
+                if (hasEvent) break;
+            }
+        }
+        if (!hasEvent) delete json.events[event];
+
         this.reloadJson();
     },
 });
