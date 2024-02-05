@@ -5,7 +5,7 @@ cc.Class({
     extends: require("LoadDataButton"),
 
     onClick() {
-        Emitter.instance.emit(EventCode.TIMELINE.ADD_EVENT_TO_ANIM, this.value);
+        // Emitter.instance.emit(EventCode.TIMELINE.ADD_EVENT_TO_ANIM, this.value);
         Emitter.instance.emit(EventCode.MENU.FILTER_ALL);
     },
 });
