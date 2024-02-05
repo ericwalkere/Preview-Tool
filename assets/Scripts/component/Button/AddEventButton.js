@@ -19,6 +19,7 @@ cc.Class({
         this.addNew.active = true;
         this.box.node.active = false;
         Emitter.instance.emit(EventCode.SPINE_CTRL.CREATE_EVENT_KEY, this.box.string.trim());
+        Emitter.instance.emit(EventCode.TIMELINE.ADD_EVENT_TO_ANIM, this.box.string.trim());
     },
 
     onLeave() {
