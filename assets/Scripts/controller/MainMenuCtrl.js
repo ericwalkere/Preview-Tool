@@ -44,7 +44,6 @@ cc.Class({
         registerEvent(EventCode.MENU.UPDATE_ANIM_EVENT, this.updateAnimEvents, this);
         registerEvent(EventCode.MENU.FILTER_EVENT, this.filterEventKey, this);
         registerEvent(EventCode.MENU.FILTER_ALL, this.filterAll, this);
-        registerEvent(EventCode.MENU.SHOW_ANIM_NAME, this.showAnim, this);
     },
 
     getJson(json) {
@@ -57,14 +56,7 @@ cc.Class({
 
     getAnimName(anim) {
         this.animName = anim;
-    },
-
-    showAnim(anim) {
-        if (!anim) {
-            this.animText.string = "";
-            return;
-        }
-        this.animText.string = anim;
+        this.animText.string = this.animName;
     },
 
     loadAnims() {

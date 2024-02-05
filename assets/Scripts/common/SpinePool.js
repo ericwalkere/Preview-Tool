@@ -73,19 +73,20 @@ cc.Class({
         this._spineNode.getComponent("SpineController").loadSkeleton(data);
         Emitter.instance.emit(EventCode.MENU.GET_JSON, data.skeletonJson);
 
+        Emitter.instance.emit(EventCode.MENU.GET_ANIM_NAME);
         Emitter.instance.emit(EventCode.MENU.LOAD_SKIN);
         Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
         Emitter.instance.emit(EventCode.MENU.UPDATE_ANIM_EVENT);
         Emitter.instance.emit(EventCode.TIMELINE.REMOVE_EVENT_KEY);
         Emitter.instance.emit(EventCode.TIMELINE.SET_DURATION_TIME, 0);
         Emitter.instance.emit(EventCode.TIMELINE.UPDATE_TIMELINE, 0);
-        Emitter.instance.emit(EventCode.MENU.SHOW_ANIM_NAME);
     },
 
     loadJson(json) {
         if (!this._spineNode) return;
 
         const skeleton = this._spineNode.skeletonData;
+        this._json = json;
         skeleton.skeletonJson = json;
         this.loadSkeletonData(skeleton);
     },
