@@ -55,6 +55,8 @@ cc.Class({
         const currentTime = slide.progress * this._durationTime;
         Emitter.instance.emit(EventCode.SPINE_CTRL.UPDATE_TIME, currentTime);
         Emitter.instance.emit(EventCode.SPINE_CTRL.SET_PAUSED, true);
+        
+        Emitter.instance.emit('GET_TIME', currentTime);
     },
 
     createEventKey(data, animName) {
@@ -63,6 +65,10 @@ cc.Class({
         key.getComponent("ClickEvent").hint({ anim: animName, event: data.name, time: data.time });
         key.x = percent * 800;
         key.parent = this.eventNode;
+    },
+
+    dragKey() {
+        
     },
 
     removeChildren() {
