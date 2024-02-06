@@ -17,6 +17,7 @@ cc.Class({
         _toTime: 0,
         _isUpdate: false,
         _isReload: false,
+        _isDragEvent: false,
     },
 
     onLoad() {
@@ -37,15 +38,15 @@ cc.Class({
         registerEvent(EventCode.SPINE_CTRL.SET_PAUSED, this.setPaused, this);
         registerEvent(EventCode.SPINE_CTRL.SET_ALPHA, this.setPremultipliedAlpha, this);
         registerEvent(EventCode.SPINE_CTRL.UPDATE_TIME, this.updateAnimTime, this);
-        registerEvent(EventCode.SPINE_CTRL.CREATE_EVENT_KEY, this.createEventKey, this);
         registerEvent(EventCode.SPINE_CTRL.ADD_EVENT_KEY, this.addEventKey, this);
         registerEvent(EventCode.SPINE_CTRL.REMOVE_EVENT_KEY, this.removeEventKey, this);
         registerEvent(EventCode.SPINE_CTRL.SHOW_EVENT, this.canShow, this);
+        registerEvent(EventCode.SPINE_CTRL.DRAG_EVENT, this.dragEvent, this);
     },
 
     initSpineListeners() {
         this.spine.setEventListener((trackEntry, event) => {
-            if (this._isReload) return;
+            if (this._isReload || this._isDragEvent) return;
 
             const time = event.time;
             if (this._isUpdate && !inRange(time, this._fromTime, this._toTime)) return;
@@ -197,22 +198,12 @@ cc.Class({
         this._isReload = false;
     },
 
-    createEventKey(event) {
-        const json = this.getJson();
-        if (!json.events) {
-            json.events = {};
-        }
-
-        if (!json.events[event]) {
-            json.events[event] = {};
-        }
-
-        Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
-    },
-
     addEventKey(data) {
         const { anim, event, time } = data;
         const json = this.getJson();
+
+        if (!json.events) json.events = {};
+        if (!json.events[event]) json.events[event] = {};
 
         const animation = json.animations[anim];
         if (!animation.events) animation.events = [];
@@ -246,5 +237,9 @@ cc.Class({
         if (!hasEvent) delete json.events[event];
 
         this.reloadJson();
+    },
+
+    dragEvent(isDragEvent) {
+        this._isDragEvent = isDragEvent;
     },
 });
