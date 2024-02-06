@@ -11,6 +11,12 @@ cc.Class({
         this.node.on("mouseup", this.onMouseUp, this);
     },
 
+    onDestroy() {
+        this.node.off("mousedown", this.onMouseDown, this);
+        this.node.off("mousemove", this.onMouseMove, this);
+        this.node.off("mouseup", this.onMouseUp, this);
+    },
+
     onMouseDown(event) {
         this._canMove = true;
     },

@@ -30,6 +30,20 @@ cc.Class({
         this.isDragging = false;
     },
 
+    onDestroy() {
+        removeEvents(this);
+
+        this.node.off("mouseenter", this.onEnter.bind(this));
+        this.node.off("mouseleave", this.onExit.bind(this));
+        this.node.off("mousedown", this.onClick.bind(this));
+        this.removeBtn.off("click", this.removeEvent.bind(this));
+
+        this.node.off(cc.Node.EventType.MOUSE_DOWN, this.startDragging, this);
+        this.node.off(cc.Node.EventType.TOUCH_MOVE, this.onDrag, this);
+        this.node.off(cc.Node.EventType.TOUCH_END, this.endDragging, this);
+        this.node.off(cc.Node.EventType.TOUCH_CANCEL, this.endDragging, this);
+    },
+
     getCurrentTime(currentTime) {
         this.newTime = currentTime;
     },
@@ -61,7 +75,6 @@ cc.Class({
             time: this.newTime,
         });
         Emitter.instance.emit(EventCode.SPINE_CTRL.DRAG_EVENT, false);
-        // Emitter.instance.emit(EventCode.MENU.UPDATE_ANIM_EVENT);
     },
 
     onClick(event) {

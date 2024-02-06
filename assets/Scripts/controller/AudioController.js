@@ -12,6 +12,10 @@ cc.Class({
         registerEvent(EventCode.AUDIO.PLAY_SOUND, this.playSound, this);
     },
 
+    onDestroy() {
+        removeEvents(this);
+    },
+
     playSound(sound) {
         this.mAudio.clip = sound;
         this.mAudio.play();
