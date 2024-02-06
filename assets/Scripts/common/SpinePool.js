@@ -77,7 +77,6 @@ cc.Class({
         Emitter.instance.emit(EventCode.MENU.LOAD_SKIN);
         Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
         Emitter.instance.emit(EventCode.MENU.UPDATE_ANIM_EVENT);
-        Emitter.instance.emit(EventCode.TIMELINE.REMOVE_EVENT_KEY);
         Emitter.instance.emit(EventCode.TIMELINE.SET_DURATION_TIME, 0);
         Emitter.instance.emit(EventCode.TIMELINE.UPDATE_TIMELINE, 0);
     },

@@ -196,6 +196,7 @@ cc.Class({
         const entry = this.spine.setAnimation(0, anim, this._isLoop);
         this.updateTrackEntryTime(entry, time);
         this._isReload = false;
+        this._isDragEvent = false;
     },
 
     addEventKey(data) {

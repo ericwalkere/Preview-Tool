@@ -93,6 +93,7 @@ cc.Class({
         const button = cc.instantiate(this.showAllEventButton);
         button.parent = this.eventList;
         if (events) {
+            Emitter.instance.emit(EventCode.TIMELINE.REMOVE_EVENT_KEY);
             events.forEach((element) => {
                 Emitter.instance.emit(EventCode.TIMELINE.CREATE_EVENT_KEY, element, this.animName);
                 set.add(element.name);

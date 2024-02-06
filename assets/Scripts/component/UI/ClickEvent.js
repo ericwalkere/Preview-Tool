@@ -17,10 +17,10 @@ cc.Class({
     onLoad() {
         registerEvent(EventCode.EVENT_KEY.GET_CURRENT_TIME, this.getCurrentTime, this);
 
-        this.node.on("mouseenter", this.onEnter.bind(this));
-        this.node.on("mouseleave", this.onExit.bind(this));
-        this.node.on("mousedown", this.onClick.bind(this));
-        this.removeBtn.on("click", this.removeEvent.bind(this));
+        this.node.on("mouseenter", this.onEnter, this);
+        this.node.on("mouseleave", this.onExit, this);
+        this.node.on("mousedown", this.onClick, this);
+        this.removeBtn.on("click", this.removeEvent, this);
 
         this.node.on(cc.Node.EventType.MOUSE_DOWN, this.startDragging, this);
         this.node.on(cc.Node.EventType.TOUCH_MOVE, this.onDrag, this);
@@ -33,10 +33,10 @@ cc.Class({
     onDestroy() {
         removeEvents(this);
 
-        this.node.off("mouseenter", this.onEnter.bind(this));
-        this.node.off("mouseleave", this.onExit.bind(this));
-        this.node.off("mousedown", this.onClick.bind(this));
-        this.removeBtn.off("click", this.removeEvent.bind(this));
+        this.node.off("mouseenter", this.onEnter, this);
+        this.node.off("mouseleave", this.onExit, this);
+        this.node.off("mousedown", this.onClick, this);
+        this.removeBtn.off("click", this.removeEvent, this);
 
         this.node.off(cc.Node.EventType.MOUSE_DOWN, this.startDragging, this);
         this.node.off(cc.Node.EventType.TOUCH_MOVE, this.onDrag, this);
@@ -67,7 +67,6 @@ cc.Class({
         if (!this.isDragging) return;
 
         this.isDragging = false;
-        Emitter.instance.emit(EventCode.TIMELINE.REMOVE_EVENT_KEY);
         Emitter.instance.emit(EventCode.SPINE_CTRL.REMOVE_EVENT_KEY, this.data);
         Emitter.instance.emit(EventCode.SPINE_CTRL.ADD_EVENT_KEY, {
             anim: this.data.anim,
@@ -87,7 +86,6 @@ cc.Class({
     removeEvent() {
         if (this.data) {
             Emitter.instance.emit(EventCode.SPINE_CTRL.REMOVE_EVENT_KEY, this.data);
-            Emitter.instance.emit(EventCode.TIMELINE.REMOVE_EVENT_KEY);
             Emitter.instance.emit(EventCode.MENU.UPDATE_ANIM_EVENT);
         }
     },
