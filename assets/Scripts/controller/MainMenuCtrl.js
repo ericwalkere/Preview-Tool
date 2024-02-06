@@ -56,7 +56,7 @@ cc.Class({
 
     getAnimName(anim) {
         this.animName = anim;
-        this.animText.string = this.animName;
+        this.animText.string = this.animName || "";
     },
 
     loadAnims() {

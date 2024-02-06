@@ -73,7 +73,7 @@ cc.Class({
         this._spineNode.getComponent("SpineController").loadSkeleton(data);
         Emitter.instance.emit(EventCode.MENU.GET_JSON, data.skeletonJson);
 
-        Emitter.instance.emit(EventCode.MENU.GET_ANIM_NAME);
+        Emitter.instance.emit(EventCode.MENU.GET_ANIM_NAME, null);
         Emitter.instance.emit(EventCode.MENU.LOAD_SKIN);
         Emitter.instance.emit(EventCode.MENU.UPDATE_EVENT);
         Emitter.instance.emit(EventCode.MENU.UPDATE_ANIM_EVENT);

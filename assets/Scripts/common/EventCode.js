@@ -17,10 +17,10 @@ const EventCode = {
         SET_PAUSED: "SET_ANIM_PAUSED",
         SET_ALPHA: "SET_ALPHA",
         UPDATE_TIME: "UPDATE_TIME",
-        CREATE_EVENT_KEY: "CREATE_EVENT_KEY",
         ADD_EVENT_KEY: "ADD_EVENT_KEY",
         REMOVE_EVENT_KEY: "REMOVE_EVENT_KEY",
         SHOW_EVENT: "SHOW_EVENT",
+        DRAG_EVENT: "DRAG_EVENT",
     },
 
     UI_BOTTOM: {
@@ -56,6 +56,10 @@ const EventCode = {
         SET_PAUSED: "SET_PAUSED",
         SET_LOOP: "SET_LOOP",
         SAVE_KEY: "SAVE_KEY",
+    },
+
+    EVENT_KEY: {
+        GET_CURRENT_TIME: "GET_CURRENT_TIME_EVENT",
     },
 
     EXPORT: {
