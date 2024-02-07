@@ -187,8 +187,6 @@ cc.Class({
     },
 
     reloadJson() {
-        Emitter.instance.emit(EventCode.MENU.UPDATE_ANIM_EVENT);
-
         const trackEntry = this.spine.getCurrent(0);
         this.spine.skeletonData.skeletonJson = this.getJson();
         this.spine._updateSkeletonData();
@@ -200,7 +198,8 @@ cc.Class({
         const entry = this.spine.setAnimation(0, anim, this._isLoop);
         this.updateTrackEntryTime(entry, time);
         this._isReload = false;
-        this._isDragEvent = false;
+
+        Emitter.instance.emit(EventCode.MENU.UPDATE_ANIM_EVENT);
     },
 
     addEventKey(data) {
@@ -241,7 +240,9 @@ cc.Class({
         }
         if (!hasEvent) delete json.events[event];
 
-        this.removeEventListener(anim, event);
+        if (!this._isDragEvent) {
+            this.removeEventListener(anim, event);
+        }
 
         this.reloadJson();
     },
