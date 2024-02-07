@@ -43,15 +43,15 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 184,
-      "g": 184,
-      "b": 184,
+      "r": 207,
+      "g": 253,
+      "b": 61,
       "a": 255
     },
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 8,
-      "height": 25
+      "height": 30
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -635,6 +635,7 @@
       "__id__": 1
     },
     "_enabled": true,
+    "slider": null,
     "hintText": {
       "__id__": 3
     },
