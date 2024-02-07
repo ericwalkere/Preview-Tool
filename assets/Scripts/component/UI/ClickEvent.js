@@ -62,7 +62,6 @@ cc.Class({
         this.node.x += offset.x;
         this.node.x = clamp(this.node.x, 0, 800);
         this.node.opacity = 160;
-
     },
 
     endDragging(event) {
@@ -70,11 +69,8 @@ cc.Class({
 
         this.isDragging = false;
         Emitter.instance.emit(EventCode.SPINE_CTRL.REMOVE_EVENT_KEY, this.data);
-        Emitter.instance.emit(EventCode.SPINE_CTRL.ADD_EVENT_KEY, {
-            anim: this.data.anim,
-            event: this.data.event,
-            time: this.newTime,
-        });
+        this.data.time = this.newTime;
+        Emitter.instance.emit(EventCode.SPINE_CTRL.ADD_EVENT_KEY, this.data);
         Emitter.instance.emit(EventCode.SPINE_CTRL.DRAG_EVENT, false);
         this.node.opacity = 255;
     },
@@ -88,8 +84,8 @@ cc.Class({
 
     removeEvent() {
         if (this.data) {
+            Emitter.instance.emit(EventCode.SPINE_CTRL.DRAG_EVENT, false);
             Emitter.instance.emit(EventCode.SPINE_CTRL.REMOVE_EVENT_KEY, this.data);
-            Emitter.instance.emit(EventCode.MENU.UPDATE_ANIM_EVENT);
         }
     },
 
