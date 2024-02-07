@@ -173,6 +173,10 @@ cc.Class({
     },
 
     removeEventListener(anim, event) {
+        const json = this.getJson();
+        const animation = json.animations[anim];
+        if (animation.events && animation.events.some((value) => value.name === event)) return;
+
         const listeners = this._audioListener[anim];
         if (!listeners || !listeners[event]) return;
         delete listeners[event];
@@ -236,6 +240,8 @@ cc.Class({
             }
         }
         if (!hasEvent) delete json.events[event];
+
+        this.removeEventListener(anim, event);
 
         this.reloadJson();
     },
