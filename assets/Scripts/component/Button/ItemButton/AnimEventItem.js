@@ -19,6 +19,8 @@ cc.Class({
         }
     },
 
+    
+
     onClick() {
         Emitter.instance.emit(EventCode.MENU.FILTER_EVENT, this.value);
     },

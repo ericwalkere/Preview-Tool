@@ -2177,7 +2177,7 @@
     "_useOriginalSize": false,
     "_string": "",
     "returnType": 0,
-    "maxLength": 15,
+    "maxLength": 10,
     "_tabIndex": 0,
     "editingDidBegan": [],
     "textChanged": [],

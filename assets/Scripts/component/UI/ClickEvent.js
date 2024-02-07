@@ -61,6 +61,8 @@ cc.Class({
         const offset = this.node.convertToNodeSpaceAR(event.getLocation());
         this.node.x += offset.x;
         this.node.x = clamp(this.node.x, 0, 800);
+        this.node.opacity = 160;
+
     },
 
     endDragging(event) {
@@ -74,6 +76,7 @@ cc.Class({
             time: this.newTime,
         });
         Emitter.instance.emit(EventCode.SPINE_CTRL.DRAG_EVENT, false);
+        this.node.opacity = 255;
     },
 
     onClick(event) {
