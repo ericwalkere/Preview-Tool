@@ -180,7 +180,7 @@
       "__type__": "cc.Vec3",
       "x": 0,
       "y": 0,
-      "z": 360.2585833429441
+      "z": 479.77807369657904
     },
     "_scale": {
       "__type__": "cc.Vec3",
@@ -2177,7 +2177,7 @@
     "_useOriginalSize": false,
     "_string": "",
     "returnType": 0,
-    "maxLength": 10,
+    "maxLength": 15,
     "_tabIndex": 0,
     "editingDidBegan": [],
     "textChanged": [],
