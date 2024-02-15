@@ -90,10 +90,10 @@ cc.Class({
         const set = new Set();
         const events = this._json.animations[this.animName].events;
 
-        const button = cc.instantiate(this.showAllEventButton);
-        button.parent = this.eventList;
         Emitter.instance.emit(EventCode.TIMELINE.REMOVE_EVENT_KEY);
         if (events) {
+            const button = cc.instantiate(this.showAllEventButton);
+            button.parent = this.eventList;
             events.forEach((element) => {
                 Emitter.instance.emit(EventCode.TIMELINE.CREATE_EVENT_KEY, element, this.animName);
                 set.add(element.name);
